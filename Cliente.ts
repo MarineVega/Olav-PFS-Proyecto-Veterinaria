@@ -13,10 +13,6 @@ export class Cliente extends Persona {
        // this.mascotas = mascotas;
     }
 
-    mostrarDatos(): string {
-        return `Cliente (id ${this.id}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas ${this.mascotas}`
-    }
-
     public getVisitas(): number {
         return this.visitas;
     }
@@ -48,15 +44,23 @@ export class Cliente extends Persona {
         console.log(`El cliente ${this.nombre} es considerado VIP`);        
     }
 
-    public agregarPaciente() {
+    public agregarPaciente(): void {
 
     }
 
-    public modificarPaciente() {
+    public modificarPaciente(): void {
 
     }
 
-    public eliminarPaciente() {
+    public eliminarPaciente(): void {
         
     }
+
+    mostrarDatos(): string {
+        return `Cliente (id ${this.id}) ${this.nombre}\n Direción: ${this.direccion}\n Teléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas ${this.mascotas}`
+    }
+
+    /*mostrarDatos(): string {
+        return `Cliente (id ${this.getId()}) ${this.nombre}\n Direción: ${this.getDireccion()}\n Teléfono: ${this.getTelefono()}\n Documento: ${this.getDocumento()}\n Mascotas ${this.getMascotas()}.`
+    }*/
 }

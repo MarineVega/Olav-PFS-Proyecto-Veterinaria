@@ -19,19 +19,19 @@ export abstract class Persona {
         return this.id;
     }
 
-    public setId(id: number): void {
-        this.id = id;        
-    }
-
     public getNombre(): string {
          return this.nombre;
+    }
+
+    public setId(id: number): void {
+        this.id = id;        
     }
 
     public setNombre(nombre: string): void {
         if (nombre!=undefined) {
             this.nombre = nombre;
         } else {
-            console.log(`Error! Nombre de Persona no definido ${nombre}`);            
+            console.log(`Error! Nombre de Persona no definido ${nombre}`); // Acá para mostrar el error podriamos usar algo de lo que enseñó Karen?       
         }
     }
 
