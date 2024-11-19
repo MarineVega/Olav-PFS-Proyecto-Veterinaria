@@ -4,7 +4,7 @@ import { Paciente } from "./Paciente";
 
 
 console.log(" ");
-console.log(" ******************************************** Veterinaria Pocas Pulgas *********************************************");
+console.log(" **************************************** Veterinaria Pocas Pulgas ****************************************");
 
 let id: number = 0;
 // generar ids
