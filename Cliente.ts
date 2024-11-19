@@ -10,24 +10,29 @@ export class Cliente extends Persona {
         super(id, nombre, direccion, telefono, documento);
         this.visitas = 0;
         this.vip = false;
-       // this.mascotas = mascotas;
+       //this.mascotas = mascotas;
     }
 
     public getVisitas(): number {
         return this.visitas;
     }
-    public setVisitas(visitas: number): void {
-        this.visitas = visitas;
-    }
+
     public isVip(): boolean {
         return this.vip;
     }
-    public setVip(vip: boolean): void {
-        this.vip = vip;
-    }
+
     public getMascotas(): Paciente {
         return this.mascotas;
     }
+
+    public setVisitas(visitas: number): void {
+        this.visitas = visitas;
+    }
+
+    public setVip(vip: boolean): void {
+        this.vip = vip;
+    }
+
     public setMascotas(mascotas: Paciente): void {
         this.mascotas = mascotas;
     }
