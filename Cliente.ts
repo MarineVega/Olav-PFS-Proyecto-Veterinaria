@@ -4,12 +4,13 @@ export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
     private mascotas: Paciente;
-
-    constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number, mascotas: Paciente) {
+    
+    //constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number, mascotas: Paciente) {
+    constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number) {
         super(id, nombre, direccion, telefono, documento);
         this.visitas = 0;
         this.vip = false;
-        this.mascotas = mascotas;
+       // this.mascotas = mascotas;
     }
 
     mostrarDatos(): string {
