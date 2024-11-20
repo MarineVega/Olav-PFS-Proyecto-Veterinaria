@@ -4,8 +4,8 @@ import { Cliente } from "./Cliente";
 import { Proveedor } from "./Proveedor";
 
 
-export default class Sucursal { // Qué significa que la clase Sucursal sea Default?
-    private id: number;
+export class Sucursal { // Qué significa que la clase Sucursal sea Default?
+    private ID: number;
     private responsable: string;
     private direccion: string;
     private localidad: string;
@@ -14,8 +14,8 @@ export default class Sucursal { // Qué significa que la clase Sucursal sea Defa
     private listaProveedores: Proveedor[];
 
    
-    constructor (id: number, responsable: string, direccion: string, localidad: string, condicionVip: number) {
-        this.id = id;
+    constructor (ID: number, responsable: string, direccion: string, localidad: string, condicionVip: number) {
+        this.ID = ID;
         this.responsable = responsable;
         this.direccion = direccion;
         this.localidad = localidad;
@@ -25,7 +25,7 @@ export default class Sucursal { // Qué significa que la clase Sucursal sea Defa
     }
 
     public getId(): number {
-        return this.id;
+        return this.ID;
     }
 
     public getResponsable(): string {
@@ -52,8 +52,8 @@ export default class Sucursal { // Qué significa que la clase Sucursal sea Defa
         return this.listaProveedores;
     }
 
-    public setId(id: number): void {
-        this.id = id;
+    public setId(ID: number): void {
+        this.ID = ID;
     }
 
     public setResponsable(responsable: string): void {
@@ -81,7 +81,7 @@ export default class Sucursal { // Qué significa que la clase Sucursal sea Defa
     }*/ // NO ESTOY SEGURA QUE DEBAMOS DEJAR ESTOS SET 
 
     public mostrarDatosSucursal(): string {
-        return `Sucursal Veterinaria (id ${this.id}) Responsable: ${this.responsable}\n Dirección: ${this.direccion}\n Localidad: ${this.localidad}\n Condición VIP: ${this.condicionVip}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()}.`
+        return `Sucursal Veterinaria (ID ${this.ID}) Responsable: ${this.responsable}\n Dirección: ${this.direccion}\n Localidad: ${this.localidad}\n Condición VIP: ${this.condicionVip}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()}.`
     }  
     
     /*public mostrarDatosSucursal(): string {

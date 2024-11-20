@@ -3,14 +3,14 @@ import { Paciente } from "./Paciente";
 export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
-    private mascotas: Paciente;
+    private listaMascotas: Paciente[];
     
     //constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number, mascotas: Paciente) {
     constructor  (ID: number, nombre: string, direccion: string, telefono: number, documento: number) {
         super(ID, nombre, direccion, telefono, documento);
         this.visitas = 0;
         this.vip = false;
-       //this.mascotas = mascotas;
+        this.listaMascotas = [];
     }
 
     public getVisitas(): number {
@@ -21,8 +21,13 @@ export class Cliente extends Persona {
         return this.vip;
     }
 
-    public getMascotas(): Paciente {
-        return this.mascotas;
+    public getListaMascotas(): Paciente[] {
+        return this.listaMascotas;
+    }
+
+    public agregarMascota(ID: number, nombre: string, especie: string, sexo: string, fechaNacimiento: number, observacion: string): void {
+        const mascota: Paciente = new Paciente (ID,nombre,especie,sexo,fechaNacimiento,observacion);
+        this.listaMascotas.push(mascota);
     }
 
     public setVisitas(visitas: number): void {
@@ -32,11 +37,7 @@ export class Cliente extends Persona {
     public setVip(vip: boolean): void {
         this.vip = vip;
     }
-
-    public setMascotas(mascotas: Paciente): void {
-        this.mascotas = mascotas;
-    }
-
+    
     public registrarVisita(): void {
         this.visitas += 1;
         if (this.visitas >= 5 && !this.vip) {
@@ -49,8 +50,8 @@ export class Cliente extends Persona {
         console.log(`El cliente ${this.nombre} es considerado VIP`);        
     }
 
-    public agregarPaciente(): void {
-
+    public agregarPaciente(paciente: Paciente): void { // Este método se reemplazó por el método agregarMascota()?
+      this.listaMascotas.push(paciente);
     }
 
     public modificarPaciente(): void {
@@ -62,7 +63,8 @@ export class Cliente extends Persona {
     }
 
     mostrarDatos(): string {
-        return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas: ${this.mascotas}.`
+        return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas: ${this.listaMascotas}.`
+        //return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}.`
     }
 
     /*mostrarDatos(): string {
