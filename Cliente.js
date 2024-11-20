@@ -21,8 +21,8 @@ var Paciente_1 = require("./Paciente");
 var Cliente = /** @class */ (function (_super) {
     __extends(Cliente, _super);
     //constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number, mascotas: Paciente) {
-    function Cliente(ID, nombre, direccion, telefono, documento) {
-        var _this = _super.call(this, ID, nombre, direccion, telefono, documento) || this;
+    function Cliente(id, nombre, direccion, telefono, documento) {
+        var _this = _super.call(this, id, nombre, direccion, telefono, documento) || this;
         _this.visitas = 0;
         _this.vip = false;
         _this.listaMascotas = [];
@@ -65,7 +65,7 @@ var Cliente = /** @class */ (function (_super) {
     Cliente.prototype.eliminarPaciente = function () {
     };
     Cliente.prototype.mostrarDatos = function () {
-        return "Cliente (ID ".concat(this.ID, ") ").concat(this.nombre, "\nDireci\u00F3n: ").concat(this.direccion, "\nTel\u00E9fono: ").concat(this.telefono, "\nDocumento: ").concat(this.documento, "\nMascotas: ").concat(this.listaMascotas, ".");
+        return "Cliente (ID ".concat(this.id, ") ").concat(this.nombre, "\nDireci\u00F3n: ").concat(this.direccion, "\nTel\u00E9fono: ").concat(this.telefono, "\nDocumento: ").concat(this.documento, "\nMascotas: ").concat(this.listaMascotas, ".");
         //return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}.`
     };
     return Cliente;

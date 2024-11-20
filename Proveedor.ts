@@ -4,8 +4,8 @@ export class Proveedor extends Persona {
     private rubro: string;
     private CUIT: number;
 
-    constructor(ID: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number) {
-        super(ID, nombre, direccion, telefono, documento);
+    constructor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number) {
+        super(id, nombre, direccion, telefono, documento);
         this.rubro = rubro;
         this.CUIT = CUIT;
     }
@@ -27,7 +27,7 @@ export class Proveedor extends Persona {
     }
 
     public mostrarDatos(): string {
-        return `Provedor (ID ${this.ID}) ${this.nombre}\nDirección: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nRubro: ${this.rubro}\nC.U.I.T: ${this.CUIT}.`
+        return `Provedor (ID ${this.id}) ${this.nombre}\nDirección: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nRubro: ${this.rubro}\nC.U.I.T: ${this.CUIT}.`
     }
     
     /*public mostrarDatos1(): string {

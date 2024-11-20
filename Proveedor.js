@@ -19,8 +19,8 @@ exports.Proveedor = void 0;
 var Persona_1 = require("./Persona");
 var Proveedor = /** @class */ (function (_super) {
     __extends(Proveedor, _super);
-    function Proveedor(ID, nombre, direccion, telefono, documento, rubro, CUIT) {
-        var _this = _super.call(this, ID, nombre, direccion, telefono, documento) || this;
+    function Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT) {
+        var _this = _super.call(this, id, nombre, direccion, telefono, documento) || this;
         _this.rubro = rubro;
         _this.CUIT = CUIT;
         return _this;
@@ -38,7 +38,7 @@ var Proveedor = /** @class */ (function (_super) {
         this.CUIT = CUIT;
     };
     Proveedor.prototype.mostrarDatos = function () {
-        return "Provedor (ID ".concat(this.ID, ") ").concat(this.nombre, "\nDirecci\u00F3n: ").concat(this.direccion, "\nTel\u00E9fono: ").concat(this.telefono, "\nDocumento: ").concat(this.documento, "\nRubro: ").concat(this.rubro, "\nC.U.I.T: ").concat(this.CUIT, ".");
+        return "Provedor (ID ".concat(this.id, ") ").concat(this.nombre, "\nDirecci\u00F3n: ").concat(this.direccion, "\nTel\u00E9fono: ").concat(this.telefono, "\nDocumento: ").concat(this.documento, "\nRubro: ").concat(this.rubro, "\nC.U.I.T: ").concat(this.CUIT, ".");
     };
     return Proveedor;
 }(Persona_1.Persona));

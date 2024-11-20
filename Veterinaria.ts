@@ -15,6 +15,8 @@ console.error(" ------------------------------------------------- 🐾 Sucursale
 id += 1;
 let sucursal1: Sucursal = new Sucursal(id,"Marta Suarez", "Avda. Colón 1845", "Olavarría", 5);
 console.warn(sucursal1.mostrarDatosSucursal());
+sucursal1.agregarCliente(id,"Adriana","Rivadavia 1234", 15656869, 17568123);
+sucursal1.mostrarDatosSucursal();
 
 console.error(" --------------------------------------------------- 🐾 Clientes 🐾 ---------------------------------------------------");
 id += 1;

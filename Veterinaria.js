@@ -14,6 +14,8 @@ console.error(" ------------------------------------------------- 🐾 Sucursale
 id += 1;
 var sucursal1 = new Sucursal_1.Sucursal(id, "Marta Suarez", "Avda. Colón 1845", "Olavarría", 5);
 console.warn(sucursal1.mostrarDatosSucursal());
+sucursal1.agregarCliente(id, "Adriana", "Rivadavia 1234", 15656869, 17568123);
+sucursal1.mostrarDatosSucursal();
 console.error(" --------------------------------------------------- 🐾 Clientes 🐾 ---------------------------------------------------");
 id += 1;
 var cliente1 = new Cliente_1.Cliente(id, "Adriana", "Rivadavia 1234", 15656869, 17568123);

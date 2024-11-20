@@ -6,8 +6,8 @@ export class Cliente extends Persona {
     private listaMascotas: Paciente[];
     
     //constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number, mascotas: Paciente) {
-    constructor  (ID: number, nombre: string, direccion: string, telefono: number, documento: number) {
-        super(ID, nombre, direccion, telefono, documento);
+    constructor  (id: number, nombre: string, direccion: string, telefono: number, documento: number) {
+        super(id, nombre, direccion, telefono, documento);
         this.visitas = 0;
         this.vip = false;
         this.listaMascotas = [];
@@ -63,7 +63,7 @@ export class Cliente extends Persona {
     }
 
     mostrarDatos(): string {
-        return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas: ${this.listaMascotas}.`
+        return `Cliente (ID ${this.id}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nMascotas: ${this.listaMascotas}.`
         //return `Cliente (ID ${this.ID}) ${this.nombre}\nDireción: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}.`
     }
 

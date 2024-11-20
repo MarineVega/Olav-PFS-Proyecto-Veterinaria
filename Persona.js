@@ -2,21 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Persona = void 0;
 var Persona = /** @class */ (function () {
-    function Persona(ID, nombre, direccion, telefono, documento) {
-        this.ID = ID;
+    function Persona(id, nombre, direccion, telefono, documento) {
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.documento = documento;
     }
     Persona.prototype.getId = function () {
-        return this.ID;
+        return this.id;
     };
     Persona.prototype.getNombre = function () {
         return this.nombre;
     };
-    Persona.prototype.setId = function (ID) {
-        this.ID = ID;
+    Persona.prototype.setId = function (id) {
+        this.id = id;
     };
     Persona.prototype.setNombre = function (nombre) {
         if (nombre != undefined) {
