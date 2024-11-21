@@ -77,6 +77,5 @@ export class Cliente extends Persona {
     public mostrarDatos(): string {
             const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
             return `Cliente (ID ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nPacientes:\n${pacientesInfo}`;
-        }
-   
+        } 
 }
