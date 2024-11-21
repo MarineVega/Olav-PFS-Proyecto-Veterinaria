@@ -12,26 +12,27 @@ var id = 0;
 console.error(" ------------------------------------------------- 🐾 Sucursales 🐾 --------------------------------------------------");
 //OJO!!!!! Ver campo condicionVip --> tenemos q usarla para definir VIP al cliente????
 id += 1;
-var sucursal1 = new Sucursal_1.Sucursal(id, "Marta Suarez", "Avda. Colón 1845", "Olavarría", 5);
+var sucursal1 = new Sucursal_1.Sucursal(id, "Marta Suarez", "Avda. Colón 1845", "Olavarría");
 console.warn(sucursal1.mostrarDatosSucursal());
-sucursal1.agregarCliente(id, "Adriana", "Rivadavia 1234", 15656869, 17568123);
-sucursal1.mostrarDatosSucursal();
+//sucursal1.agregarCliente(id,"Adriana","Rivadavia 1234", 15656869, 17568123);
+//sucursal1.mostrarDatosSucursal();
 console.error(" --------------------------------------------------- 🐾 Clientes 🐾 ---------------------------------------------------");
 id += 1;
-var cliente1 = new Cliente_1.Cliente(id, "Adriana", "Rivadavia 1234", 15656869, 17568123);
+var cliente1 = new Cliente_1.Cliente(id, "Rosana", "Rivadavia 1234", 15656869, 17568123);
+/*id += 1;
+cliente1.agregarPaciente(id,"Mishi","gato","hembra",11012019,"Es muy asustadiza");
 id += 1;
-cliente1.agregarMascota(id, "Mishi", "gato", "hembra", 11012019, "Es muy asustadiza");
+cliente1.agregarPaciente(id,"Salem","gato","macho",24052018,"Se enoja fácil");
 id += 1;
-cliente1.agregarMascota(id, "Salem", "gato", "macho", 24052018, "Se enoja fácil");
+let cliente2: Cliente = new Cliente(id,"Alberto","Avda. Alberdi 4125", 15445577, 23123456);
 id += 1;
-var cliente2 = new Cliente_1.Cliente(id, "Alberto", "Avda. Alberdi 4125", 15445577, 23123456);
-id += 1;
-cliente2.agregarMascota(id, "Malevo", "perro", "macho", 1102010, "Le faltan varios dientes");
+cliente2.agregarPaciente(id,"Malevo","perro","macho",1102010,"Le faltan varios dientes");*/
+//ts-nodeconsole.log(cliente1.getListaPacientes());
 console.log(cliente1.mostrarDatos());
-console.log(cliente1.getListaMascotas());
-console.log("🐾 🐾 🐾 🐾 🐾");
+//console.log(cliente1.getListaPacientes());
+/*console.log("🐾 🐾 🐾 🐾 🐾");
 console.log(cliente2.mostrarDatos());
-console.log(cliente2.getListaMascotas());
+console.log(cliente2.getListaPacientes());*/
 console.error(" ------------------------------------------------- 🐾 Proveedores 🐾 --------------------------------------------------");
 id += 1;
 var proveedor1 = new Proveedor_1.Proveedor(id, "Juan Perez", "Moya 2244", 15454545, 12345678, "Alimento Balanceado", 20123456789);
@@ -43,6 +44,5 @@ console.error(" -------------------------------------------------- 🐾 Paciente
 id += 1;
 var paciente1 = new Paciente_1.Paciente(id, "Rocco", "perro", "macho", 11012019, "Tiene insuficiencia renal");
 console.log(paciente1.mostrarDatosPaciente());
-cliente1.agregarPaciente(paciente1);
-console.log(cliente1.getListaMascotas());
+console.log(cliente1.getListaPacientes());
 console.error(" ------------------------------------------------------------------------------------------------------------------------");

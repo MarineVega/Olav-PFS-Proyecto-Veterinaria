@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Paciente = void 0;
 var Paciente = /** @class */ (function () {
-    function Paciente(ID, nombre, especie, sexo, fechaNacimiento, observacion) {
-        this.ID = ID;
+    function Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion) {
+        this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.sexo = sexo;
@@ -11,7 +11,7 @@ var Paciente = /** @class */ (function () {
         this.observacion = observacion;
     }
     Paciente.prototype.getID = function () {
-        return this.ID;
+        return this.id;
     };
     Paciente.prototype.getNombre = function () {
         return this.nombre;
@@ -28,8 +28,8 @@ var Paciente = /** @class */ (function () {
     Paciente.prototype.getObservacion = function () {
         return this.observacion;
     };
-    Paciente.prototype.setID = function (ID) {
-        this.ID = ID;
+    Paciente.prototype.setID = function (id) {
+        this.id = id;
     };
     Paciente.prototype.setNombre = function (nombre) {
         this.nombre = nombre;
@@ -47,7 +47,7 @@ var Paciente = /** @class */ (function () {
         this.observacion = observacion;
     };
     Paciente.prototype.mostrarDatosPaciente = function () {
-        return "Paciente (ID ".concat(this.ID, ") ").concat(this.nombre, "\nEspecie: ").concat(this.especie, "\nSexo: ").concat(this.sexo, "\nFecha de Nacimiento: ").concat(this.fechaNacimiento, "\nObservaci\u00F3n: ").concat(this.observacion, ".");
+        return "Paciente (ID ".concat(this.getID(), ") ").concat(this.getNombre(), "\nEspecie: ").concat(this.getEspecie(), "\nSexo: ").concat(this.getSexo(), "\nFecha de Nacimiento: ").concat(this.getFechaNacimiento(), "\nObservaci\u00F3n: ").concat(this.getObservacion(), ".");
     };
     return Paciente;
 }());

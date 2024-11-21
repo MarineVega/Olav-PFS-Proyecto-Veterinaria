@@ -4,24 +4,22 @@ import { Cliente } from "./Cliente";
 import { Proveedor } from "./Proveedor";
 
 
-export class Sucursal { // Qué significa que la clase Sucursal sea Default?
+export class Sucursal { 
     private id: number;
     private responsable: string;
     private direccion: string;
     private localidad: string;
-    private condicionVip: number;
     private listaClientes: Cliente[];
     private listaProveedores: Proveedor[];
 
    
-    constructor (id: number, responsable: string, direccion: string, localidad: string, condicionVip: number) {
+    constructor (id: number, responsable: string, direccion: string, localidad: string) {
         this.id = id;
         this.responsable = responsable;
         this.direccion = direccion;
         this.localidad = localidad;
-        this.condicionVip = condicionVip;
         this.listaClientes = [];
-        this.listaProveedores = []           
+        this.listaProveedores = [];          
     }
 
     public getId(): number {
@@ -38,10 +36,6 @@ export class Sucursal { // Qué significa que la clase Sucursal sea Default?
 
     public getLocalidad(): string {
         return this.localidad;
-    }
-
-    public getCondicionVip(): number {
-        return this.condicionVip;
     }
 
     public getListaClientes(): Cliente[] {
@@ -68,65 +62,64 @@ export class Sucursal { // Qué significa que la clase Sucursal sea Default?
         this.localidad = localidad;
     }
 
-    public setCondicionVip(condicionVip: number): void {
-        this.condicionVip = condicionVip;
-    }
-
-    /*public setListaClientes(listaClientes: Cliente[]): void {
-        this.listaClientes = listaClientes;
-    }
-
-    public setListaProveedores(listaProveedores: Proveedor[]): void {
-        this.listaProveedores = listaProveedores;
-    }*/ // NO ESTOY SEGURA QUE DEBAMOS DEJAR ESTOS SET 
-
     public mostrarDatosSucursal(): string {
-        return `Sucursal Veterinaria (ID ${this.id}) Responsable: ${this.responsable}\n Dirección: ${this.direccion}\n Localidad: ${this.localidad}\n Condición VIP: ${this.condicionVip}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()}.`
-    }  
-    
-    /*public mostrarDatosSucursal(): string {
-        return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Condición VIP: ${this.getCondicionVip()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
-    }*/ // Es esta la manera en la que se aplica la buena práctica de utilizar el this.get para obtener los datos de la sucursal?
+        return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
+    }
     
     public agregarProveedor(proveedor: Proveedor): void {
         this.listaProveedores.push(proveedor);
     }
 
-    public modificarProveedor(): void {
+    public modificarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number): void {
+        const persona = this.listaProveedores.find(persona => persona.id == id);
+        if (persona) {
+            persona.setNombre(nombre);
+            persona.setDireccion(direccion);
+            persona.setTelefono(telefono);
+            persona.setDocumento(documento);
+            persona.setRubro(rubro);
+            persona.setCUIT(CUIT);
+            console.log(`Los datos del Proveedor ${nombre} han sido modificados Correctamente.`)
+          } else {
+            console.log(`El Proveedor ${nombre} (${id}) no se ha encontrado en la lista de Proveedores de la Sucursal.`);
+          }
+        }
 
-    }
-
-    eliminarProveedor(id: number): boolean {
-        const index = this.listaProveedores.findIndex(proveedor => proveedor.id === this.id);
-        if (index !== -1) {
-          this.listaProveedores.splice(index, 1); // Elimina el proveedor del arreglo listaProveedores
-          return true; // Si se elimina correctamnete del arreglo listaProveedores
+    public eliminarProveedor(id: number, nombre: string): void {
+        const index = this.listaProveedores.findIndex(proveedor => proveedor.id == this.id);
+        if (index != -1) {
+          this.listaProveedores.splice(index, 1); 
+          console.log(`El Provedor ${nombre} (${id}) ha sido eliminado de la lista de Provedores de la Sucursal.`);
         } else {
-          return false; // Si no se encuentra un proveedor con el ID especificado
+          console.log(`El Provedor ${nombre} (${id}) no ha sido encontrado en la lista de Provedores de la Sucursal.`);
         }
       }
 
       public agregarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
         const cliente: Cliente = new Cliente (id, nombre, direccion, telefono, documento);
         this.listaClientes.push(cliente);
-    }
+     }
 
-      /*public agregarCliente1(cliente: Cliente): void {
-        this.listaClientes.push(cliente);  
-      }*/ //Método alternativo para agregar Cliente a la sucursal.
-  
-      public modificarCliente(): void {
-  
-      }
+      public modificarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
+        const persona = this.listaClientes.find(persona => persona.id == id);
+        if (persona) {
+            persona.setNombre(nombre);
+            persona.setDireccion(direccion);
+            persona.setTelefono(telefono);
+            persona.setDocumento(documento);
+            console.log(`Los datos del Cliente ${nombre} han sido modificados Correctamente.`)
+          } else {
+            console.log(`El Cliente ${nombre} (${id}) no se ha encontrado en la lista de Clientes de la Sucursal.`);
+          }
+        }
 
       public eliminarCliente(id: number, nombre: string): void {
-        const index = this.listaClientes.findIndex(cliente => cliente.id === id);
-        
-        if (index !== -1) {
-          this.listaClientes.splice(index, 1); // Elimina 1 cliente en el índice encontrado
-          console.log(`Cliente ${nombre} se ha eliminado exitosamente.`);
+        const index = this.listaClientes.findIndex(cliente => cliente.id == id);
+        if (index != -1) {
+          this.listaClientes.splice(index, 1); 
+          console.log(`El Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal.`);
         } else {
-          console.log(`Cliente ${nombre} no encontrado en la lista de Clientes de la Sucursal.`);
+          console.log(`El Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal.`);
         }
       }
 }
