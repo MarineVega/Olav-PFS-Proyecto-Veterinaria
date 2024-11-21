@@ -1,6 +1,7 @@
 import { Persona } from "./Persona";
 import { Paciente } from "./Paciente";
 import { Sucursal } from "./Sucursal";
+
 export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
@@ -25,7 +26,7 @@ export class Cliente extends Persona {
         return this.listaPacientes;
     }
 
-    public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: number, observacion: string): void {
+    public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
         const paciente: Paciente = new Paciente (id, nombre, especie, sexo, fechaNacimiento, observacion);
         this.listaPacientes.push(paciente);
     }
@@ -50,7 +51,7 @@ export class Cliente extends Persona {
         console.log(`El cliente ${this.nombre} es considerado VIP`);        
     }
 
-    public modificarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: number, observacion: string): void {
+    public modificarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
         const paciente = this.listaPacientes.find(paciente => paciente.id == id);
         if (paciente) {
             paciente.setNombre(nombre);
@@ -68,9 +69,9 @@ export class Cliente extends Persona {
         const index = this.listaPacientes.findIndex(paciente => paciente.id == this.id);
         if (index != -1) {
             this.listaPacientes.splice(index, 1); 
-            console.log(`El Paciente ${this.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal.`) 
+            console.log(`El Paciente (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal.`) 
           } else {
-            console.log(`El Paciente ${this.getNombre()} (${id}) no ha sido encontado en la lista de Pacientes de la Sucursal.`) 
+            console.log(`El Paciente (${id}) no ha sido encontado en la lista de Pacientes de la Sucursal.`) 
           }
         }   
 

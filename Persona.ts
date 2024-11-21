@@ -69,5 +69,6 @@ export abstract class Persona {
         } else {
             console.log(`Error! Documento no válido ${documento}`);      
         }
-    }    
+    } 
+    
 }
