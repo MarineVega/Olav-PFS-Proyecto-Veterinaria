@@ -30,8 +30,9 @@ function mostrarMenu() {
   `);
 }
 
+console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
+
 function leerOpcion() {
-    console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
     rl.question('Selecciona una opción: ', (opcion) => {
         switch (opcion) {
             case '1':
