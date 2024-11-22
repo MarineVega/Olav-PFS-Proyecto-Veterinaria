@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sucursal = void 0;
 var Cliente_1 = require("./Cliente");
+var Proveedor_1 = require("./Proveedor");
 var Sucursal = /** @class */ (function () {
     function Sucursal(id, responsable, direccion, localidad) {
         this.id = id;
@@ -41,25 +42,38 @@ var Sucursal = /** @class */ (function () {
     Sucursal.prototype.setLocalidad = function (localidad) {
         this.localidad = localidad;
     };
+    /*public mostrarDatosSucursal(): string {
+      return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
+    }*/
     Sucursal.prototype.mostrarDatosSucursal = function () {
-        return "Sucursal Veterinaria (id ".concat(this.getId(), ") Responsable: ").concat(this.getResponsable(), "\n Direcci\u00F3n: ").concat(this.getDireccion(), "\n Localidad: ").concat(this.getLocalidad(), "\n Lista Clientes: ").concat(this.getListaClientes(), "\n Lista Proveedores: ").concat(this.getListaProveedores(), " .");
+        var clientes = this.listaClientes.map(function (cliente) { return cliente.mostrarDatos(); }).join(", ");
+        var proveedores = this.listaProveedores.map(function (proveedor) { return proveedor.mostrarDatos(); }).join(", ");
+        return "Sucursal Veterinaria (id ".concat(this.getId(), ") Responsable: ").concat(this.getResponsable(), "\n   Direcci\u00F3n: ").concat(this.getDireccion(), "\n   Localidad: ").concat(this.getLocalidad(), "\n   Lista Clientes: [").concat(clientes, "]\n   Lista Proveedores: [").concat(proveedores, "]");
     };
-    Sucursal.prototype.agregarProveedor = function (proveedor) {
-        this.listaProveedores.push(proveedor);
-    };
-    Sucursal.prototype.modificarProveedor = function (id, nombre, direccion, telefono, documento, rubro, CUIT) {
-        var persona = this.listaProveedores.find(function (persona) { return persona.id == id; });
-        if (persona) {
-            persona.setNombre(nombre);
-            persona.setDireccion(direccion);
-            persona.setTelefono(telefono);
-            persona.setDocumento(documento);
-            persona.setRubro(rubro);
-            persona.setCUIT(CUIT);
-            console.log("Los datos del Proveedor ".concat(nombre, " han sido modificados Correctamente."));
+    // alta, baja  y modificacion de Proveedores
+    Sucursal.prototype.agregarProveedor = function (datosProveedor) {
+        var proveedorExistente = this.listaProveedores.find(function (proveedor) { return proveedor.getDocumento() === datosProveedor.documento; });
+        if (proveedorExistente) {
+            console.log("Error: El proveedor con documento ".concat(datosProveedor.documento, " ya existe."));
         }
         else {
-            console.log("El Proveedor ".concat(nombre, " (").concat(id, ") no se ha encontrado en la lista de Proveedores de la Sucursal."));
+            var nuevoProveedor = new Proveedor_1.Proveedor(datosProveedor.id, datosProveedor.nombre, datosProveedor.direccion, datosProveedor.telefono, datosProveedor.documento, datosProveedor.rubro, datosProveedor.CUIT);
+            this.listaProveedores.push(nuevoProveedor);
+            console.log("Proveedor con documento ".concat(datosProveedor.documento, " agregado correctamente."));
+        }
+    };
+    Sucursal.prototype.modificarProveedor = function (datosProveedor) {
+        var proveedorExistente = this.listaProveedores.find(function (proveedor) { return proveedor.getDocumento() === datosProveedor.documento; });
+        if (proveedorExistente) {
+            proveedorExistente.setNombre(datosProveedor.nombre);
+            proveedorExistente.setDireccion(datosProveedor.direccion);
+            proveedorExistente.setTelefono(datosProveedor.telefono);
+            proveedorExistente.setRubro(datosProveedor.rubro);
+            proveedorExistente.setCUIT(datosProveedor.CUIT);
+            console.log("Proveedor con documento ".concat(datosProveedor.documento, " modificado correctamente."));
+        }
+        else {
+            console.log("Error: No se encontr\u00F3 un proveedor con documento ".concat(datosProveedor.documento, "."));
         }
     };
     Sucursal.prototype.eliminarProveedor = function (id, nombre) {
@@ -73,21 +87,28 @@ var Sucursal = /** @class */ (function () {
             console.log("El Provedor ".concat(nombre, " (").concat(id, ") no ha sido encontrado en la lista de Provedores de la Sucursal."));
         }
     };
-    Sucursal.prototype.agregarCliente = function (id, nombre, direccion, telefono, documento) {
-        var cliente = new Cliente_1.Cliente(id, nombre, direccion, telefono, documento);
-        this.listaClientes.push(cliente);
-    };
-    Sucursal.prototype.modificarCliente = function (id, nombre, direccion, telefono, documento) {
-        var persona = this.listaClientes.find(function (persona) { return persona.id == id; });
-        if (persona) {
-            persona.setNombre(nombre);
-            persona.setDireccion(direccion);
-            persona.setTelefono(telefono);
-            persona.setDocumento(documento);
-            console.log("Los datos del Cliente ".concat(nombre, " han sido modificados Correctamente."));
+    // alta, modificacion y eliminacion de Clientes
+    Sucursal.prototype.agregarCliente = function (datosCliente) {
+        var clienteExistente = this.listaClientes.find(function (cliente) { return cliente.getDocumento() === datosCliente.documento; });
+        if (clienteExistente) {
+            console.log("Error: El cliente con documento ".concat(datosCliente.documento, " ya existe."));
         }
         else {
-            console.log("El Cliente ".concat(nombre, " (").concat(id, ") no se ha encontrado en la lista de Clientes de la Sucursal."));
+            var nuevoCliente = new Cliente_1.Cliente(datosCliente.id, datosCliente.nombre, datosCliente.direccion, datosCliente.telefono, datosCliente.documento);
+            this.listaClientes.push(nuevoCliente);
+            console.log("Cliente con documento ".concat(datosCliente.documento, " agregado correctamente."));
+        }
+    };
+    Sucursal.prototype.modificarCliente = function (datosCliente) {
+        var clienteExistente = this.listaClientes.find(function (cliente) { return cliente.getDocumento() === datosCliente.documento; });
+        if (clienteExistente) {
+            clienteExistente.setNombre(datosCliente.nombre);
+            clienteExistente.setDireccion(datosCliente.direccion);
+            clienteExistente.setTelefono(datosCliente.telefono);
+            console.log("Cliente con documento ".concat(datosCliente.documento, " modificado correctamente."));
+        }
+        else {
+            console.log("Error: No se encontr\u00F3 un cliente con documento ".concat(datosCliente.documento, "."));
         }
     };
     Sucursal.prototype.eliminarCliente = function (id, nombre) {

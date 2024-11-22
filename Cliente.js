@@ -37,8 +37,21 @@ var Cliente = /** @class */ (function (_super) {
         return this.listaPacientes;
     };
     Cliente.prototype.agregarPaciente = function (id, nombre, especie, sexo, fechaNacimiento, observacion) {
+        // Verificar que todos los datos están presentes
+        if (!id || !nombre || !especie || !sexo || !fechaNacimiento) {
+            console.log("Error: Todos los datos del paciente deben estar completos para darlo de alta.");
+            return;
+        }
+        // Verificar que el paciente no exista ya en la lista
+        var existePaciente = this.listaPacientes.some(function (paciente) { return paciente.getID() === id; });
+        if (existePaciente) {
+            console.log("Error: Ya existe un paciente con ID ".concat(id, " en la lista."));
+            return;
+        }
+        //  agregar el nuevo paciente
         var paciente = new Paciente_1.Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
         this.listaPacientes.push(paciente);
+        console.log("El paciente ".concat(nombre, " (ID ").concat(id, ") ha sido agregado correctamente."));
     };
     Cliente.prototype.setVisitas = function (visitas) {
         this.visitas = visitas;
@@ -71,13 +84,14 @@ var Cliente = /** @class */ (function (_super) {
         }
     };
     Cliente.prototype.eliminarPaciente = function (id) {
-        var index = this.listaPacientes.findIndex(function (paciente) { return paciente.id == id; });
+        var _this = this;
+        var index = this.listaPacientes.findIndex(function (paciente) { return paciente.id == _this.id; });
         if (index != -1) {
             this.listaPacientes.splice(index, 1);
-            console.log("El Paciente (".concat(id, ") ha sido eliminado de la lista de Pacientes de la Sucursal."));
+            console.log("El Paciente ".concat(this.getNombre(), " (").concat(id, ") ha sido eliminado de la lista de Pacientes de la Sucursal."));
         }
         else {
-            console.log("El Paciente (".concat(id, ") no ha sido encontado en la lista de Pacientes de la Sucursal."));
+            console.log("El Paciente ".concat(this.getNombre(), " (").concat(id, ") no ha sido encontado en la lista de Pacientes de la Sucursal."));
         }
     };
     Cliente.prototype.mostrarDatos = function () {

@@ -125,7 +125,6 @@ export class Sucursal {
     }
   }
 
-
   public modificarCliente(datosCliente: { documento: number, nombre: string, direccion: string, telefono: number }): void {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === datosCliente.documento);
 
