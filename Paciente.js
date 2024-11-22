@@ -49,14 +49,6 @@ var Paciente = /** @class */ (function () {
     Paciente.prototype.mostrarDatosPaciente = function () {
         return "Paciente (ID ".concat(this.getID(), ") ").concat(this.getNombre(), "\nEspecie: ").concat(this.getEspecie(), "\nSexo: ").concat(this.getSexo(), "\nFecha de Nacimiento: ").concat(this.getFechaNacimiento(), "\nObservaci\u00F3n: ").concat(this.getObservacion(), ".");
     };
-    Paciente.prototype.obtenerFechaFormato = function () {
-        // Aquí, "es-ES" es el código para el español de España.
-        return this.fechaNacimiento.toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
     return Paciente;
 }());
 exports.Paciente = Paciente;

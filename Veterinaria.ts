@@ -3,8 +3,6 @@ import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
 import { Proveedor } from "./Proveedor";
 import { Sucursal } from "./Sucursal";
-import { clear } from "console";
-
 
 console.log(" ");
 console.error(" -----------------------------------------------------------------------------------------------------------------------");
@@ -12,15 +10,14 @@ console.error(" ------------------------------------------ 🐾 🐈 Veterinaria
 console.log(" ");
 let id: number = 0;
 
-/*console.error(" ------------------------------------------------- 🐾 Sucursales 🐾 ----------------------------------------------------");
+console.error(" ------------------------------------------------- 🐾 Sucursales 🐾 ----------------------------------------------------");
 id += 1;
 let sucursal1: Sucursal = new Sucursal(id,"Marta Suarez", "Avda. Colón 1845", "Olavarría");
 console.warn(sucursal1.mostrarDatosSucursal());
-sucursal1.agregarCliente(id,"Adriana Varela","Rivadavia 1284", 15656869, 17568123);
-sucursal1.agregarCliente(id,"Carlos Gómez","Sargento Cabral 2588", 15660898, 14906242);
 console.log(sucursal1.getListaClientes());
 sucursal1.eliminarCliente(id,"Adriana Varela");
-console.log(sucursal1.getListaClientes());*/
+console.log(sucursal1.getListaClientes());
+console.warn(sucursal1.mostrarDatosSucursal());
 
 console.error(" --------------------------------------------------- 🐾 Clientes 🐾 ---------------------------------------------------");
 id += 1;
@@ -37,7 +34,7 @@ id += 1;
 cliente2.agregarPaciente(id,"Malevo","perro","macho",new Date('1990-05-15'),"Le faltan varios dientes");
 console.log(cliente1.mostrarDatos());
 console.log(cliente1.getListaPacientes());
-cliente1.eliminarPaciente(3);// No funciona!!!.
+cliente1.eliminarPaciente(3);
 console.log(cliente1.mostrarDatos());
 console.log(cliente1.getListaPacientes());
 
@@ -62,16 +59,14 @@ let paciente2: Paciente = new Paciente (id,"Prueba","perro","macho",new Date('20
 // Crear una instancia de la clase Cliente
 let cliente = new Cliente(1, "Juan Pérez", "Calle Falsa 123", 123456789, 987654321);
 
-// Agregar pacientes usando el método agregarPaciente
-cliente.agregarPaciente(paciente1.getID(), paciente1.getNombre(), paciente1.getEspecie(), paciente1.getSexo(), paciente1.getFechaNacimiento(), paciente1.getObservacion());
-cliente.agregarPaciente(paciente2.getID(), paciente2.getNombre(), paciente2.getEspecie(), paciente2.getSexo(), paciente2.getFechaNacimiento(), paciente2.getObservacion());
+// Agregar pacientes usando el método agregarPaciente // LLAMAR EL METODO AGREGAR PACIENTE COMO LO VENIAMOS HACIENDO (LINEA 67)
 
 // Intentar agregar un paciente duplicado
-cliente.agregarPaciente(1, "Rocco", "perro", "macho", new Date('2015-02-11'), "Tiene insuficiencia renal");
+cliente.agregarPaciente(id, "Rocco", "perro", "macho", new Date('2015-02-11'), "Tiene insuficiencia renal");
 
 
 // Mostrar lista de pacientes para verificar resultados
-// console.log(cliente1.getListaPacientes()); Hay un error en cliente1, sugiere que usemos cliente
+console.log(cliente1.getListaPacientes()); 
 
 console.error(" ----------------------------------------------------------------------------------------------------------------------");
 

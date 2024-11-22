@@ -71,8 +71,7 @@ var Cliente = /** @class */ (function (_super) {
         }
     };
     Cliente.prototype.eliminarPaciente = function (id) {
-        var _this = this;
-        var index = this.listaPacientes.findIndex(function (paciente) { return paciente.id == _this.id; });
+        var index = this.listaPacientes.findIndex(function (paciente) { return paciente.id == id; });
         if (index != -1) {
             this.listaPacientes.splice(index, 1);
             console.log("El Paciente (".concat(id, ") ha sido eliminado de la lista de Pacientes de la Sucursal."));

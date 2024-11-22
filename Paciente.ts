@@ -68,16 +68,7 @@ export class Paciente {
     public mostrarDatosPaciente(): string {
         return `Paciente (ID ${this.getID()}) ${this.getNombre()}\nEspecie: ${this.getEspecie()}\nSexo: ${this.getSexo()}\nFecha de Nacimiento: ${this.getFechaNacimiento()}\nObservación: ${this.getObservacion()}.`
     }  
-    
-    public obtenerFechaFormato() {
-        // Aquí, "es-ES" es el código para el español de España.
-        return this.fechaNacimiento.toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-      }
-    }
+ }
 
 
 
