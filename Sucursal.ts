@@ -77,32 +77,36 @@ export class Sucursal {
   }
   
   // alta, baja  y modificacion de Proveedores
-  public agregarProveedor(datosProveedor: { id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number }): void {
-    const proveedorExistente = this.listaProveedores.find(proveedor => proveedor.getDocumento() === datosProveedor.documento);
-
+  public agregarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number ): void {
+    const proveedorExistente = this.listaProveedores.find((proveedor) => proveedor.getDocumento() === documento);
+  
     if (proveedorExistente) {
-      console.log(`Error: El proveedor con documento ${datosProveedor.documento} ya existe.`);
+      console.log(`Error: El proveedor con documento ${documento} ya existe.`);
     } else {
-      const nuevoProveedor = new Proveedor(datosProveedor.id, datosProveedor.nombre, datosProveedor.direccion, datosProveedor.telefono, datosProveedor.documento, datosProveedor.rubro, datosProveedor.CUIT);
+      const nuevoProveedor = new Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);
       this.listaProveedores.push(nuevoProveedor);
-      console.log(`Proveedor con documento ${datosProveedor.documento} agregado correctamente.`);
+      console.log(`Proveedor con documento ${documento} agregado correctamente.`);
     }
   }
 
-  public modificarProveedor(datosProveedor: { documento: number, nombre: string, direccion: string, telefono: number, rubro: string, CUIT: number }): void {
-    const proveedorExistente = this.listaProveedores.find(proveedor => proveedor.getDocumento() === datosProveedor.documento);
-
+  public modificarProveedor(documento: number, nombre: string, direccion: string, telefono: number, rubro: string, CUIT: number): void {
+    const proveedorExistente = this.listaProveedores.find(
+      (proveedor) => proveedor.getDocumento() === documento
+    );
+  
     if (proveedorExistente) {
-      proveedorExistente.setNombre(datosProveedor.nombre);
-      proveedorExistente.setDireccion(datosProveedor.direccion);
-      proveedorExistente.setTelefono(datosProveedor.telefono);
-      proveedorExistente.setRubro(datosProveedor.rubro);
-      proveedorExistente.setCUIT(datosProveedor.CUIT);
-      console.log(`Proveedor con documento ${datosProveedor.documento} modificado correctamente.`);
+      proveedorExistente.setNombre(nombre);
+      proveedorExistente.setDireccion(direccion);
+      proveedorExistente.setTelefono(telefono);
+      proveedorExistente.setRubro(rubro);
+      proveedorExistente.setCUIT(CUIT);
+      console.log(`Proveedor con documento ${documento} modificado correctamente.`);
     } else {
-      console.log(`Error: No se encontró un proveedor con documento ${datosProveedor.documento}.`);
+      console.log(`Error: No se encontró un proveedor con documento ${documento}.`);
     }
+  
   }
+  
   public eliminarProveedor(id: number, nombre: string): void {
     const index = this.listaProveedores.findIndex(proveedor => proveedor.id == this.id);
     if (index != -1) {
@@ -113,30 +117,31 @@ export class Sucursal {
     }
   }
   // alta, modificacion y eliminacion de Clientes
-  public agregarCliente(datosCliente: { id: number, nombre: string, direccion: string, telefono: number, documento: number }): void {
-    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === datosCliente.documento);
+  public agregarCliente( id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
+    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
     if (clienteExistente) {
-      console.log(`Error: El cliente con documento ${datosCliente.documento} ya existe.`);
+      console.log(`Error: El cliente con documento ${documento} ya existe.`);
     } else {
-      const nuevoCliente = new Cliente(datosCliente.id, datosCliente.nombre, datosCliente.direccion, datosCliente.telefono, datosCliente.documento);
+      const nuevoCliente = new Cliente(id, nombre, direccion, telefono, documento);
       this.listaClientes.push(nuevoCliente);
-      console.log(`Cliente con documento ${datosCliente.documento} agregado correctamente.`);
+      console.log(`Cliente con documento ${documento} agregado correctamente.`);
     }
   }
 
-  public modificarCliente(datosCliente: { documento: number, nombre: string, direccion: string, telefono: number }): void {
-    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === datosCliente.documento);
+  public modificarCliente(documento: number, nombre: string, direccion: string, telefono: number ): void {
+    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
     if (clienteExistente) {
-      clienteExistente.setNombre(datosCliente.nombre);
-      clienteExistente.setDireccion(datosCliente.direccion);
-      clienteExistente.setTelefono(datosCliente.telefono);
-      console.log(`Cliente con documento ${datosCliente.documento} modificado correctamente.`);
+      clienteExistente.setNombre(nombre);
+      clienteExistente.setDireccion(direccion);
+      clienteExistente.setTelefono(telefono);
+      console.log(`Cliente con documento ${documento} modificado correctamente.`);
     } else {
-      console.log(`Error: No se encontró un cliente con documento ${datosCliente.documento}.`);
+      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
   }
+  
   public eliminarCliente(id: number, nombre: string): void {
     const index = this.listaClientes.findIndex(cliente => cliente.id == id);
     if (index != -1) {

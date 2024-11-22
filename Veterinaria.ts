@@ -76,25 +76,25 @@ console.error(" ------------------------------------------------- 🐾 Sucursale
 const sucursales: Sucursal[] = [];
 
 // Función para agregar una sucursal con clientes y proveedores opcionales
-function agregarSucursal(arregloSucursales: Sucursal[],  datosSucursal: { id: number, responsable: string, direccion: string, localidad: string, clientes?: Cliente[], proveedores?: Proveedor[] }): void {
+function agregarSucursal(arregloSucursales: Sucursal[], id: number, responsable: string, direccion: string, localidad: string, clientes?: Cliente[], proveedores?: Proveedor[] ): void {
     
-    const sucursalExistente = arregloSucursales.find(sucursal => sucursal.getId() === datosSucursal.id);
+    const sucursalExistente = arregloSucursales.find(sucursal => sucursal.getId() === id);
 
     if (sucursalExistente) {
-        console.log(`Error: La sucursal con ID ${datosSucursal.id} ya existe.`);
+        console.log(`Error: La sucursal con ID ${id} ya existe.`);
     } else {
-        const nuevaSucursal = new Sucursal(datosSucursal.id, datosSucursal.responsable, datosSucursal.direccion, datosSucursal.localidad);
+        const nuevaSucursal = new Sucursal(id, responsable, direccion, localidad);
         
         // Agregar clientes y proveedores si se proporcionan
-        if (datosSucursal.clientes) {
-            datosSucursal.clientes.forEach(cliente => nuevaSucursal.getListaClientes().push(cliente));
+        if (clientes) {
+            clientes.forEach(cliente => nuevaSucursal.getListaClientes().push(cliente));
         }
-        if (datosSucursal.proveedores) {
-            datosSucursal.proveedores.forEach(proveedor => nuevaSucursal.getListaProveedores().push(proveedor));
+        if (proveedores) {
+            proveedores.forEach(proveedor => nuevaSucursal.getListaProveedores().push(proveedor));
         }
 
         arregloSucursales.push(nuevaSucursal);
-        console.log(`Sucursal con ID ${datosSucursal.id} agregada correctamente.`);
+        console.log(`Sucursal con ID ${id} agregada correctamente.`);
     }
 }
 
@@ -143,19 +143,12 @@ const proveedor12 = new Proveedor(12, "Proveedor 1", "Dirección A", 1122334455,
 const proveedor21 = new Proveedor(21, "Proveedor 2", "Dirección B", 5566778899, 44444444, "Rubro B", 9876543210);
 
 // Agregar una sucursal con listas iniciales de clientes y proveedores
-agregarSucursal(sucursales, {
-    id: 1,
-    responsable: "Pepe Gómez",
-    direccion: "Calle 123",
-    localidad: "Sierras Bayas",
-    clientes: [cliente10, cliente20],
-    proveedores: [proveedor12]
-});
+agregarSucursal(sucursales, 1, "Pepe Gómez", "Calle 123", "Sierras Bayas", [cliente10, cliente20], [proveedor12]);
 
 // Modificar las listas de clientes y proveedores en una sucursal existente
 modificarListasSucursal(sucursales, 1, [new Cliente(3, "Cliente 3", "Sin calle 3", 123123123, 55555555)], [proveedor21]);
 
-// modificar una sucursal inexistente
+// Intentar modificar una sucursal inexistente
 modificarListasSucursal(sucursales, 2, [cliente10], [proveedor12]);
 
 // Mostrar las sucursales

@@ -32,14 +32,13 @@ export class Cliente extends Persona {
             console.log("Error: Todos los datos del paciente deben estar completos para darlo de alta.");
             return;
         }
-    
-        
-        // Verificar que el paciente no exista ya en la lista
+            
+        /* Verificar que el paciente no exista ya en la lista
         const existePaciente = this.listaPacientes.some(paciente => paciente.getID() === id);
         if (existePaciente) {
             console.log(`Error: Ya existe un paciente con ID ${id} en la lista.`);
             return;
-        }
+        }*/
     
         //  agregar el nuevo paciente
         const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
