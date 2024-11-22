@@ -56,12 +56,9 @@ function leerOpcion() {
             case '7':
                 mostrarListaClientes();
                 break;
-           /* case '8':
-                mostrarListaPacientes();
-                break;*/
             case '8':
-                mostrarPacientesDeCliente();  // Nueva opción
-                break;    
+                mostrarListaPacientes();
+                break;
             case '9':
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
@@ -86,7 +83,7 @@ function crearSucursal() {
       sucursales.push(sucursal);
       console.log('Sucursal creada exitosamente.');
       //console.log('-------------------------------------------------------------------------');
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
       leerOpcion();
         });
     });
@@ -122,7 +119,7 @@ function crearProveedor() {
             listaProvedores.push(proveedor);  
             console.log('Proveedor creado exitosamente.');
            //console.log('------------------------------------------------------------------');
-            console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+           console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
             leerOpcion();  
                     });
               });
@@ -134,39 +131,28 @@ function crearProveedor() {
 
 //CREAMOS CLIENTES
 function crearCliente() {
-  console.log(`ID Cliente: ${id + 1}`);
-  id += 1;
+  console.log(`ID Cliente: ${id + 1}`); 
+  id += 1; 
   rl.question('Nombre del cliente: ', (nombre) => {
     rl.question('Dirección del cliente: ', (direccion) => {
       rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-        const telefono = parseInt(telefonoStr);
+        const telefono = parseInt(telefonoStr); 
         if (isNaN(telefono) || telefonoStr.length < 10) {
           console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-          return crearCliente();
+          return crearCliente();  
         }
         rl.question('Documento del cliente: ', (documentoStr) => {
-          const documento = parseInt(documentoStr);
-          if (isNaN(documento) || documentoStr.length < 5) {
-            console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-            return crearCliente();
-          }
-          const cliente = new Cliente(id, nombre, direccion, telefono, documento);
-
-          console.log('------------------------------------------------------------------');
-
-          rl.question('¿Desea agregar un paciente a este cliente? (si/no): ', (respuesta) => {
-            if (respuesta.toLowerCase() === 'si' || respuesta.toLowerCase() === 'si') {
-              crearPacienteParaCliente(cliente);
-            } else {
-              listaClientes.push(cliente);
-              console.log('Cliente creado correctamente.');
-          
-          console.log('------------------------------------------------------------------');
-          console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
-              leerOpcion();
+            const documento = parseInt(documentoStr);
+            if (isNaN(documento) ||documentoStr.length < 5) {  
+              console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
+              return crearCliente();  
             }
-          });
+          const cliente = new Cliente(id, nombre, direccion, telefono, documento);
+          listaClientes.push(cliente);  
+          console.log('Cliente creado exitosamente.');
+          //console.log('------------------------------------------------------------------');
+          console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+          leerOpcion();  
         });
       });
     });
@@ -230,65 +216,6 @@ function mostrarListaPacientes() {
     console.log('-------------------------------------------------------------------------');
     leerOpcion();
 }
-
-// FUNCION PARA CREAR UN PACIENTE EN EL CLIENTE RECIEN CREADO
-function crearPacienteParaCliente(cliente: Cliente) {
-  console.log(`ID Paciente: ${id + 1}`); 
-  id += 1; 
-  rl.question('Nombre del paciente: ', (nombre) => {
-    rl.question('Especie del paciente: ', (especie) => {
-      rl.question('Sexo del paciente: ', (sexo) => {
-        if (sexo !== 'Macho' && sexo !== 'Hembra') {
-          console.log('Por favor, ingresa un sexo válido: Macho o Hembra.');
-          return crearPaciente(); 
-        }
-        rl.question('Fecha de nacimiento del paciente (DD-MM-YYYY): ', (fechaStr) => {
-          const fechaNacimiento = new Date(fechaStr);
-          if (isNaN(fechaNacimiento.getTime())) {
-            console.log('Por favor, ingresa una fecha válida en el formato DD-MM-YYYY.');
-            return crearPaciente();
-          }
-          rl.question('Observación del paciente: ', (observacion) => {
-            const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
-     
-            cliente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion); 
-            console.log(`Paciente ("Id" ${id}) ${nombre}, (${especie}) se ha agregado al cliente ${cliente.getNombre()}.`);
-
-            listaClientes.push(cliente); 
-            leerOpcion();  
-          });
-        });
-      });
-    });
-  });
-}
-
-function mostrarPacientesDeCliente() {
-  rl.question('Selecciona un cliente para ver sus pacientes (por ID): ', (clienteIndex) => {
-      const cliente = listaClientes[parseInt(clienteIndex) - 1];
-      
-      if (!cliente) {
-          console.log('Cliente no válido');
-          mostrarListaClientes();  
-          return;
-      }
-      
-      console.log(`Pacientes de ${cliente.getNombre()}:`);
-      if (cliente.listaPacientes.length > 0) {
-          cliente.listaPacientes.forEach((paciente, index) => {
-              console.log(`${index + 1}. ${paciente.getNombre()} ("Id" ${id}) - Especie: ${paciente.getEspecie()}`);
-          });
-      } else {
-          console.log('Este cliente no tiene pacientes.');
-      }
-
-      console.log('------------------------------------------------------------------');
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
-      leerOpcion();
-  });
-}
-
 
 /*function mostrarSucursales() {
   console.log('Lista de sucursales:');
