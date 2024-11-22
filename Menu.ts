@@ -94,11 +94,11 @@ function crearSucursal() {
 function crearProveedor() {
     console.log(`ID Proveedor: ${id + 1}`); 
     id += 1; 
-    rl.question('Nombre del proveedor: ', (nombre) => {
-      rl.question('Dirección del proveedor: ', (direccion) => {
+    rl.question('Nombre del proveedor: ', (nombre) => {//Nombre no presenta validación 
+      rl.question('Dirección del proveedor: ', (direccion) => { //Tampoco se valida la dirección 
         rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-          const telefono = parseInt(telefonoStr); 
-          if (isNaN(telefono) || telefonoStr.length < 10) {
+          const telefono = parseInt(telefonoStr); //Convierte string a number
+          if (isNaN(telefono) || telefonoStr.length < 10) { //Intento de validación SE PUEDE MEJORAR! 
             console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
             return crearProveedor(); 
           }
@@ -108,7 +108,7 @@ function crearProveedor() {
                 console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
                 return crearProveedor(); 
               }
-              rl.question('Rubro del proveedor: ', (rubro) => {
+              rl.question('Rubro del proveedor: ', (rubro) => { //Rubro no presenta validación (Si el usuatio ingresa un número por ejemplo lo toma igual)
                 rl.question('CUIT del proveedor: ', (CUITStr) => {
                     const CUIT = parseInt(CUITStr);
                     if (isNaN(CUIT) ||CUITStr.length < 11) {  
@@ -116,7 +116,7 @@ function crearProveedor() {
                         return crearProveedor(); 
                       }
             const proveedor = new Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);
-            listaProvedores.push(proveedor);  // Suponiendo que tienes un array 'listaClientes'
+            listaProvedores.push(proveedor);  
             console.log('Proveedor creado exitosamente.');
            //console.log('------------------------------------------------------------------');
            console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
@@ -131,29 +131,28 @@ function crearProveedor() {
 
 //CREAMOS CLIENTES
 function crearCliente() {
-  console.log(`ID Cliente: ${id + 1}`); // Mostrar el próximo ID para el cliente
-  id += 1; // Incrementar el ID global para el siguiente cliente
+  console.log(`ID Cliente: ${id + 1}`); 
+  id += 1; 
   rl.question('Nombre del cliente: ', (nombre) => {
     rl.question('Dirección del cliente: ', (direccion) => {
       rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-        const telefono = parseInt(telefonoStr);  // Conversión de string a number
+        const telefono = parseInt(telefonoStr); 
         if (isNaN(telefono) || telefonoStr.length < 10) {
           console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-          return crearCliente();  // Volver a preguntar si el teléfono no es válido
+          return crearCliente();  
         }
         rl.question('Documento del cliente: ', (documentoStr) => {
             const documento = parseInt(documentoStr);
-            // Aquí puedes hacer más validaciones dependiendo de la estructura de tu documento
-            if (isNaN(documento) ||documentoStr.length < 5) {  // Suponiendo que el documento debe tener al menos 5 dígitos
+            if (isNaN(documento) ||documentoStr.length < 5) {  
               console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-              return crearCliente();  // Volver a preguntar si el documento no es válido
+              return crearCliente();  
             }
           const cliente = new Cliente(id, nombre, direccion, telefono, documento);
-          listaClientes.push(cliente);  // Suponiendo que tienes un array 'listaClientes'
+          listaClientes.push(cliente);  
           console.log('Cliente creado exitosamente.');
           //console.log('------------------------------------------------------------------');
           console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-          leerOpcion();  // Volver a mostrar el menú de opciones
+          leerOpcion();  
         });
       });
     });
