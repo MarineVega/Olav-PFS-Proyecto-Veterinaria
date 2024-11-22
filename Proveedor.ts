@@ -27,10 +27,6 @@ export class Proveedor extends Persona {
     }
 
     public mostrarDatos(): string {
-        return `Provedor (ID ${this.id}) ${this.nombre}\nDirección: ${this.direccion}\nTeléfono: ${this.telefono}\nDocumento: ${this.documento}\nRubro: ${this.rubro}\nC.U.I.T: ${this.CUIT}.`
+        return `Provedor (ID ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nRubro: ${this.getRubro()}\nC.U.I.T: ${this.getCUIT()}.`
     }
-    
-    /*public mostrarDatos1(): string {
-        return `Provedor (ID ${this.getID()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nRubro: ${this.getRubro()}\nC.U.I.T: ${this.getCUIT()}.`
-    }*/
 }

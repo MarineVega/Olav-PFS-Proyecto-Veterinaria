@@ -1,12 +1,13 @@
+
 export class Paciente {
     public id: number;
     private nombre: string;
     private especie: string;
     private sexo: string;
-    private fechaNacimiento: number;
+    private fechaNacimiento: Date;
     private observacion: string;
 
-    constructor(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: number, observacion: string) {
+    constructor(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string) {
         this.id = id;
         this.nombre = nombre;
         this. especie = especie;
@@ -31,7 +32,7 @@ export class Paciente {
         return this.sexo;
     }
 
-    public getFechaNacimiento(): number {
+    public getFechaNacimiento(): Date {
         return this.fechaNacimiento;
     }
 
@@ -55,7 +56,7 @@ export class Paciente {
         this.sexo = sexo;
     }
 
-    public setFechaNacimiento(fechaNacimiento: number): void {
+    public setFechaNacimiento(fechaNacimiento: Date): void {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -66,5 +67,8 @@ export class Paciente {
    
     public mostrarDatosPaciente(): string {
         return `Paciente (ID ${this.getID()}) ${this.getNombre()}\nEspecie: ${this.getEspecie()}\nSexo: ${this.getSexo()}\nFecha de Nacimiento: ${this.getFechaNacimiento()}\nObservación: ${this.getObservacion()}.`
-    }   
-}
+    }  
+ }
+
+
+

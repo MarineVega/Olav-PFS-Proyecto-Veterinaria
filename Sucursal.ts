@@ -1,125 +1,154 @@
-
 import { Persona } from "./Persona";
 import { Cliente } from "./Cliente";
 import { Proveedor } from "./Proveedor";
 
 
-export class Sucursal { 
-    private id: number;
-    private responsable: string;
-    private direccion: string;
-    private localidad: string;
-    private listaClientes: Cliente[];
-    private listaProveedores: Proveedor[];
+export class Sucursal {
+  private id: number;
+  private responsable: string;
+  private direccion: string;
+  private localidad: string;
+  private listaClientes: Cliente[];
+  private listaProveedores: Proveedor[];
 
-   
-    constructor (id: number, responsable: string, direccion: string, localidad: string) {
-        this.id = id;
-        this.responsable = responsable;
-        this.direccion = direccion;
-        this.localidad = localidad;
-        this.listaClientes = [];
-        this.listaProveedores = [];          
+
+  constructor(id: number, responsable: string, direccion: string, localidad: string) {
+    this.id = id;
+    this.responsable = responsable;
+    this.direccion = direccion;
+    this.localidad = localidad;
+    this.listaClientes = [];
+    this.listaProveedores = [];
+  }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getResponsable(): string {
+    return this.responsable;
+  }
+
+  public getDireccion(): string {
+    return this.direccion;
+  }
+
+  public getLocalidad(): string {
+    return this.localidad;
+  }
+
+  public getListaClientes(): Cliente[] {
+    return this.listaClientes;
+  }
+
+  public getListaProveedores(): Proveedor[] {
+    return this.listaProveedores;
+  }
+
+  public setId(id: number): void {
+    this.id = id;
+  }
+
+  public setResponsable(responsable: string): void {
+    this.responsable = responsable;
+  }
+
+  public setDireccion(direccion: string): void {
+    this.direccion = direccion;
+  }
+
+  public setLocalidad(localidad: string): void {
+    this.localidad = localidad;
+  }
+
+  /*public mostrarDatosSucursal(): string {
+    return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
+  }*/
+
+  public mostrarDatosSucursal(): string {
+    const clientes = this.listaClientes.map(cliente => cliente.mostrarDatos()).join(", ");
+    const proveedores = this.listaProveedores.map(proveedor => proveedor.mostrarDatos()).join(", ");
+
+    return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}
+   Dirección: ${this.getDireccion()}
+   Localidad: ${this.getLocalidad()}
+   Lista Clientes: [${clientes}]
+   Lista Proveedores: [${proveedores}]`;
+  }
+  
+  // alta, baja  y modificacion de Proveedores
+  public agregarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number ): void {
+    const proveedorExistente = this.listaProveedores.find((proveedor) => proveedor.getDocumento() === documento);
+  
+    if (proveedorExistente) {
+      console.log(`Error: El proveedor con documento ${documento} ya existe.`);
+    } else {
+      const nuevoProveedor = new Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);
+      this.listaProveedores.push(nuevoProveedor);
+      console.log(`Proveedor con documento ${documento} agregado correctamente.`);
     }
+  }
 
-    public getId(): number {
-        return this.id;
+  public modificarProveedor(documento: number, nombre: string, direccion: string, telefono: number, rubro: string, CUIT: number): void {
+    const proveedorExistente = this.listaProveedores.find(
+      (proveedor) => proveedor.getDocumento() === documento
+    );
+  
+    if (proveedorExistente) {
+      proveedorExistente.setNombre(nombre);
+      proveedorExistente.setDireccion(direccion);
+      proveedorExistente.setTelefono(telefono);
+      proveedorExistente.setRubro(rubro);
+      proveedorExistente.setCUIT(CUIT);
+      console.log(`Proveedor con documento ${documento} modificado correctamente.`);
+    } else {
+      console.log(`Error: No se encontró un proveedor con documento ${documento}.`);
     }
-
-    public getResponsable(): string {
-        return this.responsable;
+  
+  }
+  
+  public eliminarProveedor(id: number, nombre: string): void {
+    const index = this.listaProveedores.findIndex(proveedor => proveedor.id == this.id);
+    if (index != -1) {
+      this.listaProveedores.splice(index, 1);
+      console.log(`El Provedor ${nombre} (${id}) ha sido eliminado de la lista de Provedores de la Sucursal.`);
+    } else {
+      console.log(`El Provedor ${nombre} (${id}) no ha sido encontrado en la lista de Provedores de la Sucursal.`);
     }
+  }
+  // alta, modificacion y eliminacion de Clientes
+  public agregarCliente( id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
+    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
-    public getDireccion(): string {
-        return this.direccion;
+    if (clienteExistente) {
+      console.log(`Error: El cliente con documento ${documento} ya existe.`);
+    } else {
+      const nuevoCliente = new Cliente(id, nombre, direccion, telefono, documento);
+      this.listaClientes.push(nuevoCliente);
+      console.log(`Cliente con documento ${documento} agregado correctamente.`);
     }
+  }
 
-    public getLocalidad(): string {
-        return this.localidad;
+  public modificarCliente(documento: number, nombre: string, direccion: string, telefono: number ): void {
+    const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
+
+    if (clienteExistente) {
+      clienteExistente.setNombre(nombre);
+      clienteExistente.setDireccion(direccion);
+      clienteExistente.setTelefono(telefono);
+      console.log(`Cliente con documento ${documento} modificado correctamente.`);
+    } else {
+      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
-
-    public getListaClientes(): Cliente[] {
-        return this.listaClientes;
+  }
+  
+  public eliminarCliente(id: number, nombre: string): void {
+    const index = this.listaClientes.findIndex(cliente => cliente.id == id);
+    if (index != -1) {
+      this.listaClientes.splice(index, 1);
+      console.log(`El Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal.`);
+    } else {
+      console.log(`El Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal.`);
     }
-
-    public getListaProveedores(): Proveedor[] {
-        return this.listaProveedores;
-    }
-
-    public setId(id: number): void {
-        this.id = id;
-    }
-
-    public setResponsable(responsable: string): void {
-        this.responsable = responsable;
-    }
-
-    public setDireccion(direccion: string): void {
-        this.direccion = direccion;
-    }
-
-    public setLocalidad(localidad: string): void {
-        this.localidad = localidad;
-    }
-
-    public mostrarDatosSucursal(): string {
-        return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
-    }
-    
-    public agregarProveedor(proveedor: Proveedor): void {
-        this.listaProveedores.push(proveedor);
-    }
-
-    public modificarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number): void {
-        const persona = this.listaProveedores.find(persona => persona.id == id);
-        if (persona) {
-            persona.setNombre(nombre);
-            persona.setDireccion(direccion);
-            persona.setTelefono(telefono);
-            persona.setDocumento(documento);
-            persona.setRubro(rubro);
-            persona.setCUIT(CUIT);
-            console.log(`Los datos del Proveedor ${nombre} han sido modificados Correctamente.`)
-          } else {
-            console.log(`El Proveedor ${nombre} (${id}) no se ha encontrado en la lista de Proveedores de la Sucursal.`);
-          }
-        }
-
-    public eliminarProveedor(id: number, nombre: string): void {
-        const index = this.listaProveedores.findIndex(proveedor => proveedor.id == this.id);
-        if (index != -1) {
-          this.listaProveedores.splice(index, 1); 
-          console.log(`El Provedor ${nombre} (${id}) ha sido eliminado de la lista de Provedores de la Sucursal.`);
-        } else {
-          console.log(`El Provedor ${nombre} (${id}) no ha sido encontrado en la lista de Provedores de la Sucursal.`);
-        }
-      }
-
-      public agregarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
-        const cliente: Cliente = new Cliente (id, nombre, direccion, telefono, documento);
-        this.listaClientes.push(cliente);
-     }
-
-      public modificarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
-        const persona = this.listaClientes.find(persona => persona.id == id);
-        if (persona) {
-            persona.setNombre(nombre);
-            persona.setDireccion(direccion);
-            persona.setTelefono(telefono);
-            persona.setDocumento(documento);
-            console.log(`Los datos del Cliente ${nombre} han sido modificados Correctamente.`)
-          } else {
-            console.log(`El Cliente ${nombre} (${id}) no se ha encontrado en la lista de Clientes de la Sucursal.`);
-          }
-        }
-
-      public eliminarCliente(id: number, nombre: string): void {
-        const index = this.listaClientes.findIndex(cliente => cliente.id == id);
-        if (index != -1) {
-          this.listaClientes.splice(index, 1); 
-          console.log(`El Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal.`);
-        } else {
-          console.log(`El Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal.`);
-        }
-      }
+  }
 }
