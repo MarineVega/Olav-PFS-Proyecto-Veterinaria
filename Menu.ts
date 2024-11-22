@@ -5,6 +5,7 @@ import { Paciente } from "./Paciente";
 import { Proveedor } from "./Proveedor";
 import { Sucursal } from "./Sucursal";
 
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -13,9 +14,14 @@ const rl = readline.createInterface({
   // Datos globales
 let sucursales: Sucursal[] = [];
 let listaProvedores: Proveedor[] = [];
-let listaClientes: Cliente[] = [];
-let listaPacientes: Paciente[] = [];
+let listaClientesAUX: Cliente[] = [];
+let listaPacientesAUX: Paciente[] = [];
 
+let listaClientes: Cliente[] = [];
+/*
+getClienteDeseado(..) : Cliente
+sucursal.getClienteDeseado(..).agregarMascota(...)
+*/
 function mostrarMenu() {
   console.log(`
   1. Crear Sucursal
@@ -26,7 +32,8 @@ function mostrarMenu() {
   6. Mostrar Provedores
   7. Mostrar Clientes
   8. Mostrar Pacientes
-  9. Salir
+  9. Registrar Visita
+  10. Salir
   `);
 }
 
@@ -45,7 +52,7 @@ function leerOpcion() {
                 crearCliente();
                 break;
             case '4':
-                crearPaciente();
+                //crearPaciente();
                 break;
             case '5':
                 mostrarSucursales();
@@ -60,6 +67,9 @@ function leerOpcion() {
                 mostrarListaPacientes();
                 break;
             case '9':
+                registrarVisita();
+                break;    
+            case '10':
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
                 break;
@@ -128,7 +138,7 @@ function crearProveedor() {
       });
     });
   }
-
+/*
 //CREAMOS CLIENTES
 function crearCliente() {
   console.log(`ID Cliente: ${id + 1}`); 
@@ -158,7 +168,48 @@ function crearCliente() {
     });
   });
 }
+*/
 
+//CREAMOS CLIENTES
+function crearCliente() {  
+  elegirSucursal();
+
+  rl.question('Elija el ID de la sucursal a la que pertenece el cliente: ', (idSucursalStr) => {    
+    const idSucursal = parseInt(idSucursalStr);
+    const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
+
+    //  OJO!!!!!!!!!!  validar q index sea >= 0
+
+    let sucursalCliente = sucursales[index];
+    
+    console.log(`ID Cliente: ${id + 1}`); 
+    id += 1; 
+    rl.question('Nombre del cliente: ', (nombre) => {
+      rl.question('Dirección del cliente: ', (direccion) => {
+        rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
+          const telefono = parseInt(telefonoStr); 
+          if (isNaN(telefono) || telefonoStr.length < 10) {
+            console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
+            return crearCliente();  
+          }
+          rl.question('Documento del cliente: ', (documentoStr) => {
+              const documento = parseInt(documentoStr);
+              if (isNaN(documento) ||documentoStr.length < 5) {  
+                console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
+                return crearCliente();  
+              }
+            sucursalCliente.agregarCliente(id, nombre, direccion, telefono, documento);    
+            console.log('Cliente creado exitosamente.');            
+            console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+            leerOpcion();  
+          });
+        });
+      });
+    });
+  });
+}
+
+/*
 function crearPaciente() {
     console.log(`ID Paciente: ${id + 1}`); 
     id += 1; 
@@ -188,12 +239,61 @@ function crearPaciente() {
       });
     });
   }
+*/
+function elegirSucursal(): void {
+  if (sucursales.length === 0) {
+    console.log("No hay sucursales registradas.");
+  } else {   
+    sucursales.forEach((sucursal, index) => {
+        console.log(`Sucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}`);
+    });
+  }
+}
+
+  /*
+function mostrarSucursales(arregloSucursales: Sucursal[]): void {
+    console.log("------------------------------------------------- 🐾 Listado de Sucursales 🐾 -------------------------------------------------");
+    if (arregloSucursales.length === 0) {
+        console.log("No hay sucursales registradas.");
+    } else {
+        arregloSucursales.forEach((sucursal, index) => {
+            console.log(Sucursal ${index + 1}:);
+            console.log(- ID: ${sucursal.getId()});
+            console.log(- Responsable: ${sucursal.getResponsable()});
+            console.log(- Dirección: ${sucursal.getDireccion()});
+            console.log(- Localidad: ${sucursal.getLocalidad()});
+
+            // Mostrar lista de clientes
+            const listaClientes = sucursal.getListaClientes();
+            if (listaClientes.length > 0) {
+                console.log("  Clientes:");
+                listaClientes.forEach(cliente => {
+                    console.log(    - ID: ${cliente.getId()}, Nombre: ${cliente.getNombre()});
+                });
+            } else {
+                console.log("  No hay clientes registrados.");
+            }
+
+            // Mostrar lista de proveedores
+            const listaProveedores = sucursal.getListaProveedores();
+            if (listaProveedores.length > 0) {
+                console.log("  Proveedores:");
+                listaProveedores.forEach(proveedor => {
+                    console.log(    - ID: ${proveedor.getId()}, Nombre: ${proveedor.getNombre()});
+                });
+            } else {
+                console.log("  No hay proveedores registrados.");
+            }
+
+            console.log("-------------------------------------------------------------------------------------------------------------");
+        });
+    }*/
 
 //MOSTRAMOS LAS SUCURSALES CREADAS (LISTA DE SUCURSALES)
 function mostrarSucursales() {
     console.log(sucursales);
     console.log('-------------------------------------------------------------------------');
-leerOpcion();
+    leerOpcion();
 }
 
 //MOSTRAMOS LOS PROVEEDORES CREADOS (LISTA DE PROVEEDORES)
@@ -212,10 +312,46 @@ function mostrarListaClientes() {
 
 //MOSTRAMOS LOS PACIENTES CREADOS (LISTA DE PACIENTES)
 function mostrarListaPacientes() {
-    console.log(listaPacientes);
+    console.log(listaPacientesAUX);
     console.log('-------------------------------------------------------------------------');
     leerOpcion();
 }
+
+//Registramos la visita del cliente
+function registrarVisita() {
+  
+  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+    const documento = parseInt(documentoStr);
+    if (isNaN(documento) ||documentoStr.length < 5) {  
+      console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
+      return console.log("OJO!!!! Arreglar");  
+    }    
+
+    let clienteVisita: Cliente[] = sucursales[0].getClienteDeseado(documento);
+    console.log("cliente visita " + clienteVisita);
+
+    if (clienteVisita) {
+      
+    //  clienteVisita.registrarVisita();      
+      console.log("La visita fue registrada con éxito");
+      console.log('-------------------------------------------------------------------------');
+    } else {
+      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+    }
+    
+    /*
+    if (clienteExistente) {
+      clienteExistente.registrarVisita();      
+      console.log("La visita fue registrada con éxito");
+      console.log('-------------------------------------------------------------------------');
+    } else {
+      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+    }
+    */
+    leerOpcion();  
+  });
+}
+
 
 /*function mostrarSucursales() {
   console.log('Lista de sucursales:');
