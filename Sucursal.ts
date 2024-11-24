@@ -61,6 +61,7 @@ export class Sucursal {
     this.localidad = localidad;
   }
 
+  /*
   public getClienteDeseado(documento: number) : Cliente[] {
     //console.log(this.listaClientes.find (cliente => cliente.getDocumento() == documento));
     //return this.listaClientes.find (cliente => cliente.getDocumento() == documento);
@@ -68,6 +69,7 @@ export class Sucursal {
     //console.log("index " + index);
     return Cliente[index];
   } 
+*/
 
   /*public mostrarDatosSucursal(): string {
     return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`

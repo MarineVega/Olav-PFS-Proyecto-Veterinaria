@@ -322,33 +322,32 @@ function registrarVisita() {
   
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
-    if (isNaN(documento) ||documentoStr.length < 5) {  
-      console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-      return console.log("OJO!!!! Arreglar");  
-    }    
 
-    let clienteVisita: Cliente[] = sucursales[0].getClienteDeseado(documento);
-    console.log("cliente visita " + clienteVisita);
+    // Validación del documento
+    if (isNaN(documento) ||documentoStr.length < 5) {  
+      console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
+      return registrarVisita();
+    }    
+    
+    // Buscar el cliente con el documento proporcionado
+    //let clienteVisita: Cliente[] = sucursales[0].getClienteDeseado(documento);
+    let clienteVisita: Cliente | undefined;
+
+    // Buscar el cliente en todas las sucursales
+    sucursales.forEach(sucursal =>{
+      clienteVisita = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
+    });    
 
     if (clienteVisita) {
-      
-    //  clienteVisita.registrarVisita();      
+      // Registrar la visita   
+      clienteVisita.registrarVisita(); 
       console.log("La visita fue registrada con éxito");
       console.log('-------------------------------------------------------------------------');
     } else {
       console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
     
-    /*
-    if (clienteExistente) {
-      clienteExistente.registrarVisita();      
-      console.log("La visita fue registrada con éxito");
-      console.log('-------------------------------------------------------------------------');
-    } else {
-      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
-    }
-    */
-    leerOpcion();  
+    leerOpcion();   // Volver al menú opciones
   });
 }
 
