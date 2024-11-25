@@ -120,7 +120,7 @@ function crearSucursal() {
       sucursales.push(sucursal);
       console.log('Sucursal creada exitosamente.');
       //console.log('-------------------------------------------------------------------------');
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾🐾");
       leerOpcion();
         });
     });
