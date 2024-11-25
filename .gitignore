@@ -3,3 +3,9 @@ package-lock.json
 package.json
 tsconfig.json
 .js
+Cliente.js
+menu.js
+Paciente.js
+Persona.js
+Proveedor.js
+Sucursal.js
