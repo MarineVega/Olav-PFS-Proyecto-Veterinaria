@@ -18,9 +18,14 @@ export class Cliente extends Persona {
         return this.visitas;
     }
 
-    public isVip(): boolean {
-        return this.vip;
+    public esVip(): string {
+        if (this.vip) {
+            return "Sí"
+        } else {
+            return "No"
+        }
     }
+
 
     public getListaPacientes(): Paciente[] {
         return this.listaPacientes;
@@ -33,12 +38,12 @@ export class Cliente extends Persona {
             return;
         }
             
-        /* Verificar que el paciente no exista ya en la lista
+        //Verificar que el paciente no exista ya en la lista
         const existePaciente = this.listaPacientes.some(paciente => paciente.getID() === id);
         if (existePaciente) {
             console.log(`Error: Ya existe un paciente con ID ${id} en la lista.`);
             return;
-        }*/
+        }
     
         //  agregar el nuevo paciente
         const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);

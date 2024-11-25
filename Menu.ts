@@ -7,6 +7,7 @@ import { Sucursal } from "./Sucursal";
 import { log } from 'console';
 
 
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -14,10 +15,16 @@ const rl = readline.createInterface({
 
 // Datos globales
 let sucursales: Sucursal[] = [];
+<<<<<<< HEAD
+=======
+let listaProvedores: Proveedor[] = [];
+let listaClientes: Cliente[] = [];
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
 
 function mostrarMenu() {
   console.log(`
   1. Crear Sucursal
+<<<<<<< HEAD
   2. Modificar Sucursal
   3. Eliminar Sucursal
   4. Crear Proveedor
@@ -35,6 +42,17 @@ function mostrarMenu() {
   16. Mostrar Pacientes
   17. Registrar Visita
   18. Salir
+=======
+  2. Crear Proveedor
+  3. Crear Cliente
+  4. Crear Paciente
+  5. Mostrar Sucursales
+  6. Mostrar Provedores
+  7. Mostrar Clientes
+  8. Mostrar Pacientes
+  9. Registrar Visita
+  10. Salir
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
   `);
 }
 
@@ -59,6 +77,7 @@ function leerOpcion() {
                 //modificarProveedor();
                 break;  
             case '6':
+<<<<<<< HEAD
                 //eliminarProveedor();
                 break;  
             case '7':
@@ -95,6 +114,20 @@ function leerOpcion() {
                 registrarVisita();
                 break;    
             case '18':
+=======
+                mostrarProvedores();
+                break;
+            case '7':
+                //mostrarListaClientes();
+                break;
+            case '8':
+                //mostrarListaPacientes();
+                break;
+            case '9':
+                registrarVisita();
+                break;    
+            case '10':
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
                 break;
@@ -227,6 +260,7 @@ function crearCliente() {
   });
 }
 
+<<<<<<< HEAD
 //MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
 function modificarCliente() {
   rl.question('Ingresa el DNI del cliente a modificar: ', (dniStr) => {
@@ -291,6 +325,8 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
 
 /***********************************************************************************************************************************************************/
 /* PACIENTES */
+=======
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
 function crearPaciente() {
   
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
@@ -365,7 +401,10 @@ function mostrarSucursales(): void {
         console.log(`Sucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}\n   Dirección: ${sucursal.getDireccion()}\n   Localidad: ${sucursal.getLocalidad()}`);
       });
 
+<<<<<<< HEAD
       
+=======
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
 /*
             // Mostrar lista de clientes
             const listaClientes = sucursal.getListaClientes();
@@ -400,7 +439,11 @@ function mostrarSucursales(): void {
 //MOSTRAMOS LOS PROVEEDORES CREADOS (LISTA DE PROVEEDORES)
 function mostrarProvedores() {
   console.log("------------------------------------------------- 🐾 Listado de Proveedores 🐾 -------------------------------------------------");
+<<<<<<< HEAD
   if (Proveedor.length === 0) { 
+=======
+  if (Proveedor.length === 0) {
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
       console.log("No hay proveedores registrados.");
   } else {
     const proveedoresInfo = this.listaProveedores.map(proveedor => proveedor.mostrarDatos()).join("\n");
@@ -410,13 +453,18 @@ function mostrarProvedores() {
     leerOpcion();
 }
 */
+<<<<<<< HEAD
 
 
+=======
+/*
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
 //MOSTRAMOS LOS CLIENTES CREADOS (LISTA DE CLIENTES)
 // Función para mostrar los clientes agrupados por sucursal
 function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
   let resultado = "";
 
+<<<<<<< HEAD
   for (const sucursal of sucursales) {
       // Título con el nombre de la sucursal
       resultado += `Sucursal: ${sucursal.getId()}\n`;
@@ -438,6 +486,56 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
 
   console.log(resultado);
 
+=======
+
+
+
+
+
+
+*/
+//Registramos la visita del cliente
+function registrarVisita() {
+  
+  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+    const documento = parseInt(documentoStr);
+
+    // Validación del documento
+    if (isNaN(documento) ||documentoStr.length < 5) {  
+      console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
+      return registrarVisita();
+    }    
+    
+    // Buscar el cliente con el documento proporcionado
+    //let clienteVisita: Cliente[] = sucursales[0].getClienteDeseado(documento);
+    let clienteVisita: Cliente | undefined;
+
+    // Buscar el cliente en todas las sucursales
+    sucursales.forEach(sucursal =>{
+      clienteVisita = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
+    });    
+
+    if (clienteVisita) {
+      // Registrar la visita   
+      clienteVisita.registrarVisita(); 
+      console.log("La visita fue registrada con éxito");
+      console.log('-------------------------------------------------------------------------');
+    } else {
+      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+    }
+    
+    leerOpcion();   // Volver al menú opciones
+  });
+}
+
+
+/*function mostrarSucursales() {
+  console.log('Lista de sucursales:');
+  sucursales.forEach((sucursal) => {
+    sucursal.mostrarDatosSucursal();
+    console.log('---');
+  });
+>>>>>>> 8ada7cda67ada7e033a84f093926aee8f6c2b2dd
   leerOpcion();
 } 
 

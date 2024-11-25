@@ -63,11 +63,10 @@ export class Paciente {
     public setObservacion(observacion: string): void {
         this.observacion = observacion;
     }
-
-   
+          
     public mostrarDatosPaciente(): string {
-        return `Paciente (ID ${this.getID()}) ${this.getNombre()}\nEspecie: ${this.getEspecie()}\nSexo: ${this.getSexo()}\nFecha de Nacimiento: ${this.getFechaNacimiento()}\nObservación: ${this.getObservacion()}.`
-    }  
+        return ` Paciente (ID ${this.getID()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
+    }   
  }
 
 

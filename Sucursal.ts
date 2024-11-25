@@ -8,7 +8,7 @@ export class Sucursal {
   private responsable: string;
   private direccion: string;
   private localidad: string;
-  private listaClientes: Cliente[];
+  public listaClientes: Cliente[];
   private listaProveedores: Proveedor[];
 
 
@@ -60,6 +60,16 @@ export class Sucursal {
   public setLocalidad(localidad: string): void {
     this.localidad = localidad;
   }
+
+  /*
+  public getClienteDeseado(documento: number) : Cliente[] {
+    //console.log(this.listaClientes.find (cliente => cliente.getDocumento() == documento));
+    //return this.listaClientes.find (cliente => cliente.getDocumento() == documento);
+    const index = this.listaClientes.findIndex(cliente => cliente.getDocumento() == documento);
+    //console.log("index " + index);
+    return Cliente[index];
+  } 
+*/
 
   /*public mostrarDatosSucursal(): string {
     return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
