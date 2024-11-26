@@ -117,15 +117,16 @@ export class Sucursal {
   
   }
   
-  public eliminarProveedor(id: number, nombre: string): void {
-    const index = this.listaProveedores.findIndex(proveedor => proveedor.id == this.id);
-    if (index != -1) {
+  public eliminarProveedor(id: number, nombre: string): void { 
+    const index = this.listaProveedores.findIndex(proveedor => proveedor.id === id); // Corrección aquí
+    if (index !== -1) { // Mejor práctica: uso estricto de !==
       this.listaProveedores.splice(index, 1);
-      console.log(`El Provedor ${nombre} (${id}) ha sido eliminado de la lista de Provedores de la Sucursal.`);
+      console.log(`El Proveedor ${nombre} (${id}) ha sido eliminado de la lista de Proveedores de la Sucursal.`);
     } else {
-      console.log(`El Provedor ${nombre} (${id}) no ha sido encontrado en la lista de Provedores de la Sucursal.`);
+      console.log(`El Proveedor ${nombre} (${id}) no ha sido encontrado en la lista de Proveedores de la Sucursal.`);
     }
   }
+  
   // alta, modificacion y eliminacion de Clientes
   public agregarCliente( id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
