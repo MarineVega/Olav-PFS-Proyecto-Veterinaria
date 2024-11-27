@@ -205,7 +205,7 @@ function crearProveedor() {
                     console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
                     return crearProveedor(); 
                   }
-                  rl.question('Rubro del proveedor: ', (rubro) => { //Rubro no presenta validación (Si el usuatio ingresa un número por ejemplo lo toma igual)
+                  rl.question('Rubro del proveedor: ', (rubro) => { 
                     rl.question('CUIT del proveedor: ', (CUITStr) => {
                         const CUIT = parseInt(CUITStr);
                         if (isNaN(CUIT) ||CUITStr.length < 11) {  
@@ -421,7 +421,6 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
 /* PACIENTES */
 
 //CREAMOS PACIENTES
-
 function crearPaciente() {
   
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
@@ -544,7 +543,6 @@ function modificarPaciente() {
     });
 } 
 
-
 //ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
 // ELIMINAR PACIENTE
 function eliminarPaciente() {
@@ -646,8 +644,7 @@ function mostrarSucursales(): void {
     }
     console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
     
-    leerOpcion();  
-       
+    leerOpcion();    
   }
 
 //MOSTRAMOS LOS CLIENTES CREADOS (LISTA DE CLIENTES)
