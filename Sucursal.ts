@@ -118,7 +118,7 @@ export class Sucursal {
   }
   
   // alta, modificacion y eliminacion de Clientes
-  public agregarCliente( id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
+  public agregarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
     if (clienteExistente) {

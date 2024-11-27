@@ -16,7 +16,7 @@ export class Paciente {
         this.observacion = observacion;
     }
 
-    public getID(): number {
+    public getId(): number {
         return this.id;
     }
 
@@ -40,7 +40,7 @@ export class Paciente {
         return this.observacion;
     }
 
-    public setID(id: number): void {
+    public setId(id: number): void {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ export class Paciente {
     }
           
     public mostrarDatosPaciente(): string {
-        return ` Paciente (ID ${this.getID()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
+        return ` Paciente (ID ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
     }   
  }
 

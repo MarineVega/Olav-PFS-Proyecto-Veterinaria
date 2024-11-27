@@ -142,6 +142,8 @@ function modificarSucursal() {
           sucursal.setDireccion(direccion);
           sucursal.setLocalidad(localidad);
           console.log('Sucursal modificada exitosamente.');
+          console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+
           leerOpcion();
         });
       });
@@ -162,7 +164,6 @@ function eliminarSucursal() {
 
     const sucursal = sucursales[index];
 
-    // Validar si la sucursal tiene clientes o proveedores
     if (sucursal.getListaClientes().length > 0 || sucursal.getListaProveedores().length > 0) {
       console.log('No se puede eliminar esta sucursal porque tiene clientes o proveedores registrados.');
     } else {
@@ -194,7 +195,7 @@ function crearProveedor() {
           rl.question('Dirección del proveedor: ', (direccion) => { 
             rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
               const telefono = parseInt(telefonoStr); //Convierte string a number
-              if (isNaN(telefono) || telefonoStr.length < 10) {  
+              if (isNaN(telefono) || telefonoStr.length < 10) { 
                 console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
                 return crearProveedor(); 
               }
@@ -230,6 +231,7 @@ function crearProveedor() {
       };
     });
   }
+
 //MODIFICA LOS DATOS DEL PROVEEDORES SEGUN DNI INGRESADO
 function modificarProveedor() {
   rl.question('Ingresa el DNI del proveedor a modificar: ', (dniStr) => {
@@ -258,7 +260,6 @@ function modificarProveedor() {
                 return modificarProveedor();
               }
 
-              // Método para modificar datos del proveedor
               sucursal.modificarProveedor(dni, nombre, direccion, telefono, rubro, CUIT);
               console.log('Proveedor modificado exitosamente.');
               console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
@@ -283,7 +284,6 @@ function eliminarProveedor() {
           return leerOpcion();
       }
 
-      // Buscar PROVEEDOR en la sucursal
       const proveedor = sucursal.getListaProveedores().find(c => c.getDocumento() === dni);
       if (!proveedor) {
           console.log(`No se encontró un proveedor con DNI ${dni}.`);
@@ -292,10 +292,10 @@ function eliminarProveedor() {
           console.log('Proveedor eliminado exitosamente.');
       }
       console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
       leerOpcion();
   });
 }
+
 //OBTIENE LA SUCURSAL SEGUN EL DNI DEL PROVEEDOR
 function obtenerSucursalProveedor(dni: number): Sucursal | null {
   for (const sucursal of sucursales) {
@@ -314,6 +314,7 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
 //CREAMOS CLIENTES
 function crearCliente() {  
   elegirSucursal();
+
   rl.question('Elija el ID de la sucursal a la que pertenece el cliente: ', (idSucursalStr) => {    
     const idSucursal = parseInt(idSucursalStr);
     const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
@@ -369,7 +370,6 @@ function modificarCliente() {
               rl.question('Nuevo teléfono: ', (telefonoStr) => {
                   const telefono = parseInt(telefonoStr);
 
-                  // Usar el método de la sucursal
                   sucursal.modificarCliente(dni, nombre, direccion, telefono);
                   console.log('Cliente modificado exitosamente.');
                   console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
@@ -392,7 +392,6 @@ function eliminarCliente() {
           return leerOpcion();
       }
 
-      // Buscar cliente en la sucursal
       const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
       if (!cliente) {
           console.log(`No se encontró un cliente con DNI ${dni}.`);
@@ -422,7 +421,9 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
 /* PACIENTES */
 
 //CREAMOS PACIENTES
+
 function crearPaciente() {
+  
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
@@ -435,7 +436,7 @@ function crearPaciente() {
 
     sucursales.forEach(sucursal =>{
       clientePaciente = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
-    });    
+    });
 
     if (clientePaciente) {
       id += 1; 
@@ -454,7 +455,7 @@ function crearPaciente() {
                 return crearPaciente();
               }
               rl.question('Observación del paciente: ', (observacion) => {                
-                //clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
+                this.cliente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);//Se fue el error con this.cliente
                 console.log('Paciente creado exitosamente.');                
                 console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
@@ -468,8 +469,6 @@ function crearPaciente() {
     } else {
       console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
     leerOpcion(); 
   });      
 }
@@ -477,7 +476,6 @@ function crearPaciente() {
 //MODIFICAR PACIENTE
 function modificarPaciente() {
     let pacienteCliente: Paciente | undefined;
-    //let clientePaciente: Cliente | undefined;
 
     rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
@@ -491,7 +489,6 @@ function modificarPaciente() {
       // Buscar el cliente con el documento proporcionado
       let clientePaciente: Cliente | undefined;
   
-      // Buscar el cliente en todas las sucursales
       sucursales.forEach(sucursal =>{
         clientePaciente = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
       });    
@@ -508,8 +505,10 @@ function modificarPaciente() {
           console.log('Por favor, ingresa un ID válido.');
           return leerOpcion();
         }
-        //pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getID() === id);
+       pacienteCliente = this.clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
+         
       
+  
         if (!pacienteCliente) {
           console.log('No se encontró el paciente con el ID ingresado.');
           return leerOpcion(); 
@@ -521,15 +520,17 @@ function modificarPaciente() {
               rl.question('Nueva fecha de nacimiento (formato: DD-MM-YYYY) (deja vacío para no modificar): ', (fechaStr) => {
                 rl.question('Nueva observación (deja vacío para no modificar): ', (observacion) => {
                   
-                  /*const fechaNacimiento = new Date(fechaStr);
-                    clientePaciente.modificarPaciente (id,
-                    nombre || pacienteCliente.getNombre(),
-                    especie || pacienteCliente.getEspecie(),
-                    sexo || pacienteCliente.getSexo(),
-                    fechaNacimiento || pacienteCliente.getFechaNacimiento(),
-                    observacion || pacienteCliente.getObservacion());*/
+                  const fechaNacimiento = new Date(fechaStr);
+                    this.cliente.modificarPaciente (id,
+                    nombre || this.pacienteCliente.getNombre(),
+                    especie || this.pacienteCliente.getEspecie(),
+                    sexo || this.pacienteCliente.getSexo(),
+                    fechaNacimiento || this.pacienteCliente.getFechaNacimiento(),
+                    observacion || this.pacienteCliente.getObservacion());
 
                   console.log('Paciente modificado exitosamente.');
+                  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+
                   leerOpcion(); 
                 });
               });
@@ -539,25 +540,24 @@ function modificarPaciente() {
       });
       console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
-      leerOpcion();   
+      leerOpcion(); 
     });
 } 
 
+
 //ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
+// ELIMINAR PACIENTE
 function eliminarPaciente() {
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
-    // Validación del documento
-    if (isNaN(documento) ||documentoStr.length < 5) {  
+    if (isNaN(documento) || documentoStr.length < 5) {  
       console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
       return eliminarPaciente();
     }    
     
-    // Buscar el cliente con el documento proporcionado
     let clientePaciente: Cliente | undefined;
 
-    // Buscar el cliente en todas las sucursales
     sucursales.forEach(sucursal =>{
       clientePaciente = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
     });    
@@ -574,9 +574,9 @@ function eliminarPaciente() {
         console.log('Por favor, ingresa un ID válido.');
         return leerOpcion();
       }
-      // Eliminar paciente usando el método eliminarPaciente del Cliente
-      //clientePaciente.eliminarPaciente(id);
-    
+
+      this.clientePaciente.eliminarPaciente(id);
+
       console.log('Paciente eliminado exitosamente.');
       console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
@@ -587,20 +587,17 @@ function eliminarPaciente() {
 
 //MOSTRAR LISTA DE PACIENTES
 function mostrarListaPacientes(): void {
-  console.log("------------------------------------------------- 🐶 Listado de Pacientes 🐱 -------------------------------------------------");
+    console.log("------------------------------------------------- 🐶 Listado de Pacientes 🐱 -------------------------------------------------");
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
-    // Validación del documento
     if (isNaN(documento) ||documentoStr.length < 5) {  
       console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
       return eliminarPaciente();
     }    
     
-    // Buscar el cliente con el documento proporcionado
     let clientePaciente: Cliente | undefined;
 
-    // Buscar el cliente en todas las sucursales
     sucursales.forEach(sucursal =>{
       clientePaciente = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
     });    
@@ -612,12 +609,10 @@ function mostrarListaPacientes(): void {
 
     const pacientes = clientePaciente.getListaPacientes();
   
-    // Si no hay pacientes, mostramos un mensaje
     if (pacientes.length === 0) {
       return 'No hay pacientes registrados en este cliente.';
     }
 
-    // Creamos un string con la información de cada paciente
     const lista = pacientes.map(paciente => {
       return `ID: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
     }).join('\n');
@@ -661,7 +656,6 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
   let resultado = "";
 
   for (const sucursal of sucursales) {
-      // Título con el nombre de la sucursal
       resultado += `Sucursal: ${sucursal.getId()}\n`;
       resultado += "Clientes:\n";
 
@@ -671,7 +665,6 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
           resultado += "  - No hay clientes registrados.\n";
       } else {
           for (const cliente of listaClientes) {
-              // Agregar información formateada de cada cliente
               resultado += `  - ${cliente.mostrarDatos()}\n`;
           }
       }
@@ -690,7 +683,6 @@ function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
   let resultado = "";
 
   for (const sucursal of sucursales) {
-      // Título con el nombre de la sucursal
       resultado += `Sucursal: ${sucursal.getId()}\n`;
       resultado += "Proveedores:\n";
 
@@ -700,10 +692,10 @@ function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
           resultado += "  - No hay Proveedores registrados.\n";
       } else {
           for (const Proveedor of listaProveedores) {
-              // Agregar información formateada de cada cliente
               resultado += `  - ${Proveedor.mostrarDatos()}\n`;
           }
       }
+
       resultado += "\n"; 
   }
 
@@ -719,22 +711,18 @@ function registrarVisita() {
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
-    // Validación del documento
     if (isNaN(documento) ||documentoStr.length < 5) {  
       console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
       return registrarVisita();
     }    
     
-    // Buscar el cliente con el documento proporcionado
     let clienteVisita: Cliente | undefined;
 
-    // Buscar el cliente en todas las sucursales
     sucursales.forEach(sucursal =>{
       clienteVisita = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
     });    
 
     if (clienteVisita) {
-      // Registrar la visita   
       clienteVisita.registrarVisita(); 
       console.log("La visita fue registrada con éxito.");
       console.log('-------------------------------------------------------------------------');
@@ -743,7 +731,7 @@ function registrarVisita() {
     }
     console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
     
-    leerOpcion();   
+    leerOpcion();  
   });
 }
 

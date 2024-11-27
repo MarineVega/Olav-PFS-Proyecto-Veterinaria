@@ -26,9 +26,16 @@ export class Cliente extends Persona {
         }
     }
 
-
     public getListaPacientes(): Paciente[] {
         return this.listaPacientes;
+    }
+
+    public setVisitas(visitas: number): void {
+        this.visitas = visitas;
+    }
+
+    public setVip(vip: boolean): void {
+        this.vip = vip;
     }
 
     public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
@@ -39,7 +46,7 @@ export class Cliente extends Persona {
         }
             
         //Verificar que el paciente no exista ya en la lista
-        const existePaciente = this.listaPacientes.some(paciente => paciente.getID() === id);
+        const existePaciente = this.listaPacientes.some(paciente => paciente.getId() === id);
         if (existePaciente) {
             console.log(`Error: Ya existe un paciente con ID ${id} en la lista.`);
             return;
@@ -51,15 +58,6 @@ export class Cliente extends Persona {
         console.log(`El paciente ${nombre} (ID ${id}) ha sido agregado correctamente.`);
     }
     
-
-    public setVisitas(visitas: number): void {
-        this.visitas = visitas;
-    }
-
-    public setVip(vip: boolean): void {
-        this.vip = vip;
-    }
-
     public registrarVisita(): void {
         this.visitas += 1;
         if (this.visitas >= 5 && !this.vip) {
