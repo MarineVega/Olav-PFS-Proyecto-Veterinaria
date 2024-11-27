@@ -491,7 +491,7 @@ function modificarPaciente() {
           console.log('Por favor, ingresa un ID válido.');
           return leerOpcion();
         }
-        pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getID() === id);
+        pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
       
   
         if (!pacienteCliente) {
@@ -603,7 +603,7 @@ function mostrarListaPacientes(): void {
 
     // Creamos un string con la información de cada paciente
     const lista = pacientes.map(paciente => {
-      return `ID: ${paciente.getID()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
+      return `ID: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
     }).join('\n');
 
     console.log(lista);
