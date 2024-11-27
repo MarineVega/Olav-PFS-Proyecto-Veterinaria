@@ -86,8 +86,9 @@ export class Cliente extends Persona {
         }
     }
 
-    public eliminarPaciente(id: number): void {
-        const index = this.listaPacientes.findIndex(paciente => paciente.id == this.id);
+    public eliminarPaciente(id: number): void {       
+        const index = this.listaPacientes.findIndex(paciente => paciente.id == id);
+
         if (index != -1) {
             this.listaPacientes.splice(index, 1);
             console.log(`El Paciente ${this.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal.`)
