@@ -291,8 +291,8 @@ function validarDocumento(documento) {
 
 function validarCUIT(CUIT) {
   return /^\d{11,}$/.test(CUIT);
-
 }
+
 function validarSexo(sexo) {
   if (sexo == 'Macho' || sexo == 'Hembra') {    
     return true; 
@@ -445,13 +445,13 @@ function crearPaciente() {
 
     if (clientePaciente) {
       id += 1; 
-      console.log(`ID Paciente: ${id}`); 
+      console.log(`ID Paciente: ${id}`);
       rl.question('Nombre del paciente: ', (nombre) => {
         rl.question('Especie del paciente: ', (especie) => {
           solicitarEntrada('Sexo del paciente (Macho | Hembra): ', validarSexo, (sexo) => {
             solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY): ', validarFecha, (fecha) => {
               rl.question('Observación del paciente: ', (observacion) => {       
-                const fechaNacimiento = new Date(fecha);         
+                const fechaNacimiento = new Date(fecha);
                 clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
                 console.log('Paciente creado exitosamente.');                
                 console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
@@ -464,8 +464,7 @@ function crearPaciente() {
     } else {
       console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
-    leerOpcion(); 
-  });      
+  });
 }
 
 //MODIFICAR PACIENTE
