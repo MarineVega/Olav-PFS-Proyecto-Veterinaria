@@ -2,6 +2,7 @@ import * as readline from 'readline';
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
 import { Sucursal } from "./Sucursal";
+import { Proveedor } from './Proveedor';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -26,17 +27,18 @@ function mostrarMenu() {
   11. Modificar Paciente
   12. Eliminar Paciente
   13. Mostrar Sucursales
-  14. Mostrar Provedores
+  14. Mostrar Proveedores
   15. Mostrar Clientes
   16. Mostrar Pacientes
   17. Registrar Visita
   18. Salir
   `);
 }
-
+console.log (" ")
 console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
 
 function leerOpcion() {
+    console.log (" ")
     rl.question('Selecciona una opción: ', (opcion) => {
         switch (opcion) {
             case '1':
@@ -93,6 +95,7 @@ function leerOpcion() {
             case '18':
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
+                console.log (" ")
                 break;
             default:
                 console.log('Opción no válida');
@@ -187,28 +190,12 @@ function crearProveedor() {
       id += 1; 
       console.log(`ID Proveedor: ${id}`); 
         rl.question('Nombre del proveedor: ', (nombre) => {//Nombre no presenta validación 
-          rl.question('Dirección del proveedor: ', (direccion) => { //Tampoco se valida la dirección 
-            rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-              const telefono = parseInt(telefonoStr); //Convierte string a number
-              if (isNaN(telefono) || telefonoStr.length < 10) { //Intento de validación SE PUEDE MEJORAR! 
-                console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-                return crearProveedor(); 
-              }
-              rl.question('Documento del proveedor: ', (documentoStr) => {
-                  const documento = parseInt(documentoStr);
-                  if (isNaN(documento) ||documentoStr.length < 5) {  
-                    console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-                    return crearProveedor(); 
-                  }
+          rl.question('Dirección del proveedor: ', (direccion) => { //Tampoco se valida la dirección
+            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+              solicitarEntrada('Documento del proveedor: ', validarDocumento, (documento) => {
                   rl.question('Rubro del proveedor: ', (rubro) => { //Rubro no presenta validación (Si el usuatio ingresa un número por ejemplo lo toma igual)
-                    rl.question('CUIT del proveedor: ', (CUITStr) => {
-                        const CUIT = parseInt(CUITStr);
-                        if (isNaN(CUIT) ||CUITStr.length < 11) {  
-                            console.log('Por favor, ingresa un número de CUIT válido (11 dígitos).');
-                            return crearProveedor(); 
-                        }
-                        
-                        sucursalProveedor.agregarProveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);  
+                    solicitarEntrada('CUIT del proveedor (11 dígitos): ', validarCUIT, (CUIT) => {                   
+                        sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));  
                         console.log('Proveedor creado exitosamente.');
                         console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
                         
@@ -226,6 +213,8 @@ function crearProveedor() {
       };
     });
   }
+
+
 //MODIFICA LOS DATOS DEL PROVEEDORES SEGUN DNI INGRESADO
 function modificarProveedor() {
   rl.question('Ingresa el DNI del proveedor a modificar: ', (dniStr) => {
@@ -238,24 +227,13 @@ function modificarProveedor() {
     }
 
     rl.question('Nuevo nombre: ', (nombre) => {
-      rl.question('Nueva dirección: ', (direccion) => {
-        rl.question('Nuevo teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-          const telefono = parseInt(telefonoStr);
-          if (isNaN(telefono) || telefonoStr.length < 10) {
-            console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-            return modificarProveedor();
-          }
-
+      rl.question('Nueva dirección: ', (direccion) => {        
+        solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
           rl.question('Nuevo rubro: ', (rubro) => {
-            rl.question('Nuevo CUIT (11 dígitos): ', (CUITStr) => {
-              const CUIT = parseInt(CUITStr);
-              if (isNaN(CUIT) || CUITStr.length !== 11) {
-                console.log('Por favor, ingresa un CUIT válido (11 dígitos).');
-                return modificarProveedor();
-              }
-
+            solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, (CUIT) => {
               // Método para modificar datos del proveedor
-              sucursal.modificarProveedor(dni, nombre, direccion, telefono, rubro, CUIT);
+              sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));            
+             
               console.log('Proveedor modificado exitosamente.');
               leerOpcion();
             });
@@ -288,6 +266,7 @@ function eliminarProveedor() {
       leerOpcion();
   });
 }
+
 //OBTIENE LA SUCURSAL SEGUN EL DNI DEL PROVEEDOR
 function obtenerSucursalProveedor(dni: number): Sucursal | null {
   for (const sucursal of sucursales) {
@@ -301,8 +280,51 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
 }
 
 /***********************************************************************************************************************************************************/
+/**********  VALIDACIONES **********/
+function validarTelefono(telefono) {
+  return /^\d{10,}$/.test(telefono);
+}
+
+function validarDocumento(documento) {
+  return /^\d{5,}$/.test(documento);
+}
+
+function validarCUIT(CUIT) {
+  return /^\d{11,}$/.test(CUIT);
+
+}
+function validarSexo(sexo) {
+  if (sexo == 'Macho' || sexo == 'Hembra') {    
+    return true; 
+  } else {
+    return false;
+  }
+}
+
+function validarFecha(fecha) {
+  const fechaNacimiento = new Date(fecha);
+  if (isNaN(fechaNacimiento.getTime())) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function solicitarEntrada(mensaje, validador, callback) {
+  rl.question(mensaje, (input) => {
+    if (!validador(input)) {
+      console.log("Entrada inválida. Inténtalo de nuevo.");
+      return solicitarEntrada(mensaje, validador, callback);
+    }
+    callback(input);
+  });
+}
+
+
+
+/***********************************************************************************************************************************************************/
 //CREAMOS CLIENTES
-function crearCliente() {  
+function crearCliente() {
   elegirSucursal();
 
   rl.question('Elija el ID de la sucursal a la que pertenece el cliente: ', (idSucursalStr) => {    
@@ -314,35 +336,30 @@ function crearCliente() {
       
       id += 1; 
       console.log(`ID Cliente: ${id}`); 
+      
       rl.question('Nombre del cliente: ', (nombre) => {
-        rl.question('Dirección del cliente: ', (direccion) => {
-          rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-            const telefono = parseInt(telefonoStr); 
-            if (isNaN(telefono) || telefonoStr.length < 10) {            
-              console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-              return crearCliente();  
-            }
-            rl.question('Documento del cliente: ', (documentoStr) => {
-                const documento = parseInt(documentoStr);
-                if (isNaN(documento) ||documentoStr.length < 5) {                
-                  console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-                  return crearCliente();  
+        rl.question('Dirección del cliente: ', (direccion) => {          
+          solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+              solicitarEntrada('Documento del cliente: ', validarDocumento, (documento) => {
+
+                  sucursalCliente.agregarCliente(id, nombre, direccion, parseInt(telefono), parseInt(documento));
+                  console.log('Cliente creado exitosamente.');
+                  console.log('🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾');
+                  leerOpcion();
+                  
                 }
-              sucursalCliente.agregarCliente(id, nombre, direccion, telefono, documento);    
-              console.log('Cliente creado exitosamente.');            
-              console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-              leerOpcion();  
-            });
-          });
+              );
+            }
+          );
         });
       });
-    } else {
+    }
+    else {
       console.log("Por favor ingrese un número de sucursal existente");
       return crearCliente();
     };
-  });
+  })
 }
-
 //MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
 function modificarCliente() {
   rl.question('Ingresa el DNI del cliente a modificar: ', (dniStr) => {
@@ -356,11 +373,10 @@ function modificarCliente() {
 
       rl.question('Nuevo nombre: ', (nombre) => {
           rl.question('Nueva dirección: ', (direccion) => {
-              rl.question('Nuevo teléfono: ', (telefonoStr) => {
-                  const telefono = parseInt(telefonoStr);
+              solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {                
 
                   // Usar el método de la sucursal
-                  sucursal.modificarCliente(dni, nombre, direccion, telefono);
+                  sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
                   console.log('Cliente modificado exitosamente.');
                   leerOpcion();
               });
@@ -392,9 +408,11 @@ function eliminarCliente() {
   });
 }
 
-//OBTIENE LA SUCURSAL SEGUN EL DNI DEL CLIENTE 
+//OBTIENE LA SUCURSAL SEGUN EL DNI DEL CLIENTE
 function obtenerSucursalCliente(dni: number): Sucursal | null {
   for (const sucursal of sucursales) {
+      console.log(sucursal.getListaClientes());
+      
       const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
       if (cliente) {
           return sucursal;
@@ -403,6 +421,8 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
   console.log(`No se encontró un cliente con DNI ${dni} en ninguna sucursal.`);
   return null;
 }
+
+
 /***********************************************************************************************************************************************************/
 
 /***********************************************************************************************************************************************************/
@@ -428,18 +448,10 @@ function crearPaciente() {
       console.log(`ID Paciente: ${id}`); 
       rl.question('Nombre del paciente: ', (nombre) => {
         rl.question('Especie del paciente: ', (especie) => {
-          rl.question('Sexo del paciente: ', (sexo) => {
-            if (sexo !== 'Macho' && sexo !== 'Hembra') {
-              console.log('Por favor, ingresa un sexo válido: Macho o Hembra.');
-              return crearPaciente(); 
-            }
-            rl.question('Fecha de nacimiento del paciente (DD-MM-YYYY): ', (fechaStr) => {
-              const fechaNacimiento = new Date(fechaStr);
-              if (isNaN(fechaNacimiento.getTime())) {
-                console.log('Por favor, ingresa una fecha válida en el formato DD-MM-YYYY.');
-                return crearPaciente();
-              }
-              rl.question('Observación del paciente: ', (observacion) => {                
+          solicitarEntrada('Sexo del paciente (Macho | Hembra): ', validarSexo, (sexo) => {
+            solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY): ', validarFecha, (fecha) => {
+              rl.question('Observación del paciente: ', (observacion) => {       
+                const fechaNacimiento = new Date(fecha);         
                 clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
                 console.log('Paciente creado exitosamente.');                
                 console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
@@ -449,7 +461,6 @@ function crearPaciente() {
           });
         });
       });
-
     } else {
       console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
@@ -460,7 +471,6 @@ function crearPaciente() {
 //MODIFICAR PACIENTE
 function modificarPaciente() {
     let pacienteCliente: Paciente | undefined;
-    //let clientePaciente: Cliente | undefined;
 
     rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
@@ -657,6 +667,7 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
           for (const cliente of listaClientes) {
               // Agregar información formateada de cada cliente
               resultado += `  - ${cliente.mostrarDatos()}\n`;
+              resultado += `🐾🐈  🐩🐾\n`
           }
       }
 
