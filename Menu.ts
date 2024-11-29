@@ -2,6 +2,7 @@ import * as readline from 'readline';
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
 import { Sucursal } from "./Sucursal";
+import { Proveedor } from './Proveedor';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -26,18 +27,18 @@ function mostrarMenu() {
   11. Modificar Paciente
   12. Eliminar Paciente
   13. Mostrar Sucursales
-  14. Mostrar Provedores
+  14. Mostrar Proveedores
   15. Mostrar Clientes
-  16. Mostrar Pacientes del Cliente
-  17. Mostrar todos los Pacientes
-  18. Registrar Visita
-  19. Salir
+  16. Mostrar Pacientes
+  17. Registrar Visita
+  18. Salir
   `);
 }
-
+console.log (" ")
 console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
 
 function leerOpcion() {
+    //console.log (" ")
     rl.question('Selecciona una opción: ', (opcion) => {
         switch (opcion) {
             case '1':
@@ -89,14 +90,12 @@ function leerOpcion() {
                 mostrarListaPacientes();
                 break;
             case '17':
-                mostrarTodosLosPacientes();
-                break;   
-            case '18':
                 registrarVisita();
-                break;   
-            case '19':
+                break;    
+            case '18':
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
+                console.log (" ")
                 break;
             default:
                 console.log('Opción no válida');
@@ -104,6 +103,7 @@ function leerOpcion() {
         }
     });
 }
+
 let id = 0;   // Inicializa el ID global 
 
 /***********************************************************************************************************************************************************/
@@ -114,13 +114,13 @@ function crearSucursal() {
   id += 1; // Incrementar el ID global para el siguiente elemento que se crea
   console.log(`ID Sucursal: ${id}`); 
   rl.question('Nombre del Responsable de la Sucursal: ', (responsable) => {
-    rl.question('Dirección de la sucursal: ', (direccion: string) =>  {
-        rl.question('Localidad en la que se encuentra la sucursal: ', (localidad) =>  {   
+    rl.question('Dirección de la Sucursal: ', (direccion: string) =>  {
+        rl.question('Localidad en la que se encuentra la Sucursal: ', (localidad) =>  {   
       const sucursal = new Sucursal(id, responsable, direccion, localidad);
       sucursales.push(sucursal);
-      console.log('Sucursal creada exitosamente.');
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+      console.log('\nSucursal creada exitosamente ​✅');
 
+      console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
       leerOpcion();
         });
     });
@@ -129,12 +129,12 @@ function crearSucursal() {
 
 //PERMITE MODIFICAR LOS DATOS DE LA SUCURSAL
 function modificarSucursal() {
-  rl.question('Ingresa el ID de la sucursal a modificar: ', (idStr) => {
+  rl.question('Ingresa el ID de la Sucursal a modificar: ', (idStr) => {
     const id = parseInt(idStr);
     const sucursal = sucursales.find(s => s.getId() === id);
 
     if (!sucursal) {
-      console.log('No se encontró una sucursal con ese ID.');
+      console.log('\nNo se encontró una Sucursal con ese ID ​🔎​');
       return leerOpcion();
     }
 
@@ -144,7 +144,7 @@ function modificarSucursal() {
           sucursal.setResponsable(responsable);
           sucursal.setDireccion(direccion);
           sucursal.setLocalidad(localidad);
-          console.log('Sucursal modificada exitosamente.');
+          console.log('\nSucursal modificada exitosamente ​✅​');
           leerOpcion();
         });
       });
@@ -154,12 +154,12 @@ function modificarSucursal() {
 
 //SE VERIFICA QUE NO TENGA NI CLIENTES NI PROVEEDORES! SI TIENE NO SE BORRA
 function eliminarSucursal() {
-  rl.question('Ingresa el ID de la sucursal a eliminar: ', (idStr) => {
+  rl.question('Ingresa el ID de la Sucursal a eliminar: ', (idStr) => {
     const id = parseInt(idStr);
     const index = sucursales.findIndex(s => s.getId() === id);
 
     if (index === -1) {
-      console.log('No se encontró una sucursal con ese ID.');
+      console.log('\nNo se encontró una Sucursal con ese ID ​🔎​');
       return leerOpcion();
     }
 
@@ -167,16 +167,15 @@ function eliminarSucursal() {
 
     // Validar si la sucursal tiene clientes o proveedores
     if (sucursal.getListaClientes().length > 0 || sucursal.getListaProveedores().length > 0) {
-      console.log('No se puede eliminar esta sucursal porque tiene clientes o proveedores registrados.');
+      console.log('\nNo se puede eliminar esta Sucursal porque tiene Clientes o Proveedores registrados ⚠️​');
     } else {
       sucursales.splice(index, 1);
-      console.log('Sucursal eliminada exitosamente.');
+      console.log('\nSucursal eliminada exitosamente ​✅​');
     }
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
     leerOpcion();
   });
 }
+
 /***********************************************************************************************************************************************************/
 /* Proveeodres */
 
@@ -184,7 +183,7 @@ function eliminarSucursal() {
 function crearProveedor() {
   elegirSucursal();
 
-  rl.question('Elija el ID de la sucursal a la que pertenece el Proveedor: ', (idSucursalStr) => {    
+  rl.question('Elija el ID de la Sucursal a la que pertenece el Proveedor: ', (idSucursalStr) => {    
     const idSucursal = parseInt(idSucursalStr);
     const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
     
@@ -193,32 +192,16 @@ function crearProveedor() {
       
       id += 1; 
       console.log(`ID Proveedor: ${id}`); 
-        rl.question('Nombre del proveedor: ', (nombre) => {
-          rl.question('Dirección del proveedor: ', (direccion) => { 
-            rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-              const telefono = parseInt(telefonoStr); //Convierte string a number
-              if (isNaN(telefono) || telefonoStr.length < 10) {  
-                console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-                return crearProveedor(); 
-              }
-              rl.question('Documento del proveedor: ', (documentoStr) => {
-                  const documento = parseInt(documentoStr);
-                  if (isNaN(documento) ||documentoStr.length < 5) {  
-                    console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-                    return crearProveedor(); 
-                  }
-                  rl.question('Rubro del proveedor: ', (rubro) => { //Rubro no presenta validación (Si el usuatio ingresa un número por ejemplo lo toma igual)
-                    rl.question('CUIT del proveedor: ', (CUITStr) => {
-                        const CUIT = parseInt(CUITStr);
-                        if (isNaN(CUIT) ||CUITStr.length < 11) {  
-                            console.log('Por favor, ingresa un número de CUIT válido (11 dígitos).');
-                            return crearProveedor(); 
-                        }
-                        
-                        sucursalProveedor.agregarProveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);  
-                        console.log('Proveedor creado exitosamente.');
-                        console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-                        
+        rl.question('Nombre del Proveedor: ', (nombre) => {//Nombre no presenta validación 
+          rl.question('Dirección del Proveedor: ', (direccion) => { //Tampoco se valida la dirección
+            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+              solicitarEntrada('Documento del Proveedor: ', validarDocumento, (documento) => {
+                  rl.question('Rubro del Proveedor: ', (rubro) => { //Rubro no presenta validación (Si el usuatio ingresa un número por ejemplo lo toma igual)
+                    solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, (CUIT) => {                   
+                        sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));  
+                        console.log('\nProveedor creado exitosamente ​✅​');
+
+                        console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
                         leerOpcion();  
                     });
                   });
@@ -228,44 +211,34 @@ function crearProveedor() {
         });
 
       } else {
-        console.log("Por favor ingrese un número de sucursal existente.");
+        console.log('\nPor favor ingrese un número de Sucursal existente.');
         return crearProveedor();
       };
     });
   }
+
+
 //MODIFICA LOS DATOS DEL PROVEEDORES SEGUN DNI INGRESADO
 function modificarProveedor() {
-  rl.question('Ingresa el DNI del proveedor a modificar: ', (dniStr) => {
+  rl.question('Ingresa el DNI del Proveedor a modificar: ', (dniStr) => {
     const dni = parseInt(dniStr);
-    const sucursal = obtenerSucursalProveedor(dni); 
+    const sucursal = obtenerSucursalProveedor(dni); // Método adaptado para proveedores
 
     if (!sucursal) {
-      console.log('No se encontró la sucursal actual.');
+      console.log('\nNo se encontró la sucursal actual ​🔎​');
       return leerOpcion();
     }
 
     rl.question('Nuevo nombre: ', (nombre) => {
-      rl.question('Nueva dirección: ', (direccion) => {
-        rl.question('Nuevo teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-          const telefono = parseInt(telefonoStr);
-          if (isNaN(telefono) || telefonoStr.length < 10) {
-            console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-            return modificarProveedor();
-          }
-
+      rl.question('Nueva dirección: ', (direccion) => {        
+        solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
           rl.question('Nuevo rubro: ', (rubro) => {
-            rl.question('Nuevo CUIT (11 dígitos): ', (CUITStr) => {
-              const CUIT = parseInt(CUITStr);
-              if (isNaN(CUIT) || CUITStr.length !== 11) {
-                console.log('Por favor, ingresa un CUIT válido (11 dígitos).');
-                return modificarProveedor();
-              }
-
+            solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, (CUIT) => {
               // Método para modificar datos del proveedor
-              sucursal.modificarProveedor(dni, nombre, direccion, telefono, rubro, CUIT);
-              console.log('Proveedor modificado exitosamente.');
-              console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+              sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));            
+              console.log('\nProveedor modificado exitosamente ​✅​');
 
+              console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
               leerOpcion();
             });
           });
@@ -277,28 +250,27 @@ function modificarProveedor() {
 
 //ELIMINA UN PROVEEDOR SEGUN EL DOCUMENTO INGRESADO
 function eliminarProveedor() {
-  rl.question('Ingresa el DNI del proveedor a eliminar: ', (dniStr) => {
+  rl.question('Ingresa el DNI del Proveedor a eliminar: ', (dniStr) => {
       const dni = parseInt(dniStr);
       const sucursal = obtenerSucursalProveedor(dni); 
 
       if (!sucursal) {
-          console.log('No se encontró la sucursal actual.');
+          console.log('\nNo se encontró la sucursal actual ​🔎​');
           return leerOpcion();
       }
 
       // Buscar PROVEEDOR en la sucursal
       const proveedor = sucursal.getListaProveedores().find(c => c.getDocumento() === dni);
       if (!proveedor) {
-          console.log(`No se encontró un proveedor con DNI ${dni}.`);
+          console.log(`\nNo se encontró un Proveedor con DNI ${dni} ​🔎​`);
       } else {
           sucursal.eliminarProveedor(proveedor.getId(), proveedor.getNombre());
-          console.log('Proveedor eliminado exitosamente.');
+          console.log('\nProveedor eliminado exitosamente ​✅​');
       }
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
       leerOpcion();
   });
 }
+
 //OBTIENE LA SUCURSAL SEGUN EL DNI DEL PROVEEDOR
 function obtenerSucursalProveedor(dni: number): Sucursal | null {
   for (const sucursal of sucursales) {
@@ -307,17 +279,59 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
           return sucursal;
       }
   }
-  console.log(`No se encontró un proveedor con DNI ${dni} en ninguna sucursal.`);
+  console.log(`\nNo se encontró un Proveedor con DNI ${dni} en ninguna Sucursal ​❌​`);
   return null;
 }
 
 /***********************************************************************************************************************************************************/
-/*Clientes*/
+/**********  VALIDACIONES **********/
+function validarTelefono(telefono) {
+  return /^\d{10,}$/.test(telefono);
+}
+
+function validarDocumento(documento) {
+  return /^\d{5,}$/.test(documento);
+}
+
+function validarCUIT(CUIT) {
+  return /^\d{11,}$/.test(CUIT);
+}
+
+function validarSexo(sexo) {
+  if (sexo == 'Macho' || sexo == 'Hembra') {    
+    return true; 
+  } else {
+    return false;
+  }
+}
+
+function validarFecha(fecha) {
+  const fechaNacimiento = new Date(fecha);
+  if (isNaN(fechaNacimiento.getTime())) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function solicitarEntrada(mensaje, validador, callback) {
+  rl.question(mensaje, (input) => {
+    if (!validador(input)) {
+      console.log('\nDato inválido. Inténtalo de nuevo ​⚠️​\n');
+      return solicitarEntrada(mensaje, validador, callback);
+    }
+    callback(input);
+  });
+}
+
+/***********************************************************************************************************************************************************/
+/* Clientes */
 
 //CREAMOS CLIENTES
-function crearCliente() {  
+function crearCliente() {
   elegirSucursal();
-  rl.question('Elija el ID de la sucursal a la que pertenece el cliente: ', (idSucursalStr) => {    
+
+  rl.question('Elija el ID de la Sucursal a la que pertenece el cliente: ', (idSucursalStr) => {    
     const idSucursal = parseInt(idSucursalStr);
     const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
     
@@ -326,57 +340,50 @@ function crearCliente() {
       
       id += 1; 
       console.log(`ID Cliente: ${id}`); 
+      
       rl.question('Nombre del cliente: ', (nombre) => {
-        rl.question('Dirección del cliente: ', (direccion) => {
-          rl.question('Número de teléfono (sin guiones ni espacios): ', (telefonoStr) => {
-            const telefono = parseInt(telefonoStr); 
-            if (isNaN(telefono) || telefonoStr.length < 10) {            
-              console.log('Por favor, ingresa un número de teléfono válido (al menos 10 dígitos).');
-              return crearCliente();  
-            }
-            rl.question('Documento del cliente: ', (documentoStr) => {
-                const documento = parseInt(documentoStr);
-                if (isNaN(documento) ||documentoStr.length < 5) {                
-                  console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');
-                  return crearCliente();  
-                }
-              sucursalCliente.agregarCliente(id, nombre, direccion, telefono, documento);    
-              console.log('Cliente creado exitosamente.');            
-              console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+        rl.question('Dirección del cliente: ', (direccion) => {          
+          solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+              solicitarEntrada('Documento del cliente: ', validarDocumento, (documento) => {
 
-              leerOpcion();  
-            });
-          });
+                  sucursalCliente.agregarCliente(id, nombre, direccion, parseInt(telefono), parseInt(documento));
+                  console.log('\nCliente creado exitosamente ​✅​');
+                  
+                  console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+                  leerOpcion();
+                  
+                }
+              );
+            }
+          );
         });
       });
-    } else {
-      console.log("Por favor ingrese un número de sucursal existente");
+    }
+    else {
+      console.log('\nPor favor ingrese un número de Sucursal existente.');
       return crearCliente();
     };
-  });
+  })
 }
 
 //MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
 function modificarCliente() {
-  rl.question('Ingresa el DNI del cliente a modificar: ', (dniStr) => {
+  rl.question('Ingresa el DNI del Cliente a modificar: ', (dniStr) => {
       const dni = parseInt(dniStr);
       const sucursal = obtenerSucursalCliente(dni); 
 
       if (!sucursal) {
-          console.log('No se encontró la sucursal actual.');
+          console.log('\nNo se encontró la sucursal actual ​🔎​');
           return leerOpcion();
       }
 
       rl.question('Nuevo nombre: ', (nombre) => {
           rl.question('Nueva dirección: ', (direccion) => {
-              rl.question('Nuevo teléfono: ', (telefonoStr) => {
-                  const telefono = parseInt(telefonoStr);
+              solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {                
 
                   // Usar el método de la sucursal
-                  sucursal.modificarCliente(dni, nombre, direccion, telefono);
-                  console.log('Cliente modificado exitosamente.');
-                  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
+                  sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
+                  console.log('\nCliente modificado exitosamente ​✅​');
                   leerOpcion();
               });
           });
@@ -386,38 +393,38 @@ function modificarCliente() {
 
 //ELIMINA UN CLIENTE SEGUN EL DOCUMENTO INGRESADO
 function eliminarCliente() {
-  rl.question('Ingresa el DNI del cliente a eliminar: ', (dniStr) => {
+  rl.question('Ingresa el DNI del Cliente a eliminar: ', (dniStr) => {
       const dni = parseInt(dniStr);
       const sucursal = obtenerSucursalCliente(dni); 
 
       if (!sucursal) {
-          console.log('No se encontró la sucursal actual.');
+          console.log('\nNo se encontró la sucursal actual ​🔎​');
           return leerOpcion();
       }
 
       // Buscar cliente en la sucursal
       const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
       if (!cliente) {
-          console.log(`No se encontró un cliente con DNI ${dni}.`);
+          console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎​`);
       } else {
           sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
-          console.log('Cliente eliminado exitosamente.');
+          console.log('\nCliente eliminado exitosamente ​✅​');
       }
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
       leerOpcion();
   });
 }
 
-//OBTIENE LA SUCURSAL SEGUN EL DNI DEL CLIENTE 
+//OBTIENE LA SUCURSAL SEGUN EL DNI DEL CLIENTE
 function obtenerSucursalCliente(dni: number): Sucursal | null {
   for (const sucursal of sucursales) {
+      console.log(sucursal.getListaClientes());
+      
       const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
       if (cliente) {
           return sucursal;
       }
   }
-  console.log(`No se encontró un cliente con DNI ${dni} en ninguna sucursal.`);
+  console.log(`\nNo se encontró un Cliente con DNI ${dni} en ninguna sucursal ​🔎​`);
   return null;
 }
 
@@ -426,8 +433,7 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
 
 //CREAMOS PACIENTES
 function crearPaciente() {
-  
-  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+  rl.question('Ingrese el Documento del Cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
     if (isNaN(documento) ||documentoStr.length < 5) {      
@@ -443,49 +449,39 @@ function crearPaciente() {
 
     if (clientePaciente) {
       id += 1; 
-      console.log(`ID Paciente: ${id}`); 
+      console.log(`ID Paciente: ${id}`);
       rl.question('Nombre del paciente: ', (nombre) => {
         rl.question('Especie del paciente: ', (especie) => {
-          rl.question('Sexo del paciente: ', (sexo) => {
-            if (sexo !== 'Macho' && sexo !== 'Hembra') {
-              console.log('Por favor, ingresa un sexo válido: Macho o Hembra.');
-              return crearPaciente(); 
-            }
-            rl.question('Fecha de nacimiento del paciente (DD-MM-YYYY): ', (fechaStr) => {
-              const fechaNacimiento = new Date(fechaStr);
-              if (isNaN(fechaNacimiento.getTime())) {
-                console.log('Por favor, ingresa una fecha válida en el formato DD-MM-YYYY.');
-                return crearPaciente();
-              }
-              rl.question('Observación del paciente: ', (observacion) => {                
+          solicitarEntrada('Sexo del paciente (Macho | Hembra): ', validarSexo, (sexo) => {
+            solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY): ', validarFecha, (fecha) => {
+              rl.question('Observación del paciente: ', (observacion) => {       
+                const fechaNacimiento = new Date(fecha);
                 clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
-                console.log('Paciente creado exitosamente.');                
-                console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+                console.log('\nPaciente creado exitosamente ​✅​');                
+                
+                console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
                 leerOpcion();  
               });
             });
           });
         });
       });
-
     } else {
-      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+      console.log(`Error ​❌​: No se encontró un Cliente con documento ${documento}.`);
     }
-    leerOpcion(); 
-  });      
+  });
 }
 
 //MODIFICAR PACIENTE
 function modificarPaciente() {
     let pacienteCliente: Paciente | undefined;
-    //let clientePaciente: Cliente | undefined;
 
-    rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+    rl.question('Ingrese el Documento del Cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
   
       // Validación del documento
       if (isNaN(documento) ||documentoStr.length < 5) {  
-        console.log('Por favor, ingresa un número de documento válido (al menos 5 dígitos).');      
+        console.log('\nPor favor, ingresa un número de documento válido (al menos 5 dígitos).');      
         return registrarVisita();
       }    
       
@@ -498,11 +494,11 @@ function modificarPaciente() {
       });    
       
       if (!clientePaciente) {
-        console.log('No se encontró el cliente con el ID ingresado.');
+        console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
         return leerOpcion(); 
       } 
 
-      rl.question('Ingresa el ID del paciente a modificar: ', (idStr) => {
+      rl.question('Ingresa el ID del Paciente a modificar: ', (idStr) => {
         const id = parseInt(idStr);
         
         if (isNaN(id)) {
@@ -513,7 +509,7 @@ function modificarPaciente() {
       
   
         if (!pacienteCliente) {
-          console.log('No se encontró el paciente con el ID ingresado.');
+          console.log('\nNo se encontró el paciente con el ID ingresado ​🔎​');
           return leerOpcion(); 
         }
 
@@ -531,7 +527,7 @@ function modificarPaciente() {
                     fechaNacimiento || pacienteCliente.getFechaNacimiento(),
                     observacion || pacienteCliente.getObservacion());
 
-                  console.log('Paciente modificado exitosamente.');
+                  console.log('\nPaciente modificado exitosamente ​✅​');
                   leerOpcion(); 
                 });
               });
@@ -540,15 +536,13 @@ function modificarPaciente() {
         });
       });
 
-      leerOpcion();   // Volver al menú opciones
+      leerOpcion(); 
     });
 } 
 
-
 //ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
-// ELIMINAR PACIENTE
 function eliminarPaciente() {
-  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+  rl.question('Ingrese el Documento del Cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
     // Validación del documento
@@ -566,11 +560,11 @@ function eliminarPaciente() {
     });    
     
     if (!clientePaciente) {
-      console.log('No se encontró el cliente con el ID ingresado.');
+      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
       return leerOpcion(); 
     } 
 
-    rl.question('Ingresa el ID del paciente a eliminar: ', (idStr) => {
+    rl.question('Ingresa el ID del Paciente a eliminar: ', (idStr) => {
       const id = parseInt(idStr);
       
       if (isNaN(id)) {
@@ -581,16 +575,16 @@ function eliminarPaciente() {
       // Eliminar paciente usando el método eliminarPaciente del Cliente
       clientePaciente.eliminarPaciente(id);
 
-      console.log('Paciente eliminado exitosamente.');
-      leerOpcion(); // Volver al menú de opciones
+      console.log('\nPaciente eliminado exitosamente ​✅​');
+      leerOpcion(); 
   });
 });
 }
 
-
 //MOSTRAR LISTA DE PACIENTES
 function mostrarListaPacientes(): void {
-  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+  console.log('\n🐾🐈---------------------------------------------🐾Listado de Pacientes por Cliente🐾---------------------------------------------🐩🐾\n');
+  rl.question('Ingrese el Documento del Cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
     // Validación del documento
@@ -608,7 +602,7 @@ function mostrarListaPacientes(): void {
     });    
     
     if (!clientePaciente) {
-      console.log('No se encontró el cliente con el ID ingresado.');
+      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
       return leerOpcion(); 
     } 
 
@@ -616,53 +610,24 @@ function mostrarListaPacientes(): void {
   
     // Si no hay pacientes, mostramos un mensaje
     if (pacientes.length === 0) {
-      return 'No hay pacientes registrados en este cliente.';
+      return '\nNo hay Pacientes registrados en este cliente ❌';
     }
 
     // Creamos un string con la información de cada paciente
     const lista = pacientes.map(paciente => {
-      return `ID: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
+      return `🆔: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
     }).join('\n');
 
     console.log(lista);
 
+    console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
     leerOpcion();
 });  
 }
 
-//METODO PARA MOSTRAR TODOS LO PACENTES REGISTARDOS EN LA SUCURSAL
-function mostrarTodosLosPacientes(): void {
-  console.log("------------------------------------------------- 🐶 Listado de Pacientes por Sucursal 🐱 -------------------------------------------------");
-
-  // Recorremos todas las sucursales y mostramos sus pacientes
-  let pacientesEncontrados = false;
-
-  sucursales.forEach(sucursal => {
-    const pacientes = sucursal.getListaClientes().flatMap(cliente => cliente.getListaPacientes());
-    
-    if (pacientes.length > 0) {
-      console.log(`\nSucursal: ${sucursal.getId()}`);
-      pacientes.forEach(paciente => {
-        console.log(`ID: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Fecha de Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`);
-        console.log(`Sucursal: ${sucursal.getId()} - ${pacientes.length} Pacientes`);
-      });
-      pacientesEncontrados = true;
-    }
-  });
-
-
-  if (!pacientesEncontrados) {
-    console.log('No hay pacientes registrados en ninguna sucursal.');
-  }
-
-  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-  
-  leerOpcion();  
-}
-
 function elegirSucursal(): void {
   if (sucursales.length === 0) {
-    console.log("No hay sucursales registradas.");
+    console.log('No hay Sucursales registradas.');
   } else {   
     sucursales.forEach((sucursal, index) => {
         console.log(`Sucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}`);
@@ -671,24 +636,25 @@ function elegirSucursal(): void {
 }
 
 function mostrarSucursales(): void {
-    console.log("------------------------------------------------- 🐾 Listado de Sucursales 🐾 -------------------------------------------------");
+    console.log('\n🐾🐈---------------------------------------------🐾Listado de Sucursales🐾---------------------------------------------🐩🐾\n');
     if (sucursales.length === 0) {
-        console.log("No hay sucursales registradas.");
+        console.log("No hay Sucursales registradas.");
     } else {
       sucursales.forEach((sucursal, index) => {
         console.log(`Sucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}\n   Dirección: ${sucursal.getDireccion()}\n   Localidad: ${sucursal.getLocalidad()}`);
       });
-      console.log("-------------------------------------------------------------------------------------------------------------");
+      console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
     }
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
     
-    leerOpcion();  
+    leerOpcion(); 
        
   }
 
 //MOSTRAMOS LOS CLIENTES CREADOS (LISTA DE CLIENTES)
+
 // Función para mostrar los clientes agrupados por sucursal
 function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
+  console.log('\n🐾🐈---------------------------------------------🐾Listado de Clientes por Sucursal🐾---------------------------------------------🐩🐾\n');
   let resultado = "";
 
   for (const sucursal of sucursales) {
@@ -699,11 +665,12 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
       const listaClientes = sucursal.getListaClientes();
 
       if (listaClientes.length === 0) {
-          resultado += "  - No hay clientes registrados.\n";
+          resultado += "  - No hay Clientes registrados.\n";
       } else {
           for (const cliente of listaClientes) {
               // Agregar información formateada de cada cliente
               resultado += `  - ${cliente.mostrarDatos()}\n`;
+              resultado += `\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n`
           }
       }
 
@@ -711,13 +678,14 @@ function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
   }
 
   console.log(resultado);
-  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
+  console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
   leerOpcion();
 } 
 
 //MOSTRAMOS LOS PROVEEDORES CREADOS (LISTA DE CLIENTES)
 function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
+  console.log('\n🐾🐈---------------------------------------------🐾Listado de Proveedores por Sucursal🐾---------------------------------------------🐩🐾\n');
   let resultado = "";
 
   for (const sucursal of sucursales) {
@@ -735,19 +703,20 @@ function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
               resultado += `  - ${Proveedor.mostrarDatos()}\n`;
           }
       }
+
       resultado += "\n"; 
   }
 
   console.log(resultado);
-  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
+  
+  console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
   leerOpcion();
 } 
 
 //Registramos la visita del cliente
 function registrarVisita() {
   
-  rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
+  rl.question('Ingrese el Documento del Cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
     // Validación del documento
@@ -767,12 +736,11 @@ function registrarVisita() {
     if (clienteVisita) {
       // Registrar la visita   
       clienteVisita.registrarVisita(); 
-      console.log("La visita fue registrada con éxito.");
+      console.log('\nLa visita fue registrada con éxito ​✅​');
       console.log('-------------------------------------------------------------------------');
     } else {
-      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+      console.log(`\nError ​❌​: No se encontró un Cliente con documento ${documento} ​🔎.`);
     }
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
     
     leerOpcion();   
   });

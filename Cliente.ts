@@ -41,21 +41,21 @@ export class Cliente extends Persona {
     public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
         // Verificar que todos los datos están presentes
         if (!id || !nombre || !especie || !sexo || !fechaNacimiento) {
-            console.log("Error: Todos los datos del paciente deben estar completos para darlo de alta.");
+            console.log("\nError ❌: Todos los datos del Paciente deben estar completos para darlo de alta.");
             return;
         }
             
         //Verificar que el paciente no exista ya en la lista
         const existePaciente = this.listaPacientes.some(paciente => paciente.getId() === id);
         if (existePaciente) {
-            console.log(`Error: Ya existe un paciente con ID ${id} en la lista.`);
+            console.log(`\nError ❌: Ya existe un Paciente con ID ${id} en la lista.`);
             return;
         }
     
         //  agregar el nuevo paciente
         const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
         this.listaPacientes.push(paciente);
-        console.log(`El paciente ${nombre} (ID ${id}) ha sido agregado correctamente.`);
+        console.log(`\nEl Paciente ${nombre} (🆔 ${id}) ha sido agregado correctamente ✔️.`);
     }
     
     public registrarVisita(): void {
@@ -67,7 +67,7 @@ export class Cliente extends Persona {
 
     private definirVIP(): void {
         this.vip = true;
-        console.log(`El cliente ${this.nombre} es considerado VIP`);
+        console.log(`\nEl cliente ${this.nombre} es considerado VIP`);
     }
 
     public modificarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
@@ -78,9 +78,9 @@ export class Cliente extends Persona {
             paciente.setSexo(sexo);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setObservacion(observacion);
-            console.log(`Los datos del Paciente ${nombre} han sido modificados Correctamente.`)
+            console.log(`\nLos datos del Paciente ${nombre} han sido modificados Correctamente ✔️`)
         } else {
-            console.log(`El Paciente ${nombre} (${id}) no se ha encontrado en la lista de Pacientes de la Sucursal.`);
+            console.log(`\nEl Paciente ${nombre} (${id}) no se ha encontrado en la lista de Pacientes de la Sucursal 🔎`);
         }
     }
 
@@ -89,14 +89,14 @@ export class Cliente extends Persona {
 
         if (index != -1) {
             this.listaPacientes.splice(index, 1);
-            console.log(`El Paciente ${this.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal.`)
+            console.log(`\nEl Paciente ${this.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal 🗑️`)
         } else {
-            console.log(`El Paciente ${this.getNombre()} (${id}) no ha sido encontado en la lista de Pacientes de la Sucursal.`)
+            console.log(`\nEl Paciente ${this.getNombre()} (${id}) no ha sido encontado en la lista de Pacientes de la Sucursal 🔎`)
         }
     }
 
     public mostrarDatos(): string {
         const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
-        return `Cliente (ID ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nPacientes:\n${pacientesInfo}`;
+        return `Cliente (​​🆔​ ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nPacientes:\n${pacientesInfo}`;
     }
 }
