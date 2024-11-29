@@ -28,9 +28,10 @@ function mostrarMenu() {
   13. Mostrar Sucursales
   14. Mostrar Provedores
   15. Mostrar Clientes
-  16. Mostrar Pacientes
-  17. Registrar Visita
-  18. Salir
+  16. Mostrar Pacientes del Cliente
+  17. Mostrar todos los Pacientes
+  18. Registrar Visita
+  19. Salir
   `);
 }
 
@@ -88,9 +89,12 @@ function leerOpcion() {
                 mostrarListaPacientes();
                 break;
             case '17':
-                registrarVisita();
-                break;    
+                mostrarTodosLosPacientes();
+                break;   
             case '18':
+                registrarVisita();
+                break;   
+            case '19':
                 rl.close();
                 console.log("Salió correctamente del Sistema.\nGracias por ser parte de 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾.")
                 break;
@@ -100,7 +104,6 @@ function leerOpcion() {
         }
     });
 }
-
 let id = 0;   // Inicializa el ID global 
 
 /***********************************************************************************************************************************************************/
@@ -423,6 +426,7 @@ function obtenerSucursalCliente(dni: number): Sucursal | null {
 
 //CREAMOS PACIENTES
 function crearPaciente() {
+  
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
@@ -454,10 +458,9 @@ function crearPaciente() {
                 return crearPaciente();
               }
               rl.question('Observación del paciente: ', (observacion) => {                
-                //clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
+                clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
                 console.log('Paciente creado exitosamente.');                
-                console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
+                console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
                 leerOpcion();  
               });
             });
@@ -468,8 +471,6 @@ function crearPaciente() {
     } else {
       console.log(`Error: No se encontró un cliente con documento ${documento}.`);
     }
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
-
     leerOpcion(); 
   });      
 }
@@ -508,8 +509,9 @@ function modificarPaciente() {
           console.log('Por favor, ingresa un ID válido.');
           return leerOpcion();
         }
-        //pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getID() === id);
+        pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
       
+  
         if (!pacienteCliente) {
           console.log('No se encontró el paciente con el ID ingresado.');
           return leerOpcion(); 
@@ -521,13 +523,13 @@ function modificarPaciente() {
               rl.question('Nueva fecha de nacimiento (formato: DD-MM-YYYY) (deja vacío para no modificar): ', (fechaStr) => {
                 rl.question('Nueva observación (deja vacío para no modificar): ', (observacion) => {
                   
-                  /*const fechaNacimiento = new Date(fechaStr);
+                  const fechaNacimiento = new Date(fechaStr);
                     clientePaciente.modificarPaciente (id,
                     nombre || pacienteCliente.getNombre(),
                     especie || pacienteCliente.getEspecie(),
                     sexo || pacienteCliente.getSexo(),
                     fechaNacimiento || pacienteCliente.getFechaNacimiento(),
-                    observacion || pacienteCliente.getObservacion());*/
+                    observacion || pacienteCliente.getObservacion());
 
                   console.log('Paciente modificado exitosamente.');
                   leerOpcion(); 
@@ -537,13 +539,14 @@ function modificarPaciente() {
           });
         });
       });
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
-      leerOpcion();   
+      leerOpcion();   // Volver al menú opciones
     });
 } 
 
+
 //ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
+// ELIMINAR PACIENTE
 function eliminarPaciente() {
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
@@ -574,20 +577,19 @@ function eliminarPaciente() {
         console.log('Por favor, ingresa un ID válido.');
         return leerOpcion();
       }
-      // Eliminar paciente usando el método eliminarPaciente del Cliente
-      //clientePaciente.eliminarPaciente(id);
-    
-      console.log('Paciente eliminado exitosamente.');
-      console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
-      leerOpcion(); 
+      // Eliminar paciente usando el método eliminarPaciente del Cliente
+      clientePaciente.eliminarPaciente(id);
+
+      console.log('Paciente eliminado exitosamente.');
+      leerOpcion(); // Volver al menú de opciones
   });
 });
 }
 
+
 //MOSTRAR LISTA DE PACIENTES
 function mostrarListaPacientes(): void {
-  console.log("------------------------------------------------- 🐶 Listado de Pacientes 🐱 -------------------------------------------------");
   rl.question('Ingrese el Documento del cliente: ', (documentoStr) => {
     const documento = parseInt(documentoStr);
 
@@ -623,10 +625,39 @@ function mostrarListaPacientes(): void {
     }).join('\n');
 
     console.log(lista);
-    console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
 
     leerOpcion();
 });  
+}
+
+//METODO PARA MOSTRAR TODOS LO PACENTES REGISTARDOS EN LA SUCURSAL
+function mostrarTodosLosPacientes(): void {
+  console.log("------------------------------------------------- 🐶 Listado de Pacientes por Sucursal 🐱 -------------------------------------------------");
+
+  // Recorremos todas las sucursales y mostramos sus pacientes
+  let pacientesEncontrados = false;
+
+  sucursales.forEach(sucursal => {
+    const pacientes = sucursal.getListaClientes().flatMap(cliente => cliente.getListaPacientes());
+    
+    if (pacientes.length > 0) {
+      console.log(`\nSucursal: ${sucursal.getId()}`);
+      pacientes.forEach(paciente => {
+        console.log(`ID: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Fecha de Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`);
+        console.log(`Sucursal: ${sucursal.getId()} - ${pacientes.length} Pacientes`);
+      });
+      pacientesEncontrados = true;
+    }
+  });
+
+
+  if (!pacientesEncontrados) {
+    console.log('No hay pacientes registrados en ninguna sucursal.');
+  }
+
+  console.log("🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾");
+  
+  leerOpcion();  
 }
 
 function elegirSucursal(): void {
