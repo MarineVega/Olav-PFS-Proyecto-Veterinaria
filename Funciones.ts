@@ -59,6 +59,7 @@ export function modificarSucursal() {
           sucursal.setDireccion(direccion);
           sucursal.setLocalidad(localidad);
           console.log('\nSucursal modificada exitosamente ​✅​');
+           submenuSucursales()
           leerOpcion();
         });
       });
@@ -86,6 +87,7 @@ export function eliminarSucursal() {
       sucursales.splice(index, 1);
       console.log('\nSucursal eliminada exitosamente ​✅​');
     }
+    submenuSucursales() 
     leerOpcion();
   });
 }
