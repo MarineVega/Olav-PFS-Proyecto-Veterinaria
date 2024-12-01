@@ -155,3 +155,4 @@ modificarListasSucursal(sucursales, 2, [cliente10], [proveedor12]);
 sucursales.forEach(sucursal => {
     console.log(sucursal.mostrarDatosSucursal());
 });
+

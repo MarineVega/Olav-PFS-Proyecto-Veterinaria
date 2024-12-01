@@ -72,7 +72,6 @@ export class Sucursal {
    Lista Proveedores: [${proveedores}]`;
   }
   
-  // alta, baja  y modificacion de Proveedores
   public agregarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number ): void {
     const proveedorExistente = this.listaProveedores.find((proveedor) => proveedor.getDocumento() === documento);
   
@@ -113,7 +112,6 @@ export class Sucursal {
     }
   }
   
-  // alta, modificacion y eliminacion de Clientes
   public agregarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
