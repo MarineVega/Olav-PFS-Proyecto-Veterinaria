@@ -6,14 +6,11 @@ import { crearCliente, modificarCliente, eliminarCliente, mostrarClientesPorSucu
 import { crearPaciente, modificarPaciente, eliminarPaciente, mostrarListaPacientes } from './Funciones';
 import { registrarVisita } from './Funciones';
 
-
-// Datos globales
 let sucursales: Sucursal[] = [];
 
 console.log(" ")
 console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
 
-// Mostrar el menú principal
 export function mostrarMenuPrincipal() {
   console.log(`
   1. Sucursales
@@ -26,7 +23,7 @@ export function mostrarMenuPrincipal() {
   leerOpcion();
 }
 
-// Función para leer la opción del usuario
+// Está función permite leer la opción del Usuario
 export function leerOpcion() {
   rl.question('Selecciona una opción del Menú Principal: ', (opcion) => {
     switch (opcion) {
@@ -56,7 +53,6 @@ export function leerOpcion() {
   });
 }
 
-// Submenú para gestionar Sucursales
 export function submenuSucursales() {
   console.clear();  
 
@@ -93,8 +89,7 @@ export function submenuSucursales() {
   });
 }
 
-// Submenú para gestionar Proveedores
-function submenuProveedores() {
+export function submenuProveedores() {
   console.clear();  
 
   console.log(`
@@ -130,8 +125,7 @@ function submenuProveedores() {
   });
 }
 
-// Submenú para gestionar Clientes
-function submenuClientes() {
+export function submenuClientes() {
   console.clear();  
 
   console.log(`
@@ -167,8 +161,7 @@ function submenuClientes() {
   });
 }
 
-// Submenú para gestionar Pacientes
-function submenuPacientes() {
+export function submenuPacientes() {
   console.clear();  
 
   console.log(`
@@ -204,6 +197,6 @@ function submenuPacientes() {
   });
 }
 
-// Mostrar el menú principal al iniciar el programa
 mostrarMenuPrincipal();
+
 

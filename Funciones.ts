@@ -1,7 +1,7 @@
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
 import { Sucursal } from "./Sucursal";
-import { leerOpcion, submenuSucursales } from './MenuSubmenu';
+import { leerOpcion, submenuSucursales, submenuProveedores, submenuClientes, submenuPacientes } from './MenuSubmenu';
 
 import * as readline from 'readline';
 
@@ -34,6 +34,7 @@ export function crearSucursal() {
 
       console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
 
+      submenuSucursales();
       leerOpcion();
         });
     });
@@ -48,7 +49,7 @@ export function modificarSucursal() {
     const sucursal = sucursales.find(s => s.getId() === id);
 
     if (!sucursal) {
-      console.log('\nNo se encontró una Sucursal con ese ID ​🔎​');
+      console.log('\nNo se encontró una Sucursal con ese ID ​🔎\n​');
       return leerOpcion();
     }
 
@@ -59,6 +60,7 @@ export function modificarSucursal() {
           sucursal.setDireccion(direccion);
           sucursal.setLocalidad(localidad);
           console.log('\nSucursal modificada exitosamente ​✅​');
+          submenuSucursales();
           leerOpcion();
         });
       });
@@ -73,7 +75,7 @@ export function eliminarSucursal() {
     const index = sucursales.findIndex(s => s.getId() === id);
 
     if (index === -1) {
-      console.log('\nNo se encontró una Sucursal con ese ID ​🔎​');
+      console.log('\nNo se encontró una Sucursal con ese ID ​🔎\n​');
       return leerOpcion();
     }
 
@@ -81,11 +83,12 @@ export function eliminarSucursal() {
 
     // Validar si la sucursal tiene clientes o proveedores
     if (sucursal.getListaClientes().length > 0 || sucursal.getListaProveedores().length > 0) {
-      console.log('\nNo se puede eliminar esta Sucursal porque tiene Clientes o Proveedores registrados ⚠️​');
+      console.log('\nNo se puede eliminar esta Sucursal porque tiene Clientes o Proveedores registrados ⚠️\n​');
     } else {
       sucursales.splice(index, 1);
       console.log('\nSucursal eliminada exitosamente ​✅​');
     }
+    submenuSucursales();
     leerOpcion();
   });
 }
@@ -100,7 +103,7 @@ export function mostrarSucursales(): void {
         });
         console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
     }
-
+    submenuSucursales();
     leerOpcion();
 
 }
@@ -130,6 +133,8 @@ export function crearProveedor() {
                         console.log('\nProveedor creado exitosamente ​✅​');
 
                         console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
+
+                        submenuProveedores();
                         leerOpcion();  
                     });
                   });
@@ -153,7 +158,7 @@ export function modificarProveedor() {
     const sucursal = obtenerSucursalProveedor(dni); // Método adaptado para proveedores
 
     if (!sucursal) {
-      console.log('\nNo se encontró la sucursal actual ​🔎​');
+      console.log('\nNo se encontró la sucursal actual ​🔎\n​');
       return leerOpcion();
     }
 
@@ -167,6 +172,8 @@ export function modificarProveedor() {
               console.log('\nProveedor modificado exitosamente ​✅​');
 
               console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+
+              submenuProveedores();
               leerOpcion();
             });
           });
@@ -183,18 +190,19 @@ export function eliminarProveedor() {
       const sucursal = obtenerSucursalProveedor(dni); 
 
       if (!sucursal) {
-          console.log('\nNo se encontró la sucursal actual ​🔎​');
+          console.log('\nNo se encontró la sucursal actual ​🔎\n​');
           return leerOpcion();
       }
 
       // Buscar PROVEEDOR en la sucursal
       const proveedor = sucursal.getListaProveedores().find(c => c.getDocumento() === dni);
       if (!proveedor) {
-          console.log(`\nNo se encontró un Proveedor con DNI ${dni} ​🔎​`);
+          console.log(`\nNo se encontró un Proveedor con DNI ${dni} ​🔎\n​`);
       } else {
           sucursal.eliminarProveedor(proveedor.getId(), proveedor.getNombre());
           console.log('\nProveedor eliminado exitosamente ​✅​');
       }
+      submenuProveedores();
       leerOpcion();
   });
 }
@@ -207,7 +215,7 @@ export function obtenerSucursalProveedor(dni: number): Sucursal | null {
           return sucursal;
       }
   }
-  console.log(`\nNo se encontró un Proveedor con DNI ${dni} en ninguna Sucursal ​❌​`);
+  console.log(`\nNo se encontró un Proveedor con DNI ${dni} en ninguna Sucursal ​❌\n​`);
   return null;
 }
 
@@ -238,6 +246,8 @@ export function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
     console.log(resultado);
     
     console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
+    
+    submenuProveedores();
     leerOpcion();
   } 
 
@@ -316,8 +326,9 @@ export function crearCliente() {
                     console.log('\nCliente creado exitosamente ​✅​');
                     
                     console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+
+                    submenuClientes();
                     leerOpcion();
-                    
                   }
                 );
               }
@@ -339,7 +350,7 @@ export function crearCliente() {
         const sucursal = obtenerSucursalCliente(dni); 
   
         if (!sucursal) {
-            console.log('\nNo se encontró la sucursal actual ​🔎​');
+            console.log('\nNo se encontró la sucursal actual ​🔎\n​');
             return leerOpcion();
         }
   
@@ -350,6 +361,8 @@ export function crearCliente() {
                     // Usar el método de la sucursal
                     sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
                     console.log('\nCliente modificado exitosamente ​✅​');
+
+                    submenuClientes();
                     leerOpcion();
                 });
             });
@@ -364,18 +377,20 @@ export function crearCliente() {
         const sucursal = obtenerSucursalCliente(dni); 
   
         if (!sucursal) {
-            console.log('\nNo se encontró la sucursal actual ​🔎​');
+            console.log('\nNo se encontró la sucursal actual ​🔎\n​');
             return leerOpcion();
         }
   
         // Buscar cliente en la sucursal
         const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
         if (!cliente) {
-            console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎​`);
+            console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎\n​`);
         } else {
             sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
             console.log('\nCliente eliminado exitosamente ​✅​');
         }
+
+        submenuClientes();
         leerOpcion();
     });
   }
@@ -390,7 +405,7 @@ export function crearCliente() {
             return sucursal;
         }
     }
-    console.log(`\nNo se encontró un Cliente con DNI ${dni} en ninguna sucursal ​🔎​`);
+    console.log(`\nNo se encontró un Cliente con DNI ${dni} en ninguna sucursal ​🔎\n​`);
     return null;
   }
 
@@ -424,6 +439,8 @@ export function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
     console.log(resultado);
   
     console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
+    
+    submenuClientes();
     leerOpcion();
   } 
   
@@ -459,6 +476,8 @@ export function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
                   console.log('\nPaciente creado exitosamente ​✅​');                
                   
                   console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
+
+                  submenuPacientes();
                   leerOpcion();  
                 });
               });
@@ -466,7 +485,7 @@ export function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
           });
         });
       } else {
-        console.log(`Error ​❌​: No se encontró un Cliente con documento ${documento}.`);
+        console.log(`Error ​❌​: No se encontró un Cliente con documento ${documento}.\n`);
       }
     });
   }
@@ -493,7 +512,7 @@ export function modificarPaciente() {
       });    
       
       if (!clientePaciente) {
-        console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
+        console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
         return leerOpcion(); 
       } 
 
@@ -508,7 +527,7 @@ export function modificarPaciente() {
       
   
         if (!pacienteCliente) {
-          console.log('\nNo se encontró el paciente con el ID ingresado ​🔎​');
+          console.log('\nNo se encontró el paciente con el ID ingresado ​🔎\n​');
           return leerOpcion(); 
         }
 
@@ -534,7 +553,8 @@ export function modificarPaciente() {
           });
         });
       });
-
+      
+      submenuPacientes();
       leerOpcion(); 
     });
 } 
@@ -559,7 +579,7 @@ export function eliminarPaciente() {
     });    
     
     if (!clientePaciente) {
-      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
+      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
       return leerOpcion(); 
     } 
 
@@ -575,6 +595,8 @@ export function eliminarPaciente() {
       clientePaciente.eliminarPaciente(id);
 
       console.log('\nPaciente eliminado exitosamente ​✅​');
+
+      submenuPacientes();
       leerOpcion(); 
   });
 });
@@ -601,7 +623,7 @@ export function mostrarListaPacientes(): void {
     });    
     
     if (!clientePaciente) {
-      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎​');
+      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
       return leerOpcion(); 
     } 
 
@@ -620,6 +642,8 @@ export function mostrarListaPacientes(): void {
     console.log(lista);
 
     console.log('\n🐾 🐈----------------------------------------------------------------------🐾 🐾-----------------------------------------------------------------------🐩 🐾\n');
+    
+    submenuPacientes();
     leerOpcion();
 });  
 }
@@ -650,9 +674,10 @@ export function registrarVisita() {
       console.log('\nLa visita fue registrada con éxito ​✅​');
       console.log('-------------------------------------------------------------------------');
     } else {
-      console.log(`\nError ​❌​: No se encontró un Cliente con documento ${documento} ​🔎.`);
+      console.log(`\nError ​❌​: No se encontró un Cliente con documento ${documento} ​🔎\n`);
     }
     
+    submenuPacientes();
     leerOpcion();   
   });
 }
