@@ -130,7 +130,6 @@ function submenuProveedores() {
   });
 }
 
-// Submenú para gestionar Clientes
 function submenuClientes() {
   console.clear();  
 
