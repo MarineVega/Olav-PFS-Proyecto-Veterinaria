@@ -115,7 +115,6 @@ export function mostrarSucursales(): void {
     });
     console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
 
-
   }
 
   rl.question('Presione Enter para continuar...', () => {
@@ -277,7 +276,7 @@ export function mostrarProveedoresPorSucursal(sucursales: Sucursal[]): void {
 
   console.log(resultado);
 
-  console.log('\n🐾🐈----------------------------------------------------------------🐾🐾🐩🐾----------------------------------------------------------------\n');
+  console.log('\n🐾🐈----------------------------------------------------------------🐾🐾----------------------------------------------------------------🐩🐾\n');
 
   rl.question('Presione Enter para continuar...', () => {
 
