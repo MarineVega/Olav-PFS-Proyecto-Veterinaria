@@ -1,7 +1,7 @@
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
 import { Sucursal } from "./Sucursal";
-import { leerOpcion, submenuSucursales, submenuProveedores, submenuClientes, submenuPacientes } from './MenuSubmenu';
+import { leerOpcion, submenuSucursales, submenuProveedores, submenuClientes, submenuPacientes } from './MenuConSubmenu';
 
 import * as readline from 'readline';
 
