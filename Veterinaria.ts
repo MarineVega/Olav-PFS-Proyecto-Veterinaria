@@ -246,7 +246,7 @@ function crearSucursal() {
         });        
       }
   
-      solicitarEntrada('Nuevo responsable: ', validarVacios, false, (responsable: string) => {          
+      solicitarEntrada('Nuevo responsable: ', validarVacios, false, (responsable: string) => {
         solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
           solicitarEntrada('Nueva localidad: ', validarVacios, false, (localidad: string) => { 
 
@@ -334,11 +334,11 @@ function mostrarSucursales(): void {
   
         id += 1;
         console.log(`\nID Proveedor: ${id}`);
-        rl.question('Nombre del Proveedor: ', (nombre) => {
-          rl.question('Dirección del Proveedor: ', (direccion) => { 
+        solicitarEntrada('Nombre del Proveedor: ', validarVacios, false, (nombre: string) => {
+          solicitarEntrada('Dirección de la Sucursal: ', validarVacios, false, (direccion: string) => {
             solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
               solicitarEntrada('Documento del Proveedor: ', validarDocumento, false, (documento) => {
-                rl.question('Rubro del Proveedor: ', (rubro) => { 
+                solicitarEntrada('Rubro del Proveedor: ', validarVacios, false, (rubro: string) => {
                   solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
                     sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));
   
@@ -377,10 +377,10 @@ function mostrarSucursales(): void {
         return leerOpcion();
       }
   
-      rl.question('Nuevo nombre: ', (nombre) => {
-        rl.question('Nueva dirección: ', (direccion) => {
+      solicitarEntrada('Nuevo nombre: ', validarVacios, false, (nombre: string) => {
+        solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
           solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
-            rl.question('Nuevo rubro: ', (rubro) => {
+            solicitarEntrada('Nuevo rubro: ', validarVacios, false, (rubro: string) => {            
               solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
   
                 sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));
@@ -566,9 +566,8 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
   
         id += 1;
         console.log(`\nID Cliente: ${id}`);
-  
-        rl.question('\Nombre del cliente: ', (nombre) => {
-          rl.question('Dirección del cliente: ', (direccion) => {
+        solicitarEntrada('\Nombre del cliente: ', validarVacios, false, (nombre: string) => {
+          solicitarEntrada('Dirección del ciente: ', validarVacios, false, (direccion: string) => {          
             solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
               solicitarEntrada('Documento del cliente: ', validarDocumento, false, (documento) => {
   
@@ -607,9 +606,9 @@ function modificarCliente() {
         return leerOpcion();
       }
   
-      rl.question('Nuevo nombre: ', (nombre) => {
-        rl.question('Nueva dirección: ', (direccion) => {
-          solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
+      solicitarEntrada('Nuevo nombre: ', validarVacios, false, (nombre: string) => {
+        solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
+          solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
   
             sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
             console.log('\nCliente modificado exitosamente ​✅​');
