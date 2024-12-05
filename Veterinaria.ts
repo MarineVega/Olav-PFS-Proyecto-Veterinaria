@@ -246,9 +246,9 @@ function crearSucursal() {
         });        
       }
   
-      solicitarEntrada('Nuevo responsable: ', validarVacios, true, (responsable: string) => {
-        solicitarEntrada('Nueva dirección: ', validarVacios, true, (direccion: string) => {
-          solicitarEntrada('Nueva localidad: ', validarVacios, true, (localidad: string) => { 
+      solicitarEntrada('Nuevo responsable (deja vacío para no modificar): ', validarVacios, true, (responsable: string) => {
+        solicitarEntrada('Nueva dirección (deja vacío para no modificar): ', validarVacios, true, (direccion: string) => {
+          solicitarEntrada('Nueva localidad (deja vacío para no modificar): ', validarVacios, true, (localidad: string) => { 
 
             sucursal.setResponsable(responsable || sucursal.getResponsable());
             sucursal.setDireccion(direccion || sucursal.getDireccion());
