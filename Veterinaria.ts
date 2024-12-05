@@ -337,10 +337,10 @@ function mostrarSucursales(): void {
         console.log(`\nID Proveedor: ${id}`);
         rl.question('Nombre del Proveedor: ', (nombre) => {
           rl.question('Dirección del Proveedor: ', (direccion) => { 
-            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
-              solicitarEntrada('Documento del Proveedor: ', validarDocumento, (documento) => {
+            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
+              solicitarEntrada('Documento del Proveedor: ', validarDocumento, false, (documento) => {
                 rl.question('Rubro del Proveedor: ', (rubro) => { 
-                  solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, (CUIT) => {
+                  solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
                     sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));
   
                     console.log('\nProveedor creado exitosamente ​✅​');
@@ -380,9 +380,9 @@ function mostrarSucursales(): void {
   
       rl.question('Nuevo nombre: ', (nombre) => {
         rl.question('Nueva dirección: ', (direccion) => {
-          solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+          solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
             rl.question('Nuevo rubro: ', (rubro) => {
-              solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, (CUIT) => {
+              solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
   
                 sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));
                 console.log('\nProveedor modificado exitosamente ​✅​');
@@ -491,23 +491,29 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
     return /^\d{11,}$/.test(CUIT);
   }
   
-  function validarSexo(sexo: string) {
-    if (sexo.toLowerCase() == 'macho' || sexo.toLowerCase() == 'hembra') {
-      return true;
-    } else {
-      return false;
+  function validarSexo(sexo: string, esModificacion: boolean) {
+    if (esModificacion && sexo.trim() === '') {      
+      return true;      // Permito vacío en caso de modificación
     }
+
+    const sexosValidos = ['macho', 'hembra'];
+    return sexosValidos.includes(sexo.toLowerCase());
   }
   
-  function validarEspecie(especie: string) {
-    if (especie.toLowerCase() == 'gato' || especie.toLowerCase() == 'perro' || especie.toLowerCase() == 'exotica') {
-      return true;
-    } else {
-      return false;
-    }   
+  function validarEspecie(especie: string, esModificacion: boolean) {
+    if (esModificacion && especie.trim() === '') {      
+      return true;      // Permito vacío en caso de modificación
+    }
+
+    const especiesValidas = ['gato', 'perro', 'exotica'];
+    return especiesValidas.includes(especie.toLowerCase());
   }
 
-  function validarFecha(fecha) {
+  function validarFecha(fecha, esModificacion: boolean) {
+    if (esModificacion && fecha.trim() === '') {      
+      return true;      // Permito vacío en caso de modificación
+    }
+
     const fechaNacimiento = new Date(fecha);
     if (isNaN(fechaNacimiento.getTime())) {
       return false;
@@ -516,11 +522,11 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
     }
   }
   
-  function solicitarEntrada(mensaje, validador, callback) {
+  function solicitarEntrada(mensaje, validador, esModificacion, callback) {
     rl.question(mensaje, (input) => {
-      if (!validador(input)) {
+      if (!validador (input, esModificacion)) {
         console.log('\nDato inválido. Inténtalo de nuevo ​⚠️​\n');
-        return solicitarEntrada(mensaje, validador, callback);
+        return solicitarEntrada(mensaje, validador, esModificacion, callback);
       }
       callback(input);
     });
@@ -554,8 +560,8 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
   
         rl.question('\Nombre del cliente: ', (nombre) => {
           rl.question('Dirección del cliente: ', (direccion) => {
-            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
-              solicitarEntrada('Documento del cliente: ', validarDocumento, (documento) => {
+            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
+              solicitarEntrada('Documento del cliente: ', validarDocumento, false, (documento) => {
   
                 sucursalCliente.agregarCliente(id, nombre, direccion, parseInt(telefono), parseInt(documento));
                 console.log('\nCliente creado exitosamente ​✅​');
@@ -594,7 +600,7 @@ function modificarCliente() {
   
       rl.question('Nuevo nombre: ', (nombre) => {
         rl.question('Nueva dirección: ', (direccion) => {
-          solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+          solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
   
             sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
             console.log('\nCliente modificado exitosamente ​✅​');
@@ -712,9 +718,9 @@ function crearPaciente() {
         id += 1;
         console.log(`\nID Paciente: ${id}`);
         rl.question('Nombre del paciente: ', (nombre) => {
-          solicitarEntrada('Especie del paciente (Gato | Perro | Exotica): ', validarEspecie, (especie: string) => {
-            solicitarEntrada('Sexo del paciente (Macho | Hembra): ', validarSexo, (sexo: string) => {
-              solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY): ', validarFecha, (fecha) => {
+          solicitarEntrada('Especie del paciente (Gato | Perro | Exotica): ', validarEspecie, false, (especie: string) => {
+            solicitarEntrada('Sexo del paciente (Macho | Hembra): ', validarSexo, false, (sexo: string) => {
+              solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY): ', validarFecha, false, (fecha) => {
                 rl.question('Observación del paciente: ', (observacion) => {
                   const fechaNacimiento = new Date(fecha);
                   clientePaciente.agregarPaciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
@@ -763,7 +769,11 @@ function crearPaciente() {
   
       if (!clientePaciente) {
         console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
-        return leerOpcion();
+        
+        rl.question('Presione Enter para continuar...', () => {  
+          submenuPacientes(); 
+          leerOpcion(); 
+        });        
       }
   
       console.log(clientePaciente.mostrarListaPacientes());
@@ -775,25 +785,20 @@ function crearPaciente() {
           console.log('Por favor, ingresa un ID válido.');
           return leerOpcion();
         }
+
         pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
-  
-  
+    
         if (!pacienteCliente) {
           console.log('\nNo se encontró el paciente con el ID ingresado ​🔎\n​');
           return leerOpcion();
         }
   
         rl.question('Nuevo nombre (deja vacío para no modificar): ', (nombre) => {
-          //rl.question('Nueva especie (deja vacío para no modificar): ', (especie) => {
-          solicitarEntrada('Especie del paciente (Gato | Perro | Exotica): ', validarEspecie, (especie) => {
-            solicitarEntrada('Sexo del paciente (Macho | Hembra) (deja vacío para no modificar): ', validarSexo, (sexo) => {
-              solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY) (deja vacío para no modificar): ', validarFecha, (fecha) => {
-            
-            //rl.question('Nuevo sexo (deja vacío para no modificar): ', (sexo) => {
-              //rl.question('Nueva fecha de nacimiento (formato: DD-MM-YYYY) (deja vacío para no modificar): ', (fechaStr) => {
+          solicitarEntrada('Especie del paciente (Gato | Perro | Exotica) (deja vacío para no modificar): ', validarEspecie, true, (especie) => {
+            solicitarEntrada('Sexo del paciente (Macho | Hembra) (deja vacío para no modificar): ', validarSexo, true, (sexo) => {
+              solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY) (deja vacío para no modificar): ', validarFecha, true, (fecha) => {
                 rl.question('Nueva observación (deja vacío para no modificar): ', (observacion) => {
                   const fechaNacimiento = new Date(fecha);
-                  //const fechaNacimiento = new Date(fechaStr);
                   clientePaciente.modificarPaciente(id,
                     nombre || pacienteCliente.getNombre(),
                     especie || pacienteCliente.getEspecie(),
@@ -824,6 +829,8 @@ function crearPaciente() {
   
   // ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
  function eliminarPaciente() {
+    let pacienteCliente: Paciente | undefined;
+
     rl.question('\nIngrese el Documento del Cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
   
@@ -841,28 +848,47 @@ function crearPaciente() {
   
       if (!clientePaciente) {
         console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
-        return leerOpcion();
-      }
-      
-      rl.question('Ingresa el ID del Paciente a eliminar: ', (idStr) => {
-        const id = parseInt(idStr);
-  
-        if (isNaN(id)) {
-          console.log('Por favor, ingresa un ID válido.');
-          return leerOpcion();
-        }
-  
-        // Eliminar paciente usando el método eliminarPaciente del Cliente
-        clientePaciente.eliminarPaciente(id);
-  
-        console.log('\nPaciente eliminado exitosamente ​🗑️​');
-  
-        console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");  
         rl.question('Presione Enter para continuar...', () => {  
           submenuPacientes(); 
           leerOpcion(); 
+        });        
+      } else {
+
+        console.log(clientePaciente.mostrarListaPacientes());
+        
+        rl.question('Ingresa el ID del Paciente a eliminar: ', (idStr) => {
+          const id = parseInt(idStr);
+    
+          if (isNaN(id)) {
+            console.log('Por favor, ingresa un ID válido.');
+            return leerOpcion();
+          }
+  
+          pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
+      
+          if (!pacienteCliente) {
+            console.log('\nNo se encontró el paciente con el ID ingresado ​🔎\n​');
+            rl.question('Presione Enter para continuar...', () => {  
+              submenuPacientes(); 
+              leerOpcion(); 
+            });
+            
+          } else {
+            // Eliminar paciente usando el método eliminarPaciente del Cliente
+            clientePaciente.eliminarPaciente(id);
+      
+            console.log('\nPaciente eliminado exitosamente ​🗑️​');
+            console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");  
+          }  
+    
+          rl.question('Presione Enter para continuar...', () => {  
+            submenuPacientes(); 
+            leerOpcion(); 
+          });
         });
-      });
+        
+      }
+
     });
   }
   
