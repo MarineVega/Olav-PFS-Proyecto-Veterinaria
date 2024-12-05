@@ -913,9 +913,11 @@ function crearPaciente() {
       } else {
         console.log(`\nError ​❌​: No se encontró un Cliente con documento ${documento} ​🔎\n`);
       }
+      rl.question('Presione Enter para continuar...', () => {
   
-      submenuPacientes();
-      leerOpcion();
+        submenuClientes();
+        leerOpcion();
+      });
     });
   }
   
