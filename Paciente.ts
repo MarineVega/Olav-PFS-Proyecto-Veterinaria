@@ -65,7 +65,8 @@ export class Paciente {
     }
           
     public mostrarDatosPaciente(): string {
-        return `Paciente (🆔 ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
+        //return `Paciente (🆔 ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
+        return `Paciente (🆔 ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento().toLocaleDateString()}\n   Observación: ${this.getObservacion()}.`        
     }   
  }
 

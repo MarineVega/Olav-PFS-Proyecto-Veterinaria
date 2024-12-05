@@ -97,6 +97,11 @@ export class Cliente extends Persona {
 
     public mostrarDatos(): string {
         const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
-        return `Cliente (​​🆔​ ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nPacientes:\n${pacientesInfo}`;
+        return `Cliente (​​🆔​ ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nEs Vip: ${this.esVip()}\nPacientes:\n${pacientesInfo}`;
+    }
+
+    public mostrarListaPacientes(): string {
+        const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
+        return `Pacientes:\n${pacientesInfo}`;
     }
 }
