@@ -277,25 +277,24 @@ function eliminarSucursal() {
          rl.question('Presione Enter para continuar...', () => {  
           submenuSucursales();
           leerOpcion(); 
-        });
-        
-      }
-  
-      const sucursal = sucursales[index];
-  
-      // Validar si la sucursal tiene Clientes o Proveedores
-      if (sucursal.getListaClientes().length > 0 || sucursal.getListaProveedores().length > 0) {
-        console.log('\nNo se puede eliminar esta Sucursal porque tiene Clientes o Proveedores registrados ⚠️\n​');
+        });        
       } else {
-        sucursales.splice(index, 1);
-        console.log('\nSucursal eliminada exitosamente 🗑️​');
-      }
-  
-      rl.question('Presione Enter para continuar...', () => {
-  
-        submenuSucursales(); 
-        leerOpcion(); 
-      });
+        const sucursal = sucursales[index];
+    
+        // Validar si la sucursal tiene Clientes o Proveedores
+        if (sucursal.getListaClientes().length > 0 || sucursal.getListaProveedores().length > 0) {
+          console.log('\nNo se puede eliminar esta Sucursal porque tiene Clientes o Proveedores registrados ⚠️\n​');
+        } else {
+          sucursales.splice(index, 1);
+          console.log('\nSucursal eliminada exitosamente 🗑️​');
+        }
+    
+        rl.question('Presione Enter para continuar...', () => {
+    
+          submenuSucursales(); 
+          leerOpcion(); 
+        });
+      };  
     });
   }
   
