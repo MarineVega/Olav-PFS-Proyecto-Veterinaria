@@ -246,13 +246,13 @@ function crearSucursal() {
         });        
       }
   
-      solicitarEntrada('Nuevo responsable: ', validarVacios, false, (responsable: string) => {
-        solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
-          solicitarEntrada('Nueva localidad: ', validarVacios, false, (localidad: string) => { 
+      solicitarEntrada('Nuevo responsable: ', validarVacios, true, (responsable: string) => {
+        solicitarEntrada('Nueva dirección: ', validarVacios, true, (direccion: string) => {
+          solicitarEntrada('Nueva localidad: ', validarVacios, true, (localidad: string) => { 
 
-            sucursal.setResponsable(responsable);
-            sucursal.setDireccion(direccion);
-            sucursal.setLocalidad(localidad);
+            sucursal.setResponsable(responsable || sucursal.getResponsable());
+            sucursal.setDireccion(direccion || sucursal.getDireccion());
+            sucursal.setLocalidad(localidad || sucursal.getLocalidad());
             console.log('\nSucursal modificada exitosamente ​✅​');
   
             rl.question('Presione Enter para continuar...', () => {  
