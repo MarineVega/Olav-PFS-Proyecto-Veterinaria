@@ -213,13 +213,12 @@ mostrarMenuPrincipal();
 function crearSucursal() {
     id += 1; 
     console.log(`\nID Sucursal: ${id}`);
-    rl.question('Nombre del Responsable de la Sucursal: ', (responsable) => {
-      rl.question('Dirección de la Sucursal: ', (direccion: string) => {
-        rl.question('Localidad en la que se encuentra la Sucursal: ', (localidad) => {
+    solicitarEntrada('Nombre del Responsable de la Sucursal: ', validarVacios, false, (responsable: string) => {          
+      solicitarEntrada('Dirección de la Sucursal: ', validarVacios, false, (direccion: string) => {
+        solicitarEntrada('Localidad en la que se encuentra la Sucursal: ', validarVacios, false, (localidad: string) => {          
           const sucursal = new Sucursal(id, responsable, direccion, localidad);
           sucursales.push(sucursal);
-          console.log('\nSucursal creada exitosamente ​✅');
-  
+          console.log('\nSucursal creada exitosamente ​✅');  
           console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
   
           rl.question('Presione Enter para continuar...', () => {  
@@ -244,13 +243,13 @@ function crearSucursal() {
         rl.question('Presione Enter para continuar...', () => {  
           submenuSucursales();
           leerOpcion(); 
-        });
-        
+        });        
       }
   
-      rl.question('Nuevo responsable: ', (responsable) => {
-        rl.question('Nueva dirección: ', (direccion) => {
-          rl.question('Nueva localidad: ', (localidad) => {
+      solicitarEntrada('Nuevo responsable: ', validarVacios, false, (responsable: string) => {          
+        solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
+          solicitarEntrada('Nueva localidad: ', validarVacios, false, (localidad: string) => { 
+
             sucursal.setResponsable(responsable);
             sucursal.setDireccion(direccion);
             sucursal.setLocalidad(localidad);
@@ -522,6 +521,16 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
     }
   }
   
+  function validarVacios(texto: string, esModificacion: boolean) {
+    if (!esModificacion && texto.trim() === '') {      
+      return false;      
+    } else {
+      return true;     // Permito vacío en caso de modificación
+    }
+
+    
+  }
+
   function solicitarEntrada(mensaje, validador, esModificacion, callback) {
     rl.question(mensaje, (input) => {
       if (!validador (input, esModificacion)) {
