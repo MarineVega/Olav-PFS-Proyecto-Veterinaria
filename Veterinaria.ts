@@ -20,12 +20,12 @@ console.log('Bienvenido a 🐾 🐈 Veterinaria Pocas Pulgas 🐩 🐾');
 
 export function mostrarMenuPrincipal() {
   console.log(`
-  1. Sucursales
-  2. Proveedores
-  3. Clientes
-  4. Pacientes
-  5. Registrar Visita Paciente
-  6. Salir
+  1. 🏥 Sucursales
+  2. 🦴 Proveedores
+  3. 🧍 Clientes
+  4. 🐕 Pacientes
+  5. 📝 Registrar Visita Paciente
+  6. 👋 Salir
   `);
   leerOpcion();
 }
@@ -347,8 +347,8 @@ function mostrarSucursales(): void {
   
                     rl.question('Presione Enter para continuar...', () => {
   
-                      submenuProveedores(); // 
-                      leerOpcion(); // 
+                      submenuProveedores(); 
+                      leerOpcion();  
                     });
   
                   });
@@ -422,8 +422,8 @@ function mostrarSucursales(): void {
       }
       rl.question('Presione Enter para continuar...', () => {
   
-        submenuProveedores(); // 
-        leerOpcion(); // 
+        submenuProveedores(); 
+        leerOpcion();  
       });
   
     });
@@ -467,7 +467,7 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
   
     console.log(resultado);
   
-    console.log('\n🐾🐈----------------------------------------------------------------🐾🐾----------------------------------------------------------------🐩🐾\n');
+    console.log('\n🐾🐈----------------------------------------------------------------🐾🐾----------------------------------------------------------------🐩🐾\n');// Creo que está es la línea que se repite.
   
     rl.question('Presione Enter para continuar...', () => {
   
@@ -610,7 +610,7 @@ function modificarCliente() {
           solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
   
             sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
-            console.log('\nCliente modificado exitosamente ​✅​');
+            //console.log('\nCliente modificado exitosamente ​✅​'); // Esta línea tal vez sea redundante con la línea de Cliente con DNI ..... modificado correctamente.
   
             rl.question('Presione Enter para continuar...', () => {
   
@@ -669,7 +669,7 @@ function modificarCliente() {
   
   // Función para mostrar los clientes agrupados por sucursal
  function mostrarClientesPorSucursal(sucursales: Sucursal[]): void {
-    console.log('\n🐾🐈---------------------------------------------🐾Listado de Clientes por Sucursal🐾---------------------------------------------🐩🐾\n');
+    console.log('\n🐾🐈 ---------------------------------------------🐾 Listado de Clientes por Sucursal 🐾--------------------------------------------- 🐩🐾\n');
     let resultado = "";
   
     for (const sucursal of sucursales) {
@@ -685,14 +685,14 @@ function modificarCliente() {
         for (const cliente of listaClientes) {
    
           resultado += `  - ${cliente.mostrarDatos()}\n`;
-          resultado += `\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n`
+          resultado += `\n🐾🐈 ------------------------------------------------------ 🐾 🐾------------------------------------------------------- 🐩🐾\n`
         }
       }  
       resultado += "\n";
     }
   
     console.log(resultado);  
-    console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');
+   // console.log('\n🐾🐈------------------------------------------------------🐾🐾-------------------------------------------------------🐩🐾\n');// Puede que esta sea la línea que se repite al listar los Clientes
   
     rl.question('Presione Enter para continuar...', () => {
   
@@ -700,8 +700,7 @@ function modificarCliente() {
       leerOpcion(); 
     });
   }
-  
-  /***********************************************************************************************************************************************************/
+
   /* PACIENTES */
   
   //CREAMOS PACIENTES
@@ -901,7 +900,7 @@ function crearPaciente() {
   
   // MOSTRAR LISTA DE PACIENTES
  function mostrarListaPacientes(): void {
-    console.log('\n🐾 🐈---------------------------------------------🐾 Listado de Pacientes por Cliente🐾 ---------------------------------------------🐩 🐾\n');
+    console.log('\n🐾🐈 ---------------------------------------------🐾 Listado de Pacientes por Cliente 🐾 --------------------------------------------- 🐩🐾\n');
     rl.question('\nIngrese el Documento del Cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
   
@@ -939,7 +938,7 @@ function crearPaciente() {
   
       console.log(lista);
   
-      console.log('\n🐾 🐈----------------------------------------------------------------------🐾 🐾-----------------------------------------------------------------------🐩 🐾\n');
+      console.log('\n🐾🐈----------------------------------------------------------------------🐾 🐾-----------------------------------------------------------------------🐩🐾\n');
   
       rl.question('Presione Enter para continuar...', () => {  
         submenuPacientes(); 
