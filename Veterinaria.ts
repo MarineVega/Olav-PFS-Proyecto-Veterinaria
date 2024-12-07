@@ -322,47 +322,57 @@ function mostrarSucursales(): void {
   
   //CREAMOS PROVEEDORES
  function crearProveedor() {
-    elegirSucursal();
-  
-    rl.question('\nElija el ID de la Sucursal a la que pertenece el Proveedor: ', (idSucursalStr) => {
-      const idSucursal = parseInt(idSucursalStr);
-      const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
-  
-      if (index >= 0) {
-        let sucursalProveedor = sucursales[index];
-  
-        id += 1;
-        console.log(`\nID Proveedor: ${id}`);
-        solicitarEntrada('Nombre del Proveedor: ', validarVacios, false, (nombre: string) => {
-          solicitarEntrada('Dirección del Proveedor: ', validarVacios, false, (direccion: string) => {
-            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
-              solicitarEntrada('Documento del Proveedor: ', validarDocumento, false, (documento) => {
-                solicitarEntrada('Rubro del Proveedor: ', validarVacios, false, (rubro: string) => {
-                  solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
-                    sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));
-  
-                    console.log('\nProveedor creado exitosamente ​✅​');
-  
-                    console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
-  
-                    rl.question('Presione Enter para continuar...', () => {
-  
-                      submenuProveedores(); 
-                      leerOpcion();  
+
+    if (sucursales.length === 0) {
+      console.log('No hay Sucursales registradas.');
+      console.log(" ");
+      rl.question('Presione Enter para continuar...', () => {    
+        mostrarMenuPrincipal(); 
+        leerOpcion();  
+      });
+    } else {
+      elegirSucursal();
+
+      rl.question('\nElija el ID de la Sucursal a la que pertenece el Proveedor: ', (idSucursalStr) => {
+        const idSucursal = parseInt(idSucursalStr);
+        const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
+    
+        if (index >= 0) {
+          let sucursalProveedor = sucursales[index];
+    
+          id += 1;
+          console.log(`\nID Proveedor: ${id}`);
+          solicitarEntrada('Nombre del Proveedor: ', validarVacios, false, (nombre: string) => {
+            solicitarEntrada('Dirección del Proveedor: ', validarVacios, false, (direccion: string) => {
+              solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
+                solicitarEntrada('Documento del Proveedor: ', validarDocumento, false, (documento) => {
+                  solicitarEntrada('Rubro del Proveedor: ', validarVacios, false, (rubro: string) => {
+                    solicitarEntrada('CUIT del Proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
+                      sucursalProveedor.agregarProveedor(id, nombre, direccion, parseInt(telefono), parseInt(documento), rubro, parseInt(CUIT));
+    
+                      console.log('\nProveedor creado exitosamente ​✅​');
+    
+                      console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");
+    
+                      rl.question('Presione Enter para continuar...', () => {
+    
+                        submenuProveedores(); 
+                        leerOpcion();  
+                      });
+    
                     });
-  
                   });
                 });
               });
             });
           });
-        });
-  
-      } else {
-        console.log('\nPor favor ingrese un número de Sucursal existente.');
-        return crearProveedor();
-      };
-    });
+    
+        } else {
+          console.log('\nPor favor ingrese un número de Sucursal existente.');
+          return crearProveedor();
+        };
+      });
+    }
   }
   
   //MODIFICA LOS DATOS DEL PROVEEDORES SEGUN DNI INGRESADO
@@ -543,57 +553,63 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
   }
   
   function elegirSucursal(): void {
-    if (sucursales.length === 0) {
-      console.log('No hay Sucursales registradas.');
-    } else {
-      sucursales.forEach((sucursal, index) => {
-        console.log(`\nSucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}`);
-      });
-    }
+    sucursales.forEach((sucursal, index) => {
+      console.log(`\nSucursal (ID): ${sucursales[index].getId()} - Responsable: ${sucursales[index].getResponsable()}`);
+    });
   }
   
   /* Clientes */
   
   //CREAMOS CLIENTES
  function crearCliente() {
-    elegirSucursal();
-  
-    rl.question('\nElija el ID de la Sucursal a la que pertenece el cliente: ', (idSucursalStr) => {
-      const idSucursal = parseInt(idSucursalStr);
-      const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
-  
-      if (index >= 0) {
-        let sucursalCliente = sucursales[index];
-  
-        id += 1;
-        console.log(`\nID Cliente: ${id}`);
-        solicitarEntrada('\Nombre del cliente: ', validarVacios, false, (nombre: string) => {
-          solicitarEntrada('Dirección del ciente: ', validarVacios, false, (direccion: string) => {          
-            solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
-              solicitarEntrada('Documento del cliente: ', validarDocumento, false, (documento) => {
-  
-                sucursalCliente.agregarCliente(id, nombre, direccion, parseInt(telefono), parseInt(documento));
-                console.log('\nCliente creado exitosamente ​✅​');
-  
-                console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
-  
-                rl.question('Presione Enter para continuar...', () => {
-  
-                  submenuClientes(); 
-                  leerOpcion(); 
-                });
+
+    if (sucursales.length === 0) {
+      console.log('No hay Sucursales registradas.');      
+      console.log(" ");
+      rl.question('Presione Enter para continuar...', () => {    
+        mostrarMenuPrincipal(); 
+        leerOpcion();  
+      });
+    } else {
+      elegirSucursal();
+    
+      rl.question('\nElija el ID de la Sucursal a la que pertenece el cliente: ', (idSucursalStr) => {
+        const idSucursal = parseInt(idSucursalStr);
+        const index = sucursales.findIndex(sucursal => sucursal.getId() == idSucursal);
+    
+        if (index >= 0) {
+          let sucursalCliente = sucursales[index];
+    
+          id += 1;
+          console.log(`\nID Cliente: ${id}`);
+          solicitarEntrada('\Nombre del cliente: ', validarVacios, false, (nombre: string) => {
+            solicitarEntrada('Dirección del ciente: ', validarVacios, false, (direccion: string) => {          
+              solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
+                solicitarEntrada('Documento del cliente: ', validarDocumento, false, (documento) => {
+    
+                  sucursalCliente.agregarCliente(id, nombre, direccion, parseInt(telefono), parseInt(documento));
+                  console.log('\nCliente creado exitosamente ​✅​');
+    
+                  console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+    
+                  rl.question('Presione Enter para continuar...', () => {
+    
+                    submenuClientes(); 
+                    leerOpcion(); 
+                  });
+                }
+                );
               }
               );
-            }
-            );
+            });
           });
-        });
-      }
-      else {
-        console.log('\nPor favor ingrese un número de Sucursal existente.');
-        return crearCliente();
-      };
-    })
+        }
+        else {
+          console.log('\nPor favor ingrese un número de Sucursal existente.');
+          return crearCliente();
+        };
+      })
+    }
   }
   
   //MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
@@ -707,7 +723,16 @@ function modificarCliente() {
   
   //CREAMOS PACIENTES
 function crearPaciente() {
-    rl.question('\nIngrese el Documento del Cliente: ', (documentoStr) => {
+  if (sucursales.length === 0) {
+    console.log('No hay Sucursales registradas.');
+    console.log(" ");
+    rl.question('Presione Enter para continuar...', () => {    
+      mostrarMenuPrincipal(); 
+      leerOpcion();
+    });
+  } else {
+
+      rl.question('\nIngrese el Documento del Cliente: ', (documentoStr) => {
       const documento = parseInt(documentoStr);
   
       if (isNaN(documento) || documentoStr.length < 5) {
@@ -755,6 +780,7 @@ function crearPaciente() {
       }
     });
   }
+}
   
   //MODIFICAR PACIENTE
  function modificarPaciente() {
