@@ -334,7 +334,7 @@ function mostrarSucursales(): void {
         id += 1;
         console.log(`\nID Proveedor: ${id}`);
         solicitarEntrada('Nombre del Proveedor: ', validarVacios, false, (nombre: string) => {
-          solicitarEntrada('Dirección de la Sucursal: ', validarVacios, false, (direccion: string) => {
+          solicitarEntrada('Dirección del Proveedor: ', validarVacios, false, (direccion: string) => {
             solicitarEntrada('Número de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
               solicitarEntrada('Documento del Proveedor: ', validarDocumento, false, (documento) => {
                 solicitarEntrada('Rubro del Proveedor: ', validarVacios, false, (rubro: string) => {
@@ -380,7 +380,7 @@ function mostrarSucursales(): void {
         solicitarEntrada('Nueva dirección: ', validarVacios, false, (direccion: string) => {
           solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, false, (telefono) => {
             solicitarEntrada('Nuevo rubro: ', validarVacios, false, (rubro: string) => {            
-              solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
+              solicitarEntrada('Nuevo CUIT del proveedor (11 dígitos): ', validarCUIT, false, (CUIT) => {
   
                 sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));
                 console.log('\nProveedor modificado exitosamente ​✅​');
@@ -408,24 +408,26 @@ function mostrarSucursales(): void {
       const sucursal = obtenerSucursalProveedor(dni);
   
       if (!sucursal) {
-        console.log('\nNo se encontró la sucursal actual ​🔎\n​');
-        return leerOpcion();
-      }
-  
-      // Buscar PROVEEDOR en la sucursal
-      const proveedor = sucursal.getListaProveedores().find(c => c.getDocumento() === dni);
-      if (!proveedor) {
-        console.log(`\nNo se encontró un Proveedor con DNI ${dni} ​🔎\n​`);
+        rl.question('Presione Enter para continuar...', () => {    
+          submenuProveedores(); 
+          leerOpcion();  
+        });
       } else {
-        sucursal.eliminarProveedor(proveedor.getId(), proveedor.getNombre());
-        console.log('\nProveedor eliminado exitosamente ​🗑️​');
+        // Buscar PROVEEDOR en la sucursal
+        const proveedor = sucursal.getListaProveedores().find(c => c.getDocumento() === dni);
+        if (!proveedor) {
+          console.log(`\nNo se encontró un Proveedor con DNI ${dni} ​🔎\n​`);
+        } else {
+          sucursal.eliminarProveedor(proveedor.getId(), proveedor.getNombre());
+          console.log('\nProveedor eliminado exitosamente ​🗑️​');
+        }
+        rl.question('Presione Enter para continuar...', () => {
+    
+          submenuProveedores(); 
+          leerOpcion();  
+        });
       }
-      rl.question('Presione Enter para continuar...', () => {
-  
-        submenuProveedores(); 
-        leerOpcion();  
-      });
-  
+        
     });
   }
   
@@ -477,11 +479,11 @@ function obtenerSucursalProveedor(dni: number): Sucursal | null {
   }
   
   /**********  VALIDACIONES **********/
-  function validarTelefono(telefono: string) {
+  function validarTelefono(telefono) {
     return /^\d{10,}$/.test(telefono);
   }
   
-  function validarDocumento(documento: string) {
+  function validarDocumento(documento) {
     return /^\d{5,}$/.test(documento);
   }
   
@@ -630,32 +632,32 @@ function modificarCliente() {
       const sucursal = obtenerSucursalCliente(dni);
   
       if (!sucursal) {
-        console.log('\nNo se encontró la sucursal actual ​🔎\n​');
-        return leerOpcion();
-      }
-  
-      // Buscar cliente en la sucursal
-      const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
-      if (!cliente) {
-        console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎\n​`);
+        rl.question('Presione Enter para continuar...', () => {    
+          submenuClientes(); 
+          leerOpcion();  
+        });
       } else {
-        sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
-        console.log('\nCliente eliminado exitosamente ​🗑️​');
-      }
-  
-      rl.question('Presione Enter para continuar...', () => {
-  
-        submenuClientes(); 
-        leerOpcion(); 
-      });
+        // Buscar cliente en la sucursal
+        const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
+        if (!cliente) {
+          console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎\n​`);
+        } else {
+          sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
+          console.log('\nCliente eliminado exitosamente ​🗑️​');
+        }
+    
+        rl.question('Presione Enter para continuar...', () => {
+    
+          submenuClientes(); 
+          leerOpcion(); 
+        });
+      }  
     });
   }
   
   //OBTIENE LA SUCURSAL SEGUN EL DNI DEL CLIENTE
  function obtenerSucursalCliente(dni: number): Sucursal | null {
-    for (const sucursal of sucursales) {
-      console.log(sucursal.getListaClientes());
-  
+    for (const sucursal of sucursales) {  
       const cliente = sucursal.getListaClientes().find(c => c.getDocumento() === dni);
       if (cliente) {
         return sucursal;
