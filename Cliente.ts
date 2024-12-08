@@ -6,6 +6,7 @@ export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
     private listaPacientes: Paciente[];
+  
 
     constructor(id: number, nombre: string, direccion: string, telefono: number, documento: number) {
         super(id, nombre, direccion, telefono, documento);
@@ -41,21 +42,21 @@ export class Cliente extends Persona {
     public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
         // Verificar que todos los datos están presentes
         if (!id || !nombre || !especie || !sexo || !fechaNacimiento) {
-            console.log("\nError ❌: Todos los datos del Paciente deben estar completos para darlo de alta.");
+            console.log("\nError ❌: Todos los datos del Paciente deben estar completos para darlo de alta.\n");
             return;
         }
             
         //Verificar que el paciente no exista ya en la lista
         const existePaciente = this.listaPacientes.some(paciente => paciente.getId() === id);
         if (existePaciente) {
-            console.log(`\nError ❌: Ya existe un Paciente con ID ${id} en la lista.`);
+            console.log(`\nError ❌: Ya existe un Paciente con ID ${id} en la lista.\n`);
             return;
         }
     
         //  agregar el nuevo paciente
         const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
         this.listaPacientes.push(paciente);
-        console.log(`\nEl Paciente ${nombre} (🆔 ${id}) ha sido agregado correctamente ✔️.`);
+        console.log(`\nEl Paciente ${nombre} (🆔 ${id}) ha sido agregado correctamente ✔️\n`);
     }
     
     public registrarVisita(): void {
@@ -78,30 +79,31 @@ export class Cliente extends Persona {
             paciente.setSexo(sexo);
             paciente.setFechaNacimiento(fechaNacimiento);
             paciente.setObservacion(observacion);
-            console.log(`\nLos datos del Paciente ${nombre} han sido modificados Correctamente ✔️`)
+            console.log(`\nLos datos del Paciente ${nombre} han sido modificados Correctamente ✔️\n`)
         } else {
-            console.log(`\nEl Paciente ${nombre} (${id}) no se ha encontrado en la lista de Pacientes de la Sucursal 🔎`);
+            console.log(`\nEl Paciente ${nombre} (${id}) no se ha encontrado en la lista de Pacientes de la Sucursal 🔎\n`);
         }
     }
 
-    public eliminarPaciente(id: number): void {       
+    public eliminarPaciente(id: number): void {
         const index = this.listaPacientes.findIndex(paciente => paciente.id == id);
 
         if (index != -1) {
+            const pacienteEliminado = this.listaPacientes[index]; // NO SALIA EL NOMBRE DEL PACIENTE ELIMINADO SINO EL DEL CLIENTE Y ESTABA MAL! YA SE CORRIGIO.
             this.listaPacientes.splice(index, 1);
-            console.log(`\nEl Paciente ${this.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal 🗑️`)
+            console.log(`\nEl Paciente ${pacienteEliminado.getNombre()} (${id}) ha sido eliminado de la lista de Pacientes de la Sucursal 🗑️`);
         } else {
-            console.log(`\nEl Paciente ${this.getNombre()} (${id}) no ha sido encontado en la lista de Pacientes de la Sucursal 🔎`)
+            console.log(`\nEl Paciente con ID ${id} no ha sido encontrado en la lista de Pacientes de la Sucursal 🔎`);
         }
     }
 
     public mostrarDatos(): string {
         const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
-        return `Cliente (​​🆔​ ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nEs Vip: ${this.esVip()}\nPacientes:\n${pacientesInfo}`;
+        return `\nCliente (​​🆔​ ${this.getId()}) ${this.getNombre()}\nDirección: ${this.getDireccion()}\nTeléfono: ${this.getTelefono()}\nDocumento: ${this.getDocumento()}\nEs Vip: ${this.esVip()}\nPacientes:\n${pacientesInfo}`;
     }
 
     public mostrarListaPacientes(): string {
         const pacientesInfo = this.listaPacientes.map(paciente => paciente.mostrarDatosPaciente()).join("\n");
-        return `Pacientes:\n${pacientesInfo}`;
+        return `\nPacientes:\n${pacientesInfo}`;
     }
 }
