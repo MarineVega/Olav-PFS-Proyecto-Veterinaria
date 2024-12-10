@@ -387,63 +387,67 @@ function modificarProveedor() {
     const sucursal = obtenerSucursalProveedor(dni); 
 
     if (!sucursal) {
-      console.log('\nNo se encontró la Sucursal actual ​🔎\n​');
-      return leerOpcion(); 
-    }
-
-    const proveedorExistente = sucursal.getListaProveedores().find(
-      (proveedor) => proveedor.getDocumento() === dni
-    );
-
-    if (!proveedorExistente) {
-      console.log(`\nError ❌: No se encontró un Proveedor con documento ${dni}.\n`);
-      return leerOpcion(); 
-    }
-
-    const nombreActual = proveedorExistente.getNombre();
-    const direccionActual = proveedorExistente.getDireccion();
-    const telefonoActual = proveedorExistente.getTelefono().toString();  // ..toSrting() convierte el vacío en String
-    const rubroActual = proveedorExistente.getRubro();
-    const CUITActual = proveedorExistente.getCUIT().toString();
-
-
-    function solicitarDatos(mensaje: string, valorActual: string, callback: (dato: string) => void) {
-      rl.question(mensaje, (input) => {
-        if (input.trim() === '') {
-
-          callback(valorActual);
-        } else {
-
-          callback(input.trim());
-        }
+      rl.question('Presione Enter para continuar...', () => {
+        submenuProveedores();
+        leerOpcion();
       });
-    }
-
-    solicitarDatos('\nNuevo Nombre (deja vacío para no modificar): ', nombreActual, (nombre: string) => {
-      solicitarDatos('\nNueva Dirección (deja vacío para no modificar): ', direccionActual, (direccion: string) => {
-        solicitarDatos('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', telefonoActual, (telefono: string) => {
-          solicitarDatos('\nNuevo Rubro (deja vacío para no modificar): ', rubroActual, (rubro: string) => {
-            solicitarDatos('\nNuevo CUIT del Proveedor (11 dígitos, deja vacío para no modificar): ', CUITActual, (CUIT: string) => {
-              const telefonoModificado = telefono ? parseInt(telefono) : parseInt(telefonoActual);
-              const CUITModificado = CUIT ? parseInt(CUIT) : parseInt(CUITActual);
-
-              if (isNaN(telefonoModificado) || isNaN(CUITModificado)) {
-                console.log("\nError ❌: El teléfono o el CUIT no son válidos.");
-                return leerOpcion(); 
-              }
-
-              sucursal.modificarProveedor(dni, nombre, direccion, telefonoModificado, rubro, CUITModificado);
-
-              console.log('\nProveedor modificado Exitosamente ​✅​');
-              console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
-              rl.question('Presione Enter para continuar...', () => {
-                submenuProveedores(); 
+    } else {
+      const proveedorExistente = sucursal.getListaProveedores().find(
+        (proveedor) => proveedor.getDocumento() === dni
+      );
+  
+      if (!proveedorExistente) {
+        console.log(`\nError ❌: No se encontró un Proveedor con documento ${dni}.\n`);
+        return leerOpcion(); 
+      }
+  
+      const nombreActual = proveedorExistente.getNombre();
+      const direccionActual = proveedorExistente.getDireccion();
+      const telefonoActual = proveedorExistente.getTelefono().toString();  // ..toSrting() convierte el vacío en String
+      const rubroActual = proveedorExistente.getRubro();
+      const CUITActual = proveedorExistente.getCUIT().toString();
+  
+  
+      function solicitarDatos(mensaje: string, valorActual: string, callback: (dato: string) => void) {
+        rl.question(mensaje, (input) => {
+          if (input.trim() === '') {
+  
+            callback(valorActual);
+          } else {
+  
+            callback(input.trim());
+          }
+        });
+      }
+  
+      solicitarDatos('\nNuevo Nombre (deja vacío para no modificar): ', nombreActual, (nombre: string) => {
+        solicitarDatos('\nNueva Dirección (deja vacío para no modificar): ', direccionActual, (direccion: string) => {
+          solicitarDatos('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', telefonoActual, (telefono: string) => {
+            solicitarDatos('\nNuevo Rubro (deja vacío para no modificar): ', rubroActual, (rubro: string) => {
+              solicitarDatos('\nNuevo CUIT del Proveedor (11 dígitos, deja vacío para no modificar): ', CUITActual, (CUIT: string) => {
+                const telefonoModificado = telefono ? parseInt(telefono) : parseInt(telefonoActual);
+                const CUITModificado = CUIT ? parseInt(CUIT) : parseInt(CUITActual);
+  
+                if (isNaN(telefonoModificado) || isNaN(CUITModificado)) {
+                  console.log("\nError ❌: El teléfono o el CUIT no son válidos.");
+                  return leerOpcion(); 
+                }
+  
+                sucursal.modificarProveedor(dni, nombre, direccion, telefonoModificado, rubro, CUITModificado);
+  
+                console.log('\nProveedor modificado Exitosamente ​✅​');
+                console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+                rl.question('Presione Enter para continuar...', () => {
+                  submenuProveedores(); 
+                });
               });
             });
           });
         });
       });
-    });
+
+    }
+
   });
 }
 //ELIMINA UN PROVEEDOR SEGUN EL DOCUMENTO INGRESADO
@@ -588,60 +592,68 @@ function modificarCliente() {
     const sucursal = obtenerSucursalCliente(dni); 
 
     if (!sucursal) {
+      rl.question('Presione Enter para continuar...', () => {
+        submenuClientes();
+        leerOpcion();
+      });
+      /*
       console.log('\nNo se encontró la Sucursal actual ​🔎\n​');
       return leerOpcion(); 
-    }
+      */
+    } else {
 
-    const clienteExistente = sucursal.getListaClientes().find(
-      (cliente) => cliente.getDocumento() === dni
-    );
-
-    if (!clienteExistente) {
-      console.log(`\nError ❌: No se encontró un Cliente con documento ${dni}.\n`);
-      return leerOpcion(); 
-    }
-
-    const nombreActual = clienteExistente.getNombre();
-    const direccionActual = clienteExistente.getDireccion();
-    const telefonoActual = clienteExistente.getTelefono().toString();
-
-    function solicitarDatos(mensaje: string, valorActual: string, callback: (dato: string) => void) {
-      rl.question(mensaje, (input) => {
-        if (input.trim() === '') {
-          callback(valorActual);
-        } else {
-          callback(input.trim());
-        }
-      });
-    }
-
-    solicitarDatos('\nNuevo Nombre (deja vacío para no modificar): ', nombreActual, (nombre: string) => {
-      solicitarDatos('\nNueva Dirección (deja vacío para no modificar): ', direccionActual, (direccion: string) => {
-        solicitarDatos('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', telefonoActual, (telefono: string) => {
-          let telefonoModificado: number | string = telefono; // ACA SE ACLARA QUE EL NUEMRO DE TELEFONO INICIALMENTE ES UN STRING
-          if (telefono.trim() !== '') {
-            telefonoModificado = parseInt(telefono.trim());
-            if (isNaN(telefonoModificado)) {
-              console.log("\nError ❌: El teléfono no es válido.");
-              return leerOpcion(); 
-            }
+      const clienteExistente = sucursal.getListaClientes().find(
+        (cliente) => cliente.getDocumento() === dni
+      );
+  
+      if (!clienteExistente) {
+        console.log(`\nError ❌: No se encontró un Cliente con documento ${dni}.\n`);
+        return leerOpcion(); 
+      }
+  
+      const nombreActual = clienteExistente.getNombre();
+      const direccionActual = clienteExistente.getDireccion();
+      const telefonoActual = clienteExistente.getTelefono().toString();
+  
+      function solicitarDatos(mensaje: string, valorActual: string, callback: (dato: string) => void) {
+        rl.question(mensaje, (input) => {
+          if (input.trim() === '') {
+            callback(valorActual);
           } else {
-            telefonoModificado = telefonoActual;
+            callback(input.trim());
           }
-
-          sucursal.modificarCliente(dni, nombre, direccion, telefonoModificado as number);// ACA SE HACE UN CAST A NUMERO El término "cast" o "type casting" en programación hace referencia al proceso de convertir una variable de un tipo de dato a otro. En TypeScript y JavaScript, se utiliza para asegurar que un valor se maneje de acuerdo con el tipo esperado, como convertir un string a number o viceversa.
-                                                                                          //  "cast" a number, asegura que el valor que se pasa a la función modificarCliente() (en este caso, telefonoModificado) sea de tipo number, aunque originalmente podría ser de tipo string (ya que la entrada del usuario es un string).
-          console.log('\nCliente modificado Exitosamente ​✅​');
-
-          console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
-          rl.question('Presione Enter para continuar...', () => {
-
-            submenuClientes(); 
-            leerOpcion(); 
+        });
+      }
+  
+      solicitarDatos('\nNuevo Nombre (deja vacío para no modificar): ', nombreActual, (nombre: string) => {
+        solicitarDatos('\nNueva Dirección (deja vacío para no modificar): ', direccionActual, (direccion: string) => {
+          solicitarDatos('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', telefonoActual, (telefono: string) => {
+            let telefonoModificado: number | string = telefono; // ACA SE ACLARA QUE EL NUEMRO DE TELEFONO INICIALMENTE ES UN STRING
+            if (telefono.trim() !== '') {
+              telefonoModificado = parseInt(telefono.trim());
+              if (isNaN(telefonoModificado)) {
+                console.log("\nError ❌: El teléfono no es válido.");
+                return leerOpcion(); 
+              }
+            } else {
+              telefonoModificado = telefonoActual;
+            }
+  
+            sucursal.modificarCliente(dni, nombre, direccion, telefonoModificado as number);// ACA SE HACE UN CAST A NUMERO El término "cast" o "type casting" en programación hace referencia al proceso de convertir una variable de un tipo de dato a otro. En TypeScript y JavaScript, se utiliza para asegurar que un valor se maneje de acuerdo con el tipo esperado, como convertir un string a number o viceversa.
+                                                                                            //  "cast" a number, asegura que el valor que se pasa a la función modificarCliente() (en este caso, telefonoModificado) sea de tipo number, aunque originalmente podría ser de tipo string (ya que la entrada del usuario es un string).
+            console.log('\nCliente modificado Exitosamente ​✅​');
+  
+            console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+            rl.question('Presione Enter para continuar...', () => {
+  
+              submenuClientes(); 
+              leerOpcion(); 
+            });
           });
         });
       });
-    });
+    }
+
   });
 }
   
