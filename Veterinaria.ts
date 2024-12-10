@@ -478,6 +478,35 @@ function modificarProveedor() {
   });
 } //REVISAR MODIFICAR PROVEEDOR QUE SE PERMITA VACIO EN TELEFONO Y CUIT
 
+/*function modificarProveedor() {
+  rl.question('Ingresa el DNI del Proveedor a modificar: ', (dniStr) => {
+    const dni = parseInt(dniStr);
+    const sucursal = obtenerSucursalProveedor(dni); // Método adaptado para proveedores
+
+    if (!sucursal) {
+      console.log('\nNo se encontró la sucursal actual ​🔎​');
+      return leerOpcion();
+    }
+
+    rl.question('Nuevo nombre: ', (nombre) => {
+      rl.question('Nueva dirección: ', (direccion) => {        
+        solicitarEntrada('Nuevo teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {
+          rl.question('Nuevo rubro: ', (rubro) => {
+            solicitarEntrada('Nuevo del proveedor (11 dígitos): ', validarCUIT, (CUIT) => {
+              // Método para modificar datos del proveedor
+              sucursal.modificarProveedor(dni, nombre, direccion, parseInt(telefono), rubro, parseInt(CUIT));            
+              console.log('\nProveedor modificado exitosamente ​✅​');
+
+              console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+              leerOpcion();
+            });
+          });
+        });
+      });
+    });
+  });
+}*///METODO DEL PRIMER MENU QUE SE CREO PARA MODIFICAR PROVEEDOR
+
 //ELIMINA UN PROVEEDOR SEGUN EL DOCUMENTO INGRESADO
 
   function eliminarProveedor() { 
@@ -621,81 +650,6 @@ function crearCliente() {
 
 //MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
 
-/*function modificarCliente() {
-  rl.question('\nIngresa el Documento del Cliente a modificar: ', (dniStr) => {
-    const dni = parseInt(dniStr);
-
-    let clienteExistente = null;
-    let sucursalEncontrada = null;
-
-    for (let sucursal of sucursales) {
-      clienteExistente = sucursal.getListaClientes().find(
-        (cliente) => cliente.getDocumento() === dni
-      );
-
-      if (clienteExistente) {
-        sucursalEncontrada = sucursal;
-        break; 
-      }
-    }
-
-    if (!clienteExistente) {
-      console.log(`\nError ❌: No se encontró un Cliente con Documento ${dni} en ninguna Sucursal.\n`);
-
-      rl.question('Presione Enter para Continuar...', () => {
-        submenuClientes(); 
-        leerOpcion();
-      });
-
-      return; 
-    }
-
-    const nombreActual = clienteExistente.getNombre();
-    const direccionActual = clienteExistente.getDireccion();
-    const telefonoActual = clienteExistente.getTelefono().toString();
-
-    /*function solicitarDatos(mensaje, valorActual, callback) {
-      rl.question(mensaje, (input) => {
-        if (input.trim() === '') {
-          callback(valorActual); 
-        } else {
-          callback(input.trim()); 
-        }
-      });
-    }
-*/
-    /*solicitarDatos('\nNuevo Nombre (deja vacío para no modificar): ', nombreActual, (nombre) => {
-      solicitarDatos('\nNueva Dirección (deja vacío para no modificar): ', direccionActual, (direccion) => {
-        solicitarDatos('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', telefonoActual, (telefono) => {
-          let telefonoModificado = telefono;
-
-          /*if (telefono.trim() !== '') {
-            telefonoModificado = parseInt(telefono.trim());
-            if (isNaN(telefonoModificado)) {
-              console.log("\nError ❌: El teléfono NO es válido.");
-              return leerOpcion(); 
-            }
-          } else {
-            telefonoModificado = telefonoActual; 
-          }*/
-
-          /*sucursalEncontrada.modificarCliente(dni, nombre, direccion, telefonoModificado);
-
-          console.log('\nCliente Modificado Exitosamente ✅');
-
-          console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
-
-          rl.question('Presione Enter para Continuar...', () => {
-            submenuClientes(); 
-            leerOpcion();  
-          });
-        });
-      });
-    });
-  });
-}
-*/
-
 function modificarCliente() {
   rl.question('\nIngresa el Documento del Cliente a modificar: ', (dniStr) => {
     const dni = parseInt(dniStr);
@@ -754,6 +708,30 @@ function modificarCliente() {
     });
   });
 } //LO MISMO QUE PASA EN PROVEEDROR PASA EN CLIENTE NO VALIDA EL CAMPO TELEFONO VACIO
+
+/*function modificarCliente() {
+  rl.question('Ingresa el DNI del Cliente a modificar: ', (dniStr) => {
+      const dni = parseInt(dniStr);
+      const sucursal = obtenerSucursalCliente(dni); 
+
+      if (!sucursal) {
+          console.log('\nNo se encontró la sucursal actual ​🔎​');
+          return leerOpcion();
+      }
+
+      rl.question('Nuevo nombre: ', (nombre) => {
+          rl.question('Nueva dirección: ', (direccion) => {
+              solicitarEntrada('Nuevo de teléfono (sin guiones ni espacios) (10 dígitos): ', validarTelefono, (telefono) => {                
+
+                  // Usar el método de la sucursal
+                  sucursal.modificarCliente(dni, nombre, direccion, parseInt(telefono));
+                  console.log('\nCliente modificado exitosamente ​✅​');
+                  leerOpcion();
+              });
+          });
+      });
+  });
+}*/ //PRIMER METODO CREADO PARA MODIFICAR CLIENTE
 
 //ELIMINA UN CLIENTE SEGUN EL DOCUMENTO INGRESADO
 

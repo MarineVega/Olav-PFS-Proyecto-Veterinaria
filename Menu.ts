@@ -407,7 +407,7 @@ function eliminarCliente() {
       if (!cliente) {
           console.log(`\nNo se encontró un Cliente con DNI ${dni} ​🔎​`);
       } else {
-          sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
+          //sucursal.eliminarCliente(cliente.getId(), cliente.getNombre());
           console.log('\nCliente eliminado exitosamente ​✅​');
       }
       leerOpcion();
@@ -735,7 +735,7 @@ function registrarVisita() {
 
     if (clienteVisita) {
       // Registrar la visita   
-      clienteVisita.registrarVisita(); 
+      //clienteVisita.registrarVisita(); 
       console.log('\nLa visita fue registrada con éxito ​✅​');
       console.log('-------------------------------------------------------------------------');
     } else {
