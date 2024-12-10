@@ -107,9 +107,13 @@ export class Sucursal {
     if (index !== -1) { // Mejor práctica: uso estricto de !==
       this.listaProveedores.splice(index, 1);
       console.log(`\nEl Proveedor ${nombre} (${id}) ha sido eliminado de la lista de Proveedores de la Sucursal 🗑️\n`);
+
       console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
+
     } else {
+
       console.log(`\nEl Proveedor ${nombre} (${id}) no ha sido encontrado en la lista de Proveedores de la Sucursal 🔎\n`);
+
     }
   }
   
@@ -145,7 +149,9 @@ export class Sucursal {
     if (index !== -1) {
       this.listaClientes.splice(index, 1);
     } else {
+
       console.log(`\nError ❌: No se encontró un Cliente con Documento ${documento} en ninguna Sucursal.\n`);
+      
     }
   }
 }
