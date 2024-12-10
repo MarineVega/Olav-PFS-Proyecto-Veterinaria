@@ -54,7 +54,7 @@ export abstract class Persona {
     }
 
     public setTelefono(telefono: number): void {
-        if (telefono!=undefined && typeof telefono!= "number") {
+        if (telefono!=undefined && typeof telefono == "number") {
             this.telefono = telefono;
         } else {
             console.log(`Error! Teléfono no válido ${telefono}`);      
@@ -62,7 +62,7 @@ export abstract class Persona {
     }
 
     public setDocumento(documento: number): void {
-        if (documento!=undefined && typeof documento!="number" && documento < 1000000 && documento > 59999999) {
+        if (documento!=undefined && typeof documento =="number" && documento < 1000000 && documento > 59999999) {
             this.documento = documento;
         } else {
             console.log(`Error! Documento no válido ${documento}`);      

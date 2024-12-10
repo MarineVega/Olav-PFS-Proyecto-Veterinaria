@@ -1,7 +1,7 @@
 
 export class Paciente {
     public id: number;
-    private nombre: string;
+    public nombre: string;
     private especie: string;
     private sexo: string;
     private fechaNacimiento: Date;
@@ -64,8 +64,8 @@ export class Paciente {
         this.observacion = observacion;
     }
           
-    public mostrarDatosPaciente(): string {
-        return ` Paciente (ID ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento()}\n   Observación: ${this.getObservacion()}.`
+    public mostrarDatosPaciente(): string {        
+        return `\nPaciente (🆔 ${this.getId()}) ${this.getNombre()}\n   Especie: ${this.getEspecie()}\n   Sexo: ${this.getSexo()}\n   Fecha de Nacimiento: ${this.getFechaNacimiento().toLocaleDateString()}\n   Observación: ${this.getObservacion()}.`
     }   
  }
 

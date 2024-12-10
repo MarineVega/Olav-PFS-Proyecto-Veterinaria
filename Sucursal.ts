@@ -61,31 +61,26 @@ export class Sucursal {
     this.localidad = localidad;
   }
 
-  /*public mostrarDatosSucursal(): string {
-    return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}\n Dirección: ${this.getDireccion()}\n Localidad: ${this.getLocalidad()}\n Lista Clientes: ${this.getListaClientes()}\n Lista Proveedores: ${this.getListaProveedores()} .`
-  }*/
-
   public mostrarDatosSucursal(): string {
     const clientes = this.listaClientes.map(cliente => cliente.mostrarDatos()).join(", ");
     const proveedores = this.listaProveedores.map(proveedor => proveedor.mostrarDatos()).join(", ");
 
-    return `Sucursal Veterinaria (id ${this.getId()}) Responsable: ${this.getResponsable()}
+    return `Sucursal Veterinaria (🆔 ${this.getId()}) Responsable: ${this.getResponsable()}
    Dirección: ${this.getDireccion()}
    Localidad: ${this.getLocalidad()}
    Lista Clientes: [${clientes}]
    Lista Proveedores: [${proveedores}]`;
   }
   
-  // alta, baja  y modificacion de Proveedores
   public agregarProveedor(id: number, nombre: string, direccion: string, telefono: number, documento: number, rubro: string, CUIT: number ): void {
     const proveedorExistente = this.listaProveedores.find((proveedor) => proveedor.getDocumento() === documento);
   
     if (proveedorExistente) {
-      console.log(`Error: El proveedor con documento ${documento} ya existe.`);
+      console.log(`\nError ❌: El Proveedor con documento ${documento} ya existe.\n`);
     } else {
       const nuevoProveedor = new Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);
       this.listaProveedores.push(nuevoProveedor);
-      console.log(`Proveedor con documento ${documento} agregado correctamente.`);
+      console.log(`\nProveedor con documento ${documento} agregado correctamente ✔️\n`);
     }
   }
 
@@ -100,33 +95,32 @@ export class Sucursal {
       proveedorExistente.setTelefono(telefono);
       proveedorExistente.setRubro(rubro);
       proveedorExistente.setCUIT(CUIT);
-      console.log(`Proveedor con documento ${documento} modificado correctamente.`);
+      console.log(`\nProveedor con documento ${documento} modificado correctamente ✔️\n`);
     } else {
-      console.log(`Error: No se encontró un proveedor con documento ${documento}.`);
+      console.log(`\nError ❌: No se encontró un Proveedor con documento ${documento}.\n`);
     }
   
   }
   
   public eliminarProveedor(id: number, nombre: string): void { 
-    const index = this.listaProveedores.findIndex(proveedor => proveedor.id === id); // Corrección aquí
+    const index = this.listaProveedores.findIndex(proveedor => proveedor.id === id); 
     if (index !== -1) { // Mejor práctica: uso estricto de !==
       this.listaProveedores.splice(index, 1);
-      console.log(`El Proveedor ${nombre} (${id}) ha sido eliminado de la lista de Proveedores de la Sucursal.`);
+      console.log(`\nEl Proveedor ${nombre} (${id}) ha sido eliminado de la lista de Proveedores de la Sucursal 🗑️\n`);
     } else {
-      console.log(`El Proveedor ${nombre} (${id}) no ha sido encontrado en la lista de Proveedores de la Sucursal.`);
+      console.log(`\nEl Proveedor ${nombre} (${id}) no ha sido encontrado en la lista de Proveedores de la Sucursal 🔎\n`);
     }
   }
   
-  // alta, modificacion y eliminacion de Clientes
   public agregarCliente(id: number, nombre: string, direccion: string, telefono: number, documento: number): void {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
     if (clienteExistente) {
-      console.log(`Error: El cliente con documento ${documento} ya existe.`);
+      console.log(`\nError ❌: El Cliente con documento ${documento} ya existe.\n`);
     } else {
       const nuevoCliente = new Cliente(id, nombre, direccion, telefono, documento);
       this.listaClientes.push(nuevoCliente);
-      console.log(`Cliente con documento ${documento} agregado correctamente.`);
+      console.log(`\nCliente con documento ${documento} agregado correctamente ✔️\n`);
     }
   }
 
@@ -137,9 +131,9 @@ export class Sucursal {
       clienteExistente.setNombre(nombre);
       clienteExistente.setDireccion(direccion);
       clienteExistente.setTelefono(telefono);
-      console.log(`Cliente con documento ${documento} modificado correctamente.`);
+      console.log(`\nCliente con documento ${documento} modificado correctamente ✅\n`);
     } else {
-      console.log(`Error: No se encontró un cliente con documento ${documento}.`);
+      console.log(`\nError ❌: No se encontró un Cliente con documento ${documento}.\n`);
     }
   }
   
@@ -147,9 +141,9 @@ export class Sucursal {
     const index = this.listaClientes.findIndex(cliente => cliente.id == id);
     if (index != -1) {
       this.listaClientes.splice(index, 1);
-      console.log(`El Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal.`);
+      console.log(`\nEl Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal 🗑️\n`);
     } else {
-      console.log(`El Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal.`);
+      console.log(`\nEl Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal​ 🔎​`);
     }
   }
 }
