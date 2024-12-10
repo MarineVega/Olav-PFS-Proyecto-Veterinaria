@@ -798,7 +798,7 @@ function crearPaciente() {
 }
   
 // MODIFICAR PACIENTE
-
+/*
 function modificarPaciente() {
   let pacienteCliente: Paciente | undefined;
 
@@ -822,7 +822,7 @@ function modificarPaciente() {
         submenuPacientes();
         leerOpcion();
       });
-      return; 
+      //return; 
     }
 
     console.log(clientePaciente.mostrarListaPacientes());
@@ -891,6 +891,91 @@ function modificarPaciente() {
     });
   });
 }
+  */
+
+function modificarPaciente() {
+  let pacienteCliente: Paciente | undefined;
+
+  rl.question('\nIngrese el Documento del Cliente: ', (documentoStr) => {
+    const documento = parseInt(documentoStr);
+
+    if (isNaN(documento) || documentoStr.length < 5) {
+      console.log('\nPor favor, ingresa un número de documento válido (al menos 5 dígitos).');
+      return modificarPaciente();
+    }
+
+    let clientePaciente: Cliente | undefined;
+
+    // Buscar el cliente en todas las Sucursales
+    sucursales.forEach(sucursal => {
+      clientePaciente = sucursal.getListaClientes().find(cliente => cliente.getDocumento() === documento);
+    });
+
+    if (!clientePaciente) {
+      console.log('\nNo se encontró el Cliente con el ID ingresado ​🔎\n​');
+      
+      rl.question('Presione Enter para continuar...', () => {  
+        submenuPacientes(); 
+        leerOpcion(); 
+      });        
+    }
+
+    console.log(clientePaciente.mostrarListaPacientes());
+    
+    rl.question('Ingresa el ID del Paciente a modificar: ', (idStr) => {
+      const id = parseInt(idStr);
+
+      if (isNaN(id)) {
+        console.log('Por favor, ingresa un ID válido.');
+        return leerOpcion();
+      }
+
+      pacienteCliente = clientePaciente.getListaPacientes().find(paciente => paciente.getId() === id);
+  
+      if (!pacienteCliente) {
+        console.log('\nNo se encontró el paciente con el ID ingresado ​🔎\n​');
+        rl.question('Presione Enter para continuar...', () => {  
+          submenuPacientes(); 
+          leerOpcion(); 
+        });
+      } else {
+
+        rl.question('Nuevo nombre (deja vacío para no modificar): ', (nombre) => {
+          solicitarEntrada('Especie del paciente (Gato | Perro | Exotica) (deja vacío para no modificar): ', validarEspecie, true, (especie) => {
+            solicitarEntrada('Sexo del paciente (Macho | Hembra) (deja vacío para no modificar): ', validarSexo, true, (sexo) => {
+              solicitarEntrada('Fecha de nacimiento del paciente (DD-MM-YYYY) (deja vacío para no modificar): ', validarFecha, true, (fecha) => {
+                rl.question('Nueva observación (deja vacío para no modificar): ', (observacion) => {
+                  const fechaNacimiento = new Date(fecha);
+                  clientePaciente.modificarPaciente(id,
+                    nombre || pacienteCliente.getNombre(),
+                    especie || pacienteCliente.getEspecie(),
+                    sexo || pacienteCliente.getSexo(),
+                    fechaNacimiento || pacienteCliente.getFechaNacimiento(),
+                    observacion || pacienteCliente.getObservacion());
+  
+                  console.log('\nPaciente modificado exitosamente ​✅​');
+                  console.log("\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n");  
+           
+                  rl.question('Presione Enter para continuar...', () => {  
+                    submenuPacientes(); 
+                    leerOpcion(); 
+                  });
+                });
+              });
+            });
+          });
+        });
+      }
+
+    });
+
+    rl.question('Presione Enter para continuar...', () => {  
+      submenuPacientes(); 
+      leerOpcion(); 
+    });
+  });
+}
+
 
 // ELIMINA UN PACIENTE SEGUN EL ID INGRESADO
 
@@ -980,26 +1065,28 @@ function mostrarListaPacientes(): void {
         mostrarListaPacientes();
         leerOpcion();
       });
+    } else {
+
+      const pacientes = clientePaciente.getListaPacientes();
+  
+      if (pacientes.length === 0) {
+        console.log('\nNo hay Pacientes registrados en este Cliente ❌\n');
+      }
+  
+      const lista = pacientes.map(paciente => {
+        return `\n🆔: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
+      }).join('\n');
+  
+      console.log(lista);
+  
+      console.log('\n🐾🐈 -------------------------------------------------------------------🐾 🐾-------------------------------------------------------------------- 🐩🐾\n');
+  
+      rl.question('Presione Enter para continuar...', () => {
+        submenuPacientes();
+        leerOpcion();
+      });
     }
 
-    const pacientes = clientePaciente.getListaPacientes();
-
-    if (pacientes.length === 0) {
-      console.log('\nNo hay Pacientes registrados en este Cliente ❌\n');
-    }
-
-    const lista = pacientes.map(paciente => {
-      return `\n🆔: ${paciente.getId()}, Nombre: ${paciente.getNombre()}, Especie: ${paciente.getEspecie()}, Sexo: ${paciente.getSexo()}, Nacimiento: ${paciente.getFechaNacimiento().toLocaleDateString()}`;
-    }).join('\n');
-
-    console.log(lista);
-
-    console.log('\n🐾🐈 -------------------------------------------------------------------🐾 🐾-------------------------------------------------------------------- 🐩🐾\n');
-
-    rl.question('Presione Enter para continuar...', () => {
-      submenuPacientes();
-      leerOpcion();
-    });
   });
 }
 
@@ -1079,16 +1166,16 @@ if (especiesValidas.includes(otraEspecie)) {
 }
 
 function validarFecha(fecha, esModificacion: boolean) {
-if (esModificacion && fecha.trim() === '') {
-  return true;
-}
+  if (esModificacion && fecha.trim() === '') {
+    return true;
+  }
 
-const fechaNacimiento = new Date(fecha);
-if (isNaN(fechaNacimiento.getTime())) {
-  return false;
-} else {
-  return true;
-}
+  const fechaNacimiento = new Date(fecha);
+    if (isNaN(fechaNacimiento.getTime())) {
+      return false;
+    } else {
+      return true;
+  }
 }
 
 function validarVacios(texto: string, esModificacion: boolean) {
