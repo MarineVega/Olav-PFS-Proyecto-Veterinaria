@@ -76,11 +76,11 @@ export class Sucursal {
     const proveedorExistente = this.listaProveedores.find((proveedor) => proveedor.getDocumento() === documento);
   
     if (proveedorExistente) {
-      console.log(`\nError ❌: El Proveedor con documento ${documento} ya existe.\n`);
+      console.log(`\nError ❌: El Proveedor con Documento ${documento} ya existe.\n`);
     } else {
       const nuevoProveedor = new Proveedor(id, nombre, direccion, telefono, documento, rubro, CUIT);
       this.listaProveedores.push(nuevoProveedor);
-      console.log(`\nProveedor con documento ${documento} agregado correctamente ✔️\n`);
+      console.log(`\nProveedor con Documento ${documento} agregado correctamente ✔️\n`);
     }
   }
 
@@ -95,9 +95,9 @@ export class Sucursal {
       proveedorExistente.setTelefono(telefono);
       proveedorExistente.setRubro(rubro);
       proveedorExistente.setCUIT(CUIT);
-      console.log(`\nProveedor con documento ${documento} modificado correctamente ✔️\n`);
+      console.log(`\nProveedor con Documento ${documento} modificado Correctamente ✔️\n`);
     } else {
-      console.log(`\nError ❌: No se encontró un Proveedor con documento ${documento}.\n`);
+      console.log(`\nError ❌: No se encontró un Proveedor con Documento ${documento}.\n`);
     }
   
   }
@@ -107,6 +107,7 @@ export class Sucursal {
     if (index !== -1) { // Mejor práctica: uso estricto de !==
       this.listaProveedores.splice(index, 1);
       console.log(`\nEl Proveedor ${nombre} (${id}) ha sido eliminado de la lista de Proveedores de la Sucursal 🗑️\n`);
+      console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
     } else {
       console.log(`\nEl Proveedor ${nombre} (${id}) no ha sido encontrado en la lista de Proveedores de la Sucursal 🔎\n`);
     }
@@ -116,11 +117,11 @@ export class Sucursal {
     const clienteExistente = this.listaClientes.find(cliente => cliente.getDocumento() === documento);
 
     if (clienteExistente) {
-      console.log(`\nError ❌: El Cliente con documento ${documento} ya existe.\n`);
+      console.log(`\nError ❌: El Cliente con Documento ${documento} ya existe.\n`);
     } else {
       const nuevoCliente = new Cliente(id, nombre, direccion, telefono, documento);
       this.listaClientes.push(nuevoCliente);
-      console.log(`\nCliente con documento ${documento} agregado correctamente ✔️\n`);
+      console.log(`\nCliente con Documento ${documento} agregado Correctamente ✔️\n`);
     }
   }
 
@@ -131,19 +132,20 @@ export class Sucursal {
       clienteExistente.setNombre(nombre);
       clienteExistente.setDireccion(direccion);
       clienteExistente.setTelefono(telefono);
-      console.log(`\nCliente con documento ${documento} modificado correctamente ✅\n`);
+      console.log(`\nCliente con documento ${documento} modificado Correctamente ✅\n`);
     } else {
-      console.log(`\nError ❌: No se encontró un Cliente con documento ${documento}.\n`);
+      console.log(`\nError ❌: No se encontró un Cliente con Documento ${documento}.\n`);
     }
   }
   
-  public eliminarCliente(id: number, nombre: string): void {
-    const index = this.listaClientes.findIndex(cliente => cliente.id == id);
-    if (index != -1) {
+  public eliminarCliente(documento: number) {
+
+    const index = this.listaClientes.findIndex(cliente => cliente.getDocumento() === documento);
+
+    if (index !== -1) {
       this.listaClientes.splice(index, 1);
-      console.log(`\nEl Cliente ${nombre} se ha eliminado correctamente de la lista de Clientes de la Sucursal 🗑️\n`);
     } else {
-      console.log(`\nEl Cliente ${nombre} no ha sido encontrado en la lista de Clientes de la Sucursal​ 🔎​`);
+      console.log(`\nError ❌: No se encontró un Cliente con Documento ${documento} en ninguna Sucursal.\n`);
     }
   }
 }

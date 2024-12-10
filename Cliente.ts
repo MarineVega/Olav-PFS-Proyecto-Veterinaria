@@ -6,6 +6,7 @@ export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
     private listaPacientes: Paciente[];
+    private listaVisitas: {diagnostico: string }[] = [];//Nuevo
   
 
     constructor(id: number, nombre: string, direccion: string, telefono: number, documento: number) {
@@ -13,11 +14,12 @@ export class Cliente extends Persona {
         this.visitas = 0;
         this.vip = false;
         this.listaPacientes = [];
+        this.listaVisitas = [];//nuevo
     }
 
-    public getVisitas(): number {
+    /*public getVisitas(): number {
         return this.visitas;
-    }
+    }*/
 
     public esVip(): string {
         if (this.vip) {
@@ -31,6 +33,10 @@ export class Cliente extends Persona {
         return this.listaPacientes;
     }
 
+    public getVisitas(): {diagnostico: string }[] {
+        return this.listaVisitas;
+      }// nuevo
+
     public setVisitas(visitas: number): void {
         this.visitas = visitas;
     }
@@ -40,31 +46,59 @@ export class Cliente extends Persona {
     }
 
     public agregarPaciente(id: number, nombre: string, especie: string, sexo: string, fechaNacimiento: Date, observacion: string): void {
-        // Verificar que todos los datos están presentes
         if (!id || !nombre || !especie || !sexo || !fechaNacimiento) {
             console.log("\nError ❌: Todos los datos del Paciente deben estar completos para darlo de alta.\n");
             return;
         }
             
-        //Verificar que el paciente no exista ya en la lista
         const existePaciente = this.listaPacientes.some(paciente => paciente.getId() === id);
         if (existePaciente) {
             console.log(`\nError ❌: Ya existe un Paciente con ID ${id} en la lista.\n`);
             return;
         }
     
-        //  agregar el nuevo paciente
         const paciente = new Paciente(id, nombre, especie, sexo, fechaNacimiento, observacion);
         this.listaPacientes.push(paciente);
         console.log(`\nEl Paciente ${nombre} (🆔 ${id}) ha sido agregado correctamente ✔️\n`);
     }
     
-    public registrarVisita(): void {
+   /* public registrarVisita(): void {
         this.visitas += 1;
         if (this.visitas >= 5 && !this.vip) {
             this.definirVIP();
         }
     }
+
+    private definirVIP(): void {
+        this.vip = true;
+        console.log(`\nEl cliente ${this.nombre} es considerado VIP`);
+    }
+*/
+
+   /* public registrarVisita(fecha: string, diagnostico: string): void {
+        this.visitas += 1;
+        this.listaVisitas.push({ fecha, diagnostico });
+
+        if (this.visitas >= 5 && !this.vip) {
+            this.definirVIP();
+        }
+    }
+*/
+
+public registrarVisita(diagnostico: string, pacienteId: number): void {
+    this.visitas += 1;
+    const paciente = this.listaPacientes.find(p => p.getId() === pacienteId);
+    
+    if (paciente) {
+      console.log(`\nSe Registra la Visita del Paciente: ${paciente.getNombre()}}\n - Diagnóstico: ${diagnostico}`);
+    } else {
+      console.log(`\nNo se encontró un paciente con ID ${pacienteId}`);
+    }
+
+    if (this.visitas >= 2 && !this.vip) {
+      this.definirVIP();
+    }
+  }
 
     private definirVIP(): void {
         this.vip = true;
