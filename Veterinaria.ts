@@ -619,63 +619,7 @@ function crearCliente() {
   }
 }
 
-//MODIFICA LOS DATOS DEL CLIENTE SEGUN DNI INGRESADO
-
-/*function modificarCliente() {
-  rl.question('\nIngresa el Documento del Cliente a modificar: ', (dniStr) => {
-    const dni = parseInt(dniStr);
-
-    let clienteExistente = null;
-    let sucursalEncontrada = null;
-
-    for (let sucursal of sucursales) {
-      clienteExistente = sucursal.getListaClientes().find(
-        (cliente) => cliente.getDocumento() === dni
-      );
-
-      if (clienteExistente) {
-        sucursalEncontrada = sucursal;
-        break; 
-      }
-    }
-
-    if (!clienteExistente) {
-      console.log(`\nError ❌: No se encontró un Cliente con Documento ${dni} en ninguna Sucursal 🔎\n`);
-
-      rl.question('Presione Enter para Continuar...', () => {
-        submenuClientes(); 
-        leerOpcion();
-      });
-
-      return; 
-    }
-
-    const nombreActual = clienteExistente.getNombre();
-    const direccionActual = clienteExistente.getDireccion();
-    const telefonoActual = clienteExistente.getTelefono().toString();
-
-
-    solicitarEntrada('\nNuevo Nombre (deja vacío para no modificar): ', validarVacios, true, (nombre) => {
-
-      solicitarEntrada('\nNueva Dirección (deja vacío para no modificar): ', validarVacios, true, (direccion) => {
-
-        solicitarEntrada('\nNuevo Teléfono (sin guiones ni espacios - 10 dígitos -deja vacío para no modificar): ', validarVacios, true, (telefono) => {
-
-          sucursalEncontrada.modificarCliente(dni, nombre.trim() === '' ? nombreActual : nombre, 
-          direccion.trim() === '' ? direccionActual : direccion, telefono.trim() === '' ? telefonoActual : telefono);
-
-          console.log('\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n');
-
-          rl.question('Presione Enter para Continuar...', () => {
-
-            submenuClientes(); 
-            leerOpcion();  
-          });
-        });
-      });
-    });
-  });
-} //LO MISMO QUE PASA EN PROVEEDROR PASA EN CLIENTE NO VALIDA EL CAMPO TELEFONO VACIO*/
+// Función para modificar Cliente
 
 function modificarCliente() {
   rl.question('\nIngresa el Documento del Cliente a modificar: ', (dniStr) => {
