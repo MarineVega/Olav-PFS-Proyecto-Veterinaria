@@ -5,7 +5,7 @@ import { Paciente } from "./Paciente";
 export class Cliente extends Persona {
     private visitas: number;
     private vip: boolean;
-    private listaPacientes: Paciente[];
+    public listaPacientes: Paciente[];
   
 
     constructor(id: number, nombre: string, direccion: string, telefono: number, documento: number) {

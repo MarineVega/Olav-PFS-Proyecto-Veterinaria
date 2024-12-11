@@ -8,7 +8,7 @@ export class Sucursal {
   private responsable: string;
   private direccion: string;
   private localidad: string;
-  private listaClientes: Cliente[];
+  public listaClientes: Cliente[];
   private listaProveedores: Proveedor[];
 
 
